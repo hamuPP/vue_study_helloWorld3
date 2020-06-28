@@ -1,0 +1,473 @@
+{
+    "code": 0,
+    "codeMsg": "",
+    "dataList": [
+        {
+            "width": 1539,
+            "height": 769,
+            "name": "立项申请（2018）",
+            "id": "78",
+            "filteroute": false,
+            "editor": "",
+            "editDate": "",
+            "httpserverport": "",
+            "createUrl": "",
+            "timelimit": 0,
+            "timelimitunit": "HOUR",
+            "parameters": [],
+            "nodes": [
+                {
+                    "comet": "",
+                    "hashId": 85710979,
+                    "id": 483,
+                    "name": "开始",
+                    "sequenceNumber": 0,
+                    "workflowId": 78,
+                    "xmlDescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>"
+                },
+                {
+                    "comet": "",
+                    "hashId": 21329673,
+                    "id": 484,
+                    "name": "拟稿人",
+                    "sequenceNumber": 0,
+                    "workflowId": 78,
+                    "xmlDescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>"
+                },
+                {
+                    "comet": "",
+                    "hashId": 93930686,
+                    "id": 485,
+                    "name": "州市分公司部门领导审批",
+                    "sequenceNumber": 0,
+                    "workflowId": 78,
+                    "xmlDescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>"
+                },
+                {
+                    "comet": "",
+                    "hashId": 53321488,
+                    "id": 486,
+                    "name": "州市分公司分管领导",
+                    "sequenceNumber": 0,
+                    "workflowId": 78,
+                    "xmlDescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>"
+                },
+                {
+                    "comet": "",
+                    "hashId": 90758566,
+                    "id": 487,
+                    "name": "计划部项目经理审批",
+                    "sequenceNumber": 0,
+                    "workflowId": 78,
+                    "xmlDescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>"
+                },
+                {
+                    "comet": "",
+                    "hashId": 14467124,
+                    "id": 488,
+                    "name": "结束",
+                    "sequenceNumber": 0,
+                    "workflowId": 78,
+                    "xmlDescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>"
+                },
+                {
+                    "type": 4,
+                    "id": 85710979,
+                    "name": "开始",
+                    "url": "/projectApplyAction.do?method=initMain",
+                    "returnurl": "",
+                    "synstate": 0,
+                    "users": [],
+                    "roles": [],
+                    "msgroles": [],
+                    "allotprinciple": 4,
+                    "timelimit": 0,
+                    "timelimitunit": "分钟",
+                    "timelimit1": 0,
+                    "timelimitunit1": "分钟",
+                    "timelimit2": 0,
+                    "timelimitunit2": "分钟",
+                    "subworkflowid": 0,
+                    "subworkflowname": "启动子流程",
+                    "subworkflowtype": "sync",
+                    "personsynnodeid": 0,
+                    "personsynnodename": "",
+                    "synbeginnodeid": 0,
+                    "synbeginnodename": "",
+                    "defaultpersonnodeid": 0,
+                    "defaultpersonnodename": {},
+                    "module": "",
+                    "op": "",
+                    "access": 11,
+                    "taskshow": 1,
+                    "sequencenumber": 0,
+                    "coment": "",
+                    "xmldescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>",
+                    "xpoint": 207,
+                    "ypoint": 205
+                },
+                {
+                    "type": 1,
+                    "id": 21329673,
+                    "name": "拟稿人",
+                    "url": "/projectApplyAction.do?method=initMain",
+                    "returnurl": "",
+                    "synstate": 0,
+                    "users": [],
+                    "roles": [],
+                    "msgroles": [],
+                    "allotprinciple": 4,
+                    "timelimit": 0,
+                    "timelimitunit": "分钟",
+                    "timelimit1": 0,
+                    "timelimitunit1": "分钟",
+                    "timelimit2": 0,
+                    "timelimitunit2": "分钟",
+                    "subworkflowid": 0,
+                    "subworkflowname": "启动子流程",
+                    "subworkflowtype": "sync",
+                    "personsynnodeid": 0,
+                    "personsynnodename": "",
+                    "synbeginnodeid": 0,
+                    "synbeginnodename": "",
+                    "defaultpersonnodeid": 0,
+                    "defaultpersonnodename": {},
+                    "module": "",
+                    "op": "",
+                    "access": 11,
+                    "taskshow": 1,
+                    "sequencenumber": 0,
+                    "coment": "",
+                    "xmldescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>",
+                    "xpoint": 353,
+                    "ypoint": 205
+                },
+                {
+                    "type": 1,
+                    "id": 93930686,
+                    "name": "州市分公司部门领导审批",
+                    "url": "/projectApplyAction.do?method=leaderMain",
+                    "returnurl": "",
+                    "synstate": 0,
+                    "users": [],
+                    "roles": [],
+                    "msgroles": [],
+                    "allotprinciple": 4,
+                    "timelimit": 0,
+                    "timelimitunit": "分钟",
+                    "timelimit1": 0,
+                    "timelimitunit1": "分钟",
+                    "timelimit2": 0,
+                    "timelimitunit2": "分钟",
+                    "subworkflowid": 0,
+                    "subworkflowname": "启动子流程",
+                    "subworkflowtype": "sync",
+                    "personsynnodeid": 0,
+                    "personsynnodename": "",
+                    "synbeginnodeid": 0,
+                    "synbeginnodename": "",
+                    "defaultpersonnodeid": 0,
+                    "defaultpersonnodename": {},
+                    "module": "",
+                    "op": "",
+                    "access": 11,
+                    "taskshow": 1,
+                    "sequencenumber": 0,
+                    "coment": "",
+                    "xmldescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>",
+                    "xpoint": 536,
+                    "ypoint": 204
+                },
+                {
+                    "type": 1,
+                    "id": 53321488,
+                    "name": "州市分公司分管领导",
+                    "url": "/projectApplyAction.do?method=leaderMain",
+                    "returnurl": "",
+                    "synstate": 0,
+                    "users": [],
+                    "roles": [
+                        {
+                            "roleId": 15,
+                            "roleName": "分公司总经理"
+                        },
+                        {
+                            "roleId": 14,
+                            "roleName": "分公司副总经理"
+                        }
+                    ],
+                    "msgroles": [],
+                    "allotprinciple": 4,
+                    "timelimit": 0,
+                    "timelimitunit": "分钟",
+                    "timelimit1": 0,
+                    "timelimitunit1": "分钟",
+                    "timelimit2": 0,
+                    "timelimitunit2": "分钟",
+                    "subworkflowid": 0,
+                    "subworkflowname": "启动子流程",
+                    "subworkflowtype": "sync",
+                    "personsynnodeid": 0,
+                    "personsynnodename": "",
+                    "synbeginnodeid": 0,
+                    "synbeginnodename": "",
+                    "defaultpersonnodeid": 0,
+                    "defaultpersonnodename": {},
+                    "module": "",
+                    "op": "",
+                    "access": 11,
+                    "taskshow": 1,
+                    "sequencenumber": 0,
+                    "coment": "",
+                    "xmldescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>",
+                    "xpoint": 692,
+                    "ypoint": 205
+                },
+                {
+                    "type": 1,
+                    "id": 90758566,
+                    "name": "计划部项目经理审批",
+                    "url": "/projectApplyAction.do?method=leaderMain",
+                    "returnurl": "",
+                    "synstate": 0,
+                    "users": [],
+                    "roles": [
+                        {
+                            "roleId": 2,
+                            "roleName": "计划部项目经理"
+                        }
+                    ],
+                    "msgroles": [],
+                    "allotprinciple": 4,
+                    "timelimit": 0,
+                    "timelimitunit": "分钟",
+                    "timelimit1": 0,
+                    "timelimitunit1": "分钟",
+                    "timelimit2": 0,
+                    "timelimitunit2": "分钟",
+                    "subworkflowid": 0,
+                    "subworkflowname": "启动子流程",
+                    "subworkflowtype": "sync",
+                    "personsynnodeid": 0,
+                    "personsynnodename": "",
+                    "synbeginnodeid": 0,
+                    "synbeginnodename": "",
+                    "defaultpersonnodeid": 0,
+                    "defaultpersonnodename": {},
+                    "module": "",
+                    "op": "",
+                    "access": 11,
+                    "taskshow": 1,
+                    "sequencenumber": 0,
+                    "coment": "",
+                    "xmldescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>",
+                    "xpoint": 848,
+                    "ypoint": 205
+                },
+                {
+                    "type": 5,
+                    "id": 14467124,
+                    "name": "结束",
+                    "url": "/projectApplyAction.do?method=leaderMain",
+                    "returnurl": "",
+                    "synstate": 0,
+                    "users": [],
+                    "roles": [],
+                    "msgroles": [],
+                    "allotprinciple": 4,
+                    "timelimit": 0,
+                    "timelimitunit": "分钟",
+                    "timelimit1": 0,
+                    "timelimitunit1": "分钟",
+                    "timelimit2": 0,
+                    "timelimitunit2": "分钟",
+                    "subworkflowid": 0,
+                    "subworkflowname": "启动子流程",
+                    "subworkflowtype": "sync",
+                    "personsynnodeid": 0,
+                    "personsynnodename": "",
+                    "synbeginnodeid": 0,
+                    "synbeginnodename": "",
+                    "defaultpersonnodeid": 0,
+                    "defaultpersonnodename": {},
+                    "module": "",
+                    "op": "",
+                    "access": 11,
+                    "taskshow": 1,
+                    "sequencenumber": 0,
+                    "coment": "",
+                    "xmldescription": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Root><entity name=\"workflow.jsp\" access=\"11\"><field name=\"rejectTaskBtn\" cnname=\"退回按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"reassignTaskBtn\" cnname=\"转办按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"terminateProcessBtn\" cnname=\"终止按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"monitor\" cnname=\"流程监控按钮\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"configDefaultParticipantBtn\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"audithide\" cnname=\"隐藏审核意见\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"auditcontent\" cnname=\"隐藏为隐藏审核意见，必填为默认为空\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"submittext\" cnname=\"提交文本(必填同意可写提交只读确定)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterController\" cnname=\"单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"unitFliterBackController\" cnname=\"回退单位过滤(必填为不添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"deptFliterController\" cnname=\"部门过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"officeFliterController\" cnname=\"处室过滤(必填为添加)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"selectuserbutton\" cnname=\"节点选人按钮(必填为隐藏)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"timelimitbutton\" cnname=\"设置任务时限按钮(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"allInfoController\" cnname=\"设置显示所有信息页面(必填为展示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"handlerController\" cnname=\"设置默认审批人\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"batchController\" cnname=\"设置批量提交节点(必填为批量节点)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ruleController\" cnname=\"设置会签规则(后置节点，隐藏为顺序必填或其他为并发会签)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"concurrentAllController\" cnname=\"并发全选规则(前置节点，必填为并发流程必须全选才能提交)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"attachmentController\" cnname=\"附件必填控制(前置节点，必填为库中配置为必填的附件类型必须全部上传才能提交)\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"auditOptionController\" cnname=\"会签意见显示控制(前置节点，必填为会签意见显示)\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"personModel\" cnname=\"流程提交选人模式（必填为单选，其他多选）/\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"backHint\" cnname=\"退回提示（必填为提示）/\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyLeaderView.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/></entity><entity name=\"projectApplyInfo.jsp\" access=\"11\"><field name=\"isManager\" cnname=\"计划建设项目经理审核环节必填\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"canWrite\" cnname=\"可修改表单环节必填\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"name\" cnname=\"标题\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"constructTypeId\" cnname=\"建设类型\" access=\"11\" datatype=\"1\" type=\"select\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"applyInvest\" cnname=\"applyInvest\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"orgName\" cnname=\"建设单位\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"&apos;orgId&apos;\" cnname=\"&apos;orgId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerName\" cnname=\"建设项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;proManagerId&apos;\" cnname=\"&apos;proManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"proManagerDep\" cnname=\"proManagerDep\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"planManagerName\" cnname=\"计划部项目经理\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;planManagerId&apos;\" cnname=\"&apos;planManagerId&apos;\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"&apos;decisionDate&apos;\" cnname=\"&apos;决策时间&apos;\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"scale\" cnname=\"规模\" access=\"14\" datatype=\"1\" type=\"input\"/><field name=\"ability1\" cnname=\"ability1\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability2\" cnname=\"ability2\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability3\" cnname=\"ability3\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability4\" cnname=\"ability4\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"ability5\" cnname=\"ability5\" access=\"11\" datatype=\"1\" type=\"input\"/><field name=\"description\" cnname=\"description\" access=\"11\" datatype=\"1\" type=\"input\"/></entity></Root>",
+                    "xpoint": 996,
+                    "ypoint": 205
+                }
+            ],
+            "links": [
+                {
+                    "points": [
+                        {
+                            "x": 224,
+                            "y": 222
+                        },
+                        {
+                            "x": 370,
+                            "y": 222
+                        }
+                    ],
+                    "id": 176960380,
+                    "name": "",
+                    "linktype": 0,
+                    "returnprinciple": 2,
+                    "isdefaultpath": false,
+                    "from": 85710979,
+                    "to": 21329673
+                },
+                {
+                    "points": [
+                        {
+                            "x": 370,
+                            "y": 222
+                        },
+                        {
+                            "x": 553,
+                            "y": 221
+                        }
+                    ],
+                    "id": 890938839,
+                    "name": "",
+                    "linktype": 0,
+                    "returnprinciple": 2,
+                    "isdefaultpath": false,
+                    "from": 21329673,
+                    "to": 93930686
+                },
+                {
+                    "points": [
+                        {
+                            "x": 553,
+                            "y": 221
+                        },
+                        {
+                            "x": 709,
+                            "y": 222
+                        }
+                    ],
+                    "id": 97374062,
+                    "name": "",
+                    "linktype": 0,
+                    "returnprinciple": 2,
+                    "isdefaultpath": false,
+                    "from": 93930686,
+                    "to": 53321488
+                },
+                {
+                    "points": [
+                        {
+                            "x": 553,
+                            "y": 221
+                        },
+                        {
+                            "x": 529,
+                            "y": 210
+                        },
+                        {
+                            "x": 370,
+                            "y": 222
+                        }
+                    ],
+                    "id": 577671592,
+                    "name": "",
+                    "linktype": 1,
+                    "returnprinciple": 2,
+                    "isdefaultpath": false,
+                    "from": 93930686,
+                    "to": 21329673
+                },
+                {
+                    "points": [
+                        {
+                            "x": 709,
+                            "y": 222
+                        },
+                        {
+                            "x": 865,
+                            "y": 222
+                        }
+                    ],
+                    "id": 1003369013,
+                    "name": "",
+                    "linktype": 0,
+                    "returnprinciple": 2,
+                    "isdefaultpath": false,
+                    "from": 53321488,
+                    "to": 90758566
+                },
+                {
+                    "points": [
+                        {
+                            "x": 709,
+                            "y": 222
+                        },
+                        {
+                            "x": 660,
+                            "y": 178
+                        },
+                        {
+                            "x": 370,
+                            "y": 222
+                        }
+                    ],
+                    "id": 212715787,
+                    "name": "",
+                    "linktype": 1,
+                    "returnprinciple": 2,
+                    "isdefaultpath": false,
+                    "from": 53321488,
+                    "to": 21329673
+                },
+                {
+                    "points": [
+                        {
+                            "x": 865,
+                            "y": 222
+                        },
+                        {
+                            "x": 1013,
+                            "y": 222
+                        }
+                    ],
+                    "id": 2121695522,
+                    "name": "",
+                    "linktype": 0,
+                    "returnprinciple": 2,
+                    "isdefaultpath": false,
+                    "from": 90758566,
+                    "to": 14467124
+                },
+                {
+                    "points": [
+                        {
+                            "x": 865,
+                            "y": 222
+                        },
+                        {
+                            "x": 789,
+                            "y": 114
+                        },
+                        {
+                            "x": 370,
+                            "y": 222
+                        }
+                    ],
+                    "id": 544543706,
+                    "name": "",
+                    "linktype": 1,
+                    "returnprinciple": 2,
+                    "isdefaultpath": false,
+                    "from": 90758566,
+                    "to": 21329673
+                }
+            ]
+        }
+    ],
+    "status": 200
+}

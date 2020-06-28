@@ -1,0 +1,304 @@
+{
+	"node1": {
+		"xPoint": "207",
+		"yPoint": "205",
+		"nodeId": "85710979",
+		"nodeName": "开始",
+		"nodeType": "4",
+		"child0": {
+			"linkId": "176960380",
+			"linkName": "",
+			"linkType": "0",
+			"startNode": "85710979",
+			"aimNode": "21329673",
+			"point0": {
+				"x": "224",
+				"y": "222"
+			}
+		},
+		"link0": {
+			"linkId": "176960380",
+			"linkName": "",
+			"linkType": "0",
+			"startNode": "85710979",
+			"aimNode": "21329673",
+			"point0": {
+				"x": "224",
+				"y": "222"
+			},
+			"point1": {
+				"x": "370",
+				"y": "222"
+			},
+			"pointCounts": 2
+		},
+		"linkCounts": 1,
+		"childCounts": 0
+	},
+	"node2": {
+		"xPoint": "353",
+		"yPoint": "205",
+		"nodeId": "21329673",
+		"nodeName": "拟稿人",
+		"nodeType": "1",
+		"nodeState": "yes",
+		"isBegin": "1",
+		"tipInfo": "参与办理人员：任超",
+		"child0": {
+			"linkId": "890938839",
+			"linkName": "",
+			"linkType": "0",
+			"startNode": "21329673",
+			"aimNode": "93930686",
+			"point0": {
+				"x": "370",
+				"y": "222"
+			}
+		},
+		"link0": {
+			"linkId": "890938839",
+			"linkName": "",
+			"linkType": "0",
+			"startNode": "21329673",
+			"aimNode": "93930686",
+			"point0": {
+				"x": "370",
+				"y": "222"
+			},
+			"point1": {
+				"x": "553",
+				"y": "221"
+			},
+			"pointCounts": 2
+		},
+		"linkCounts": 1,
+		"childCounts": 0
+	},
+	"node3": {
+		"xPoint": "536",
+		"yPoint": "204",
+		"nodeId": "93930686",
+		"nodeName": "州市分公司部门领导审批",
+		"nodeType": "1",
+		"nodeState": "no",
+		"isBegin": "1",
+		"tipInfo": "当前办理人员：任超",
+		"child0": {
+			"linkId": "97374062",
+			"linkName": "",
+			"linkType": "0",
+			"startNode": "93930686",
+			"aimNode": "53321488",
+			"point0": {
+				"x": "553",
+				"y": "221"
+			}
+		},
+		"link0": {
+			"linkId": "97374062",
+			"linkName": "",
+			"linkType": "0",
+			"startNode": "93930686",
+			"aimNode": "53321488",
+			"point0": {
+				"x": "553",
+				"y": "221"
+			},
+			"point1": {
+				"x": "709",
+				"y": "222"
+			},
+			"pointCounts": 2
+		},
+		"child1": {
+			"linkId": "577671592",
+			"linkName": "",
+			"linkType": "1",
+			"startNode": "93930686",
+			"aimNode": "21329673",
+			"point0": {
+				"x": "553",
+				"y": "221"
+			},
+			"point1": {
+				"x": "529",
+				"y": "210"
+			}
+		},
+		"link1": {
+			"linkId": "577671592",
+			"linkName": "",
+			"linkType": "1",
+			"startNode": "93930686",
+			"aimNode": "21329673",
+			"point0": {
+				"x": "553",
+				"y": "221"
+			},
+			"point1": {
+				"x": "529",
+				"y": "210"
+			},
+			"point2": {
+				"x": "370",
+				"y": "222"
+			},
+			"pointCounts": 3
+		},
+		"linkCounts": 2,
+		"childCounts": 0
+	},
+	"node4": {
+		"xPoint": "692",
+		"yPoint": "205",
+		"nodeId": "53321488",
+		"nodeName": "州市分公司分管领导",
+		"nodeType": "1",
+		"nodeRoleName": "分公司副总经理",
+		"child0": {
+			"linkId": "1003369013",
+			"linkName": "",
+			"linkType": "0",
+			"startNode": "53321488",
+			"aimNode": "90758566",
+			"point0": {
+				"x": "709",
+				"y": "222"
+			}
+		},
+		"link0": {
+			"linkId": "1003369013",
+			"linkName": "",
+			"linkType": "0",
+			"startNode": "53321488",
+			"aimNode": "90758566",
+			"point0": {
+				"x": "709",
+				"y": "222"
+			},
+			"point1": {
+				"x": "865",
+				"y": "222"
+			},
+			"pointCounts": 2
+		},
+		"child1": {
+			"linkId": "212715787",
+			"linkName": "",
+			"linkType": "1",
+			"startNode": "53321488",
+			"aimNode": "21329673",
+			"point0": {
+				"x": "709",
+				"y": "222"
+			},
+			"point1": {
+				"x": "660",
+				"y": "178"
+			}
+		},
+		"link1": {
+			"linkId": "212715787",
+			"linkName": "",
+			"linkType": "1",
+			"startNode": "53321488",
+			"aimNode": "21329673",
+			"point0": {
+				"x": "709",
+				"y": "222"
+			},
+			"point1": {
+				"x": "660",
+				"y": "178"
+			},
+			"point2": {
+				"x": "370",
+				"y": "222"
+			},
+			"pointCounts": 3
+		},
+		"linkCounts": 2,
+		"childCounts": 0
+	},
+	"node5": {
+		"xPoint": "848",
+		"yPoint": "205",
+		"nodeId": "90758566",
+		"nodeName": "计划部项目经理审批",
+		"nodeType": "1",
+		"nodeRoleName": "计划部项目经理",
+		"child0": {
+			"linkId": "2121695522",
+			"linkName": "",
+			"linkType": "0",
+			"startNode": "90758566",
+			"aimNode": "14467124",
+			"point0": {
+				"x": "865",
+				"y": "222"
+			}
+		},
+		"link0": {
+			"linkId": "2121695522",
+			"linkName": "",
+			"linkType": "0",
+			"startNode": "90758566",
+			"aimNode": "14467124",
+			"point0": {
+				"x": "865",
+				"y": "222"
+			},
+			"point1": {
+				"x": "1013",
+				"y": "222"
+			},
+			"pointCounts": 2
+		},
+		"child1": {
+			"linkId": "544543706",
+			"linkName": "",
+			"linkType": "1",
+			"startNode": "90758566",
+			"aimNode": "21329673",
+			"point0": {
+				"x": "865",
+				"y": "222"
+			},
+			"point1": {
+				"x": "789",
+				"y": "114"
+			}
+		},
+		"link1": {
+			"linkId": "544543706",
+			"linkName": "",
+			"linkType": "1",
+			"startNode": "90758566",
+			"aimNode": "21329673",
+			"point0": {
+				"x": "865",
+				"y": "222"
+			},
+			"point1": {
+				"x": "789",
+				"y": "114"
+			},
+			"point2": {
+				"x": "370",
+				"y": "222"
+			},
+			"pointCounts": 3
+		},
+		"linkCounts": 2,
+		"childCounts": 0
+	},
+	"node6": {
+		"xPoint": "996",
+		"yPoint": "205",
+		"nodeId": "14467124",
+		"nodeName": "结束",
+		"nodeType": "5",
+		"linkCounts": 0,
+		"childCounts": 0
+	}
+}

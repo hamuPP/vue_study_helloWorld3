@@ -5,78 +5,41 @@
   <title>Title</title>
   <link rel="stylesheet" href="./css/common.css" charset="UTF-8" type="text/css">
   <link rel="stylesheet" type="text/css" href="./css/grapheditor.css">
-  <style type="text/css">
-    body {
-      overflow: hidden;
-    }
-
-    div.picker {
-      z-index: 10007;
-    }
-
-    .geSidebarContainer .geTitle input {
-      font-size: 8pt;
-      color: #606060;
-    }
-
-    .geBlock {
-      z-index: -3;
-      margin: 100px;
-      margin-top: 40px;
-      margin-bottom: 30px;
-      padding: 20px;
-    }
-
-    .geBlock h1, .geBlock h2 {
-      margin-top: 0px;
-      padding-top: 0px;
-    }
-
-    .geEditor ::-webkit-scrollbar {
-      width: 14px;
-      height: 14px;
-    }
-
-    .geEditor ::-webkit-scrollbar-track {
-      background-clip: padding-box;
-      border: solid transparent;
-      border-width: 1px;
-    }
-
-    .geEditor ::-webkit-scrollbar-corner {
-      background-color: transparent;
-    }
-
-    .geEditor ::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, .1);
-      background-clip: padding-box;
-      border: solid transparent;
-      border-radius: 10px;
-    }
-
-    .geEditor ::-webkit-scrollbar-thumb:hover {
-      background-color: rgba(0, 0, 0, .4);
-    }
-
-    .geTemplate {
-      border: 1px solid transparent;
-      display: inline-block;
-      _display: inline;
-      vertical-align: top;
-      border-radius: 3px;
-      overflow: hidden;
-      font-size: 14pt;
-      cursor: pointer;
-      margin: 5px;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="./css/editor.css">
 </head>
 <body>
-
+<div class="my-tree" id="myTree">
+  <ul class="root-node">
+    <li data-id="1">
+      <span class="icon">+</span><span class="text">aaa</span></li>
+    <li data-id="1">bbb</li>
+    <li data-id="1">cccc
+      <ul>
+        <li data-id="1">ccc_1</li>
+        <li data-id="1">ccc_2</li>
+        <li data-id="1">ccc_3</li>
+      </ul>
+    </li>
+  </ul>
+</div>
 </body>
+<!--<script type="text/javascript" src="./js/require.js"></script>-->
+<script src="./js/urlMapping.js"></script>
 <script src="./js/language.js"></script>
+<script src="./js/varsSetting.js"></script>
+<script src="./js/formateJson.js"></script>
+<script src="./js/myWork.js"></script>
+<script src="./js/siderBar.js"></script>
+
 <script src="./js/app.min.js"></script>
 <script>
   App.main();
 </script>
+<!--<script>-->
+  <!--document.addEventListener('click', function(){-->
+    <!--console.log('doc clicked');-->
+    <!--var eles = document.getElementsByClassName('org-select-tree');-->
+    <!--console.log(eles)-->
+  <!--})-->
+<!--</script>-->
 </html>

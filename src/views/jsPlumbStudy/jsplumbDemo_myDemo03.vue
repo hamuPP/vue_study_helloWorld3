@@ -24,7 +24,7 @@
              @mouseover="showInfo(it)"
              @mouseout="hideInfo(it)">
           <span class="flow-icon iconfont" :class="getNodeIcon(it)"></span>
-          <span class="flow-text"  :style="getNodeTextStyle(it.nodeName)">{{it.nodeName}}</span>
+          <span class="flow-text" :style="getNodeTextStyle(it.nodeName)">{{it.nodeName}}</span>
 
         </div>
 
@@ -55,6 +55,18 @@
         nodeInfoVisible: false,//
         nodeInfoStyleObj: {},
         currentHoveredNode: {},// 当前鼠标悬浮的节点的信息
+        //设置流程图的宽度
+        initWidth: 40,
+        //设置流程图的高度
+        intiHeight: 40,
+        //节点x坐标到图形左边框的距离
+        toLeft: Math.floor(1 / 3 * this.initWidth),
+        //节点x坐标到图形右边框的距离
+        toRight: Math.floor(2 / 3 * this.initWidth),
+        //节点y坐标距离图形上边框的距离
+        toTop: Math.floor(1 / 3 * this.intiHeight),
+        //节点y坐标距离图形下边框的距离
+        toBotom: Math.floor(2 / 3 * this.intiHeight),
         //流程图距离（0,0）点的默认位置
         chartInitX: 30,
         chartInitY: 60,
@@ -68,59 +80,15 @@
       this.getDataList();
     },
     mounted() {
-      // 初始化jsPlumb实例
-      this.initJsPlumbInstance();
+
     },
     watch: {
       dataList() {
         // 整理出连线的关系，现在是随便搞的，后面当确定业务逻辑后需要重写
         // 初始化我的流程图
-        this.$nextTick(() => {
-          // 放在nextTick之后，保证在页面渲染完之后再渲染流程图
-          this.initMyJsplumb();
-        });
       }
     },
     methods: {
-      // 初始化jsPlumb实例
-      initJsPlumbInstance() {
-        this.jsPlumb = jsplum.jsPlumb.getInstance({
-          Container: 'container', // 选择器id
-          Connector: ['Straight'], // 要使用的默认连接器的类型：直线，折线，曲线等
-          // connector: ['Flowchart', { gap: 10, cornerRadius: 5, alwaysRespectStubs: true}],  // 连接线的样式种类有[Bezier],[Flowchart],[StateMachine ],[Straight ]
-          // connector: ['Bezier'],  // 连接线的样式种类有[Bezier],[Flowchart],[StateMachine ],[Straight ]
-          // connector: this.todo(),  // 连接线的样式种类有[Bezier],[Flowchart],[StateMachine ],[Straight ]
-          // DrapOptions: {cursor: 'crosshair', zIndex: 2000},
-          EndpointStyle: {radius: 0.11, fill: '#fff'},// 使端点不可见
-        },);
-      },
-
-      initMyJsplumb() {
-        const that = this;
-        let instance = this.jsPlumb;
-        let connectionList = this.connectionList;
-        instance.ready(function () {
-          connectionList.forEach(it => {
-            instance.connect({
-              source: it.source,
-              target: it.target,
-              anchor: "Continuous",
-              overlays: [['Arrow', {
-                width: 12,
-                length: 10,
-                location: 1,
-                strokeWidth: 4,
-                paintStyle: {
-                  stroke: 'lightgray',// 箭头的颜色，根据节点的状态来改
-                  fill: 'lightgray',
-                }
-              }
-              ]],// 设置箭头
-              paintStyle: {stroke: that.getLineColor(it, it), strokeWidth: 3},// 设置连接线的样式：比如粗细、颜色
-            });
-          })
-        });
-      },
       getNodeIcon(data) {
         let cls = 'icon-jurassic_start';// 默认样式
         let nodeType = data.nodeType;
@@ -133,7 +101,7 @@
         } else if (nodeType == 1) {
           if (data.nodeState == 'yes') {
             //已经审批
-            cls = "icon-jurassic_ing";// todo 这几个找几个不同的图标
+            cls = "icon-jurassic_complete";// todo 这几个找几个不同的图标
           } else if (data.nodeState == 'no') {
             //当前审批
             cls = "icon-jurassic_ing";
@@ -153,9 +121,7 @@
         return clsList.join(' ')
       },
       // 设置节点的行内样式，这个主要是配置left top right bottom这些偏移量的
-      getNodeStyle(node, index){
-        debugger;
-
+      getNodeStyle(node) {
         let offSetPoint = this.offSetPoint;
         var adjustNodeX = node.xPoint - offSetPoint.offSetX;
         var adjustNodey = node.yPoint - offSetPoint.offSetY;
@@ -193,10 +159,10 @@
         }
         return color
       },
-      getNodeTextStyle(nodeName){
+      getNodeTextStyle(nodeName) {
         let sum = 0;
         let fontSize = 12;// 这里的字体宽度是16，如果后面改了宽度，这里也要改
-        console.log(nodeName, nodeName.length * fontSize/2)
+        console.log(nodeName, nodeName.length * fontSize / 2)
         return {
           left: '-' + nodeName.length * fontSize / 3 + 'px'
         }
@@ -206,6 +172,134 @@
         this.dataList = json;
         //获取流程图的偏移量
         this.offSetPoint = this.getOffSetXANDY4Chart(json);
+        this.drawLines();
+      },
+      drawLines() {
+        for (let i in this.dataList) {
+          let node = this.dataList[i];
+          this.drawLine(node);
+        }
+      },
+      drawLine(node) {
+        if (node.linkCounts && node.linkCounts > 0) {
+          var linkCounts = node.linkCounts * 1;
+          for (var i = 0; i < linkCounts; i++) {
+            var link = node["link" + i];
+            //画箭头和连线
+            var instance = this.drawArrow(link);
+            // //获取连线的填充颜色
+            // var linkColor = getLinkFillColor(link, node);
+            // //为联系填充颜色
+            // fillColor4Link(instance, linkColor);
+          }
+        }
+      },
+      //对连线的终点坐标进行调整
+      adjustLastPoint(obj) {
+        var x1 = obj.lastPoint.x;
+        var y1 = obj.lastPoint.y;
+        var x2 = obj.secondLastPoint.x;
+        var y2 = obj.secondLastPoint.y;
+        var x = 0;
+        var y = 0;
+        if (x2 < x1 && y1 == y2) {
+          //从左到右
+          y = y1;
+          x = x1 - this.toLeft - 5;
+        } else if (x2 > x1 && y1 == y2) {
+          //从右边到左边
+          y = y1;
+          x = x1 * 1 + this.toRight;
+        } else if (x1 == x2 && y1 > y2) {
+          //垂直向下
+          x = x1;
+          y = y1 - this.toTop;
+        } else if (x1 == x2 && y1 < y2) {
+          //垂直向上
+          x = x1;
+          y = y1 * 1 + this.toBotom;
+        }
+        else {
+          if (Math.abs(x1 - x2) <= Math.abs(y1 - y2)) {
+            //x一定
+            x = x1;
+            if (y1 - y2 > 0) {
+              //点在上方
+              y = y1 * 1 - this.toTop - 5;
+            } else {
+              //点在下方
+              y = y1 * 1 + this.toBotom;
+            }
+          } else {
+            //y一定
+            y = y1;
+            if (x1 - x2 > 0) {
+              //点在左方
+              x = x1 - this.toLeft - 5;
+            } else {
+              //点在右方
+              x = x1 * 1 + this.toRight
+            }
+          }
+        }
+        //终点坐标
+        var newLastPoint = {
+          lastPointX: x,
+          lastPointY: y
+        };
+        // delete x; todo 注释掉，报错了
+        // delete y;
+        return newLastPoint;
+      },
+
+
+      //组装连线及箭头信息
+      getArrow(obj, size) {
+        let offSetPoint = this.offSetPoint;
+        var pointCounts = obj.pointCounts;
+        var lastSecondPoint = obj["point" + (pointCounts - 2)];
+        var lastPoint = obj["point" + (pointCounts - 1)];
+
+        var param = {
+          lastPoint: lastPoint,
+          secondLastPoint: lastSecondPoint
+        };
+        //调整连线的终点坐标
+        var newLastPoint = this.adjustLastPoint(param);
+        lastPoint.x = newLastPoint.lastPointX - offSetPoint.offSetX;
+        lastPoint.y = newLastPoint.lastPointY - offSetPoint.offSetY;
+
+        // var angle = Raphael.angle((lastSecondPoint.x - offSetPoint.offSetX), (lastSecondPoint.y - offSetPoint.offSetY), lastPoint.x, lastPoint.y);//得到两点之间的角度
+        // var a45 = Raphael.rad(angle - 45);//角度转换成弧度
+        // var a45m = Raphael.rad(angle + 45);
+        // todo 没有
+        var angle = 0;
+        var a45 = 0;
+        var a45m = 0;
+
+        var x2a = Math.floor(lastPoint.x * 1 + Math.cos(a45) * size);
+        var y2a = Math.floor(lastPoint.y * 1 + Math.sin(a45) * size);
+        var x2b = Math.floor(lastPoint.x * 1 + Math.cos(a45m) * size);
+        var y2b = Math.floor(lastPoint.y * 1 + Math.sin(a45m) * size);
+
+        //构建路径
+        var mapPath = "M,";
+
+        for (var i = 0; i < pointCounts - 1; i++) {
+          var point = obj["point" + i];
+          mapPath += (point.x - offSetPoint.offSetX) + "," + (point.y - offSetPoint.offSetY) + ",L,"
+        }
+        mapPath += lastPoint.x + "," + lastPoint.y + "," + x2a + "," + y2a + "," + "M," + lastPoint.x + "," + lastPoint.y + ",L," + x2b + "," + y2b;
+        var result = mapPath.split(",");
+        return result;
+      },
+      // 画箭头的方法
+      drawArrow(obj) {
+        var instance = {};
+        var path1 = this.getArrow(obj, 8);
+        debugger;
+        // instance.arrPath = this.path(path1);
+        return instance;
       },
       // 获取悬浮节点的div元素。
       getclickedDivElement(ele) {
@@ -236,7 +330,7 @@
       asc(a, b) {
         return a - b;
       },
-      generateConnectionList(linkCounts, node){
+      generateConnectionList(linkCounts, node) {
         let list = [];
         for (let l = 0; l < linkCounts; l++) {
           let link = node["link" + l];
@@ -250,9 +344,7 @@
       },
       // 整理节点的坐标，以及整理出连线的关系
       getOffSetXANDY4Chart(source) {
-        let newConnectionList = [];
         //存储流程图中所有的x坐标
-        debugger;
         let xArray = [];
         //存储流程图中所有的y坐标
         let yArray = [];
@@ -266,7 +358,6 @@
             ++index;
             let linkCounts = node.linkCounts;
             if (linkCounts && linkCounts > 0) {
-              newConnectionList = newConnectionList.concat(this.generateConnectionList(linkCounts, node));
               //获取到节点下所有连线的坐标
               for (let l = 0; l < linkCounts; l++) {
                 let link = node["link" + l];
@@ -287,8 +378,6 @@
               }
             }
           }
-          debugger;
-          this.connectionList = newConnectionList;
         }
 
         xArray.sort(this.asc);
@@ -367,7 +456,8 @@
     line-height: 30px;
     font-size: 20px;
   }
-  .flow-text{
+
+  .flow-text {
     position: absolute;
     white-space: nowrap;
     /* left: -10px; */

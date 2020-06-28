@@ -1,0 +1,372 @@
+body {
+	overflow: hidden;
+}
+
+div.picker {
+	z-index: 10007;
+}
+
+.geSidebarContainer .geTitle input {
+	font-size: 8pt;
+	color: #606060;
+}
+
+.geBlock {
+	z-index: -3;
+	margin: 100px;
+	margin-top: 40px;
+	margin-bottom: 30px;
+	padding: 20px;
+}
+
+.geBlock h1, .geBlock h2 {
+	margin-top: 0px;
+	padding-top: 0px;
+}
+
+.geEditor ::-webkit-scrollbar {
+	width: 14px;
+	height: 14px;
+}
+
+.geEditor ::-webkit-scrollbar-track {
+	background-clip: padding-box;
+	border: solid transparent;
+	border-width: 1px;
+}
+
+.geEditor ::-webkit-scrollbar-corner {
+	background-color: transparent;
+}
+
+.geEditor ::-webkit-scrollbar-thumb {
+	background-color: rgba(0, 0, 0, .1);
+	background-clip: padding-box;
+	border: solid transparent;
+	border-radius: 10px;
+}
+
+.geEditor ::-webkit-scrollbar-thumb:hover {
+	background-color: rgba(0, 0, 0, .4);
+}
+
+.geTemplate {
+	border: 1px solid transparent;
+	display: inline-block;
+	_display: inline;
+	vertical-align: top;
+	border-radius: 3px;
+	overflow: hidden;
+	font-size: 14pt;
+	cursor: pointer;
+	margin: 5px;
+}
+/* 左侧的搜索框的样式 */
+.sidebar-searchbox{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	overflow: hidden;
+	width: 100%;
+	padding: 14px 8px 0;
+}
+.sidebar-searchbox .sidebar-inputbox{
+	white-space: nowrap;
+	text-overflow: clip;
+	padding-bottom: 8px;
+	cursor: default;
+}
+.inputbox-inner-input{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	font-size: 12px;
+	overflow: hidden;
+	border: 1px solid rgb(213, 213, 213);
+	border-radius: 4px;
+	width: 100%;
+	outline: none;
+	padding: 6px 20px 6px 6px;
+}
+.geFormatSection{
+	padding: 12px 0px 12px 18px;
+}
+.right-tool-block{
+	white-space: nowrap;
+	color: rgb(112, 112, 112);
+	text-align: left;
+	cursor: default;
+}
+/* 上方的菜单栏 */
+.geMenubarContainer{
+	top: 0;
+	left: 0;
+	right: 0;
+}
+/* 右侧的栏 */
+.geSidebarContainer.geFormatContainer{
+	right: 0;
+	z-index: 1;
+}
+/*上方的工具栏*/
+.toolbar-container{
+	left: 0;
+	right: 0;
+}
+.geFooterContainer{
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+/* 右侧的绘图面板上的关闭按钮*/
+.close-btn{
+	position: absolute;
+	display: block;
+	right: 0;
+	top: 8px;
+	cursor: pointer;
+	margin-top: 1px;
+	margin-right: 17px;
+	border:1px solid transparent;
+	padding: 1px;
+	opacity: 0.5;
+}
+/*// 右侧列的头部*/
+.right-col-head{
+	width: 100%;
+	cursor: pointer;
+	/*border-left-width: 1px;*/
+	border:1px solid #dadce0;
+
+	text-align: center;
+	font-weight: bold;
+	padding-top: 8px;
+	font-size: 13px;
+	display: inline-block;
+	height: 25px;
+	overflow: hidden;
+}
+/* '保存绘图到'的弹窗的内容包裹元素 */
+.save-device-setting{
+	text-align: center;
+	white-space: nowrap;
+	padding-top: 0px;
+	padding-bottom: 20px;
+	max-height: 100%;
+	overflow-y: auto;
+}
+.save-device-setting-container{
+	border:1px solid #d3d3d3;
+	border-width: 1px 0 1px 0;
+	padding: 12px 0;
+}
+.save-device-setting-title{
+	font-size: 16pt;
+	padding: 4px 0px 16px;
+	margin: 0px;
+	color: gray;
+}
+
+.chart-name-wrapper{
+	position: absolute;
+	right: 120px;
+	left: 60px;
+	top: 9px;
+	height: 26px;
+	display: block;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.chart-name-wrapper > .geItem{
+	padding: 2px 8px;
+	display: inline;
+	font-size: 18px;
+	white-space: nowrap;
+}
+/*上方的菜单栏*/
+.geMenubar{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	position: absolute;
+	padding-left: 59px;
+	top: 34px;
+}
+.submit-button{
+	padding: 6px 6px 6px 9px;
+	display: inline-block;
+	cursor: pointer;
+}
+.submit-button:hover{
+	background: #eee;
+	border-radius: 2px;
+}
+
+/* 编辑数据的弹窗 */
+.data-setting-dialog{
+	font-family: Microsoft YaHeiHelvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,SimSun,sans-serif;
+	font-size: 12px;
+}
+.data-setting-dialog-body{
+	position: absolute;
+	left: 10px;
+	right: 10px;
+	overflow-y: auto;
+	top: 30px;
+	bottom: 80px;
+}
+
+.data-setting-dialog .content-table {
+	width: 100%;
+}
+.data-setting-dialog .content-table tbody tr{
+	display: inline-block;
+}
+
+.data-setting-dialog .content-table input {
+	font-size: 12px;
+	font-family: Microsoft YaHeiHelvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,SimSun,sans-serif;
+
+}
+.data-setting-dialog .value-box{
+	/*width: 100%;*/
+	text-align: center;
+}
+
+.data-setting-dialog .textarea-group{
+	position: relative;
+	padding-right: 20px;
+	box-sizing: border-box;
+	width: 100%;
+}
+.data-setting-dialog .del {
+	position: absolute;
+	right: 0;
+	top: 0;
+	padding: 0 5px;
+	cursor: pointer;
+}
+.data-setting-dialog .del:hover{
+	background: #b5d2fc;
+}
+.group-w{
+	position: relative;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	border: 1px  solid #874a9c;
+	margin: 0 0 10px;
+	padding: 5px;
+	width: 100%;
+}
+.group-w:nth-child(4){ /*人员定义的*/
+	height: 200px;
+}
+
+.group-w-title{
+	font-size: 14px;
+	font-weight: bold;
+	background: rgba(77, 144, 254, 0.29);
+	margin: 0;
+	padding: 5px 0 5px 10px;
+	border-left: 2px solid #3b73af;
+}
+.group-w .top-tools{
+	position: absolute;
+	right: 3px;
+	top: 3px;
+}
+
+.group-w .top-tools .toolbtn{
+	cursor: pointer;
+	padding: 5px;
+	background: #fff;
+	border: 1px solid #dcdcdc;
+}
+.group-w .top-tools .toolbtn:hover{
+	background: #b5d2fc;
+}
+
+.loading-text{
+	position: absolute;
+	white-space: nowrap;
+	background: rgb(75, 66, 67);
+	color: white;
+	font-size: 9pt;
+	padding: 6px 10px;
+	z-index: 2E9;
+	left: 630px;
+	top: 249.5px;
+	border-radius: 6px;
+	transform: translate(-50%, -50%);
+	box-shadow: rgb(221, 221, 221) 2px 2px 3px 0px;
+}
+
+.head-search-box{
+	display: inline-block;
+}
+.head-search-box .search-btn{
+	cursor: pointer;
+}
+
+.dialog-bg{
+	position: absolute;
+	right: 0;
+}
+
+.geDialog.my-edi1{
+	padding: 5px;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+	height: 800px;
+	top: 60px;
+	width: 100%;
+}
+
+.geDialog.my-edi1 .data-setting-dialog-body{
+	overflow-y: visible; /* 改为默认值 */
+}
+.data-setting-dialog-body + .btns{
+	position:absolute;left:30px;right:30px;text-align:right;
+	top: 5px;
+	height:40px;
+}
+
+.my-tree{
+	display: none;
+}
+.geSidebarContainer.geFormatContainer{
+	top: 103px;
+	bottom: 0px;
+	width: 240px; /* 默认240*/
+}
+
+.geFormatContainer .input[readonly="readonly"]{
+	outline: none;
+}
+
+.geFormatContainer .org-select-tree{
+	position: absolute;
+	top: 20px;
+	left:0;
+	min-width: 40px;
+	border: 1px solid #ccc;
+	background: #fff;
+}
+.geFormatContainer .org-select-tree ul {
+	list-style:none;
+}
+
+.geFormatContainer .org-select-tree li{
+	cursor: pointer;
+}
+.geFormatContainer .org-select-tree li:hover {
+	background: #f2c6ff;
+}
+.geFormatContainer .org-select-tree li .icon{
+	padding: 3px;
+}
+.geFormatContainer .org-select-tree li .text {
+	padding: 3px;
+}

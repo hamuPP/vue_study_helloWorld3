@@ -2,9 +2,45 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <title>Title</title>
+  <style>
+    #diagramContainer {
+      padding: 20px;
+      width: 80%;
+      height: 200px;
+      border: 1px solid gray;
+    }
+
+    .item {
+      height: 80px;
+      width: 80px;
+      border: 1px solid blue;
+      float: left;
+    }
+  </style>
 </head>
 <body>
-$END$
+  <h1>这是照着js中文教程写的例子。是用引入script标签的方式来做的</h1>
+  <h2>基础例子：连接2个点88888</h2>
+  <div id="diagramContainer">
+    <div id="item_left" class="item"></div>
+    <div id="item_right" class="item" style="margin-left:50px;"></div>
+  </div>
+  <script src="https://cdn.bootcss.com/jsPlumb/2.6.8/js/jsplumb.min.js"></script>
+  <h2>
+    ……
+  </h2>
 </body>
+
+<script>
+  /* global jsPlumb */
+  jsPlumb.ready(function () {
+    jsPlumb.setContainer('diagramContainer');
+    jsPlumb.connect({
+      source: 'item_left',
+      target: 'item_right',
+      endpoint: 'Dot'
+    })
+  })
+</script>
 </html>

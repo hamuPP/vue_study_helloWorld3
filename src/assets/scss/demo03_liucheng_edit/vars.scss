@@ -1,0 +1,13 @@
+//整个项目的样式中的公共变量统一管理
+$baseFontSize:12px;
+$hundredPercent:100%;
+$commonColor:#239ce9;
+$whiteColor:#ffffff;
+$blackColor:#000000;
+$greenColor: #67c23a;
+
+@mixin boxSizingBorderbox{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}

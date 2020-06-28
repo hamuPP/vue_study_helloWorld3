@@ -1,0 +1,74 @@
+/*重写elementui的样式*/
+.el-input--mini .el-input__inner{
+	height: 22px;
+	line-height: 22px;
+}
+.el-input--mini .el-input__icon{
+	line-height: 22px;
+
+}
+.node-attributes-box {
+	position: relative;
+	border: 1px solid red;
+	min-height: 300px;
+	background: #cebbea;
+	font-size: 12px;
+}
+
+.node-attributes-box .node-attributes-inner {
+	/*position: absolute;*/
+	/*top: 0;*/
+	/*left: 0;*/
+	width: 100%;
+	min-height: 200px;
+}
+
+.node-attributes-box .buttons-group {
+	/*position: absolute;*/
+	/*left: 0;*/
+	/*bottom: 30px;*/
+	margin: 10px 0;
+	width: 100%;
+	text-align: right;
+	height: 40px;
+}
+
+.node-attributes-box .my-node-attributes-form{
+	width: 100%;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 0 5px 5px;
+}
+
+.my-node-attributes-form *{
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+.node-attributes-box .display-id{
+	background: pink;
+	display: none; /* 这是画图软件自带的显示ID的地方，这里隐藏掉，不给用户看*/
+}
+.node-attributes-box .form-item{
+	margin: 0 0 5px;
+}
+.node-attributes-box .form-item__label{
+	width: 80px;
+	float: left;
+	text-align: right;
+	padding: 0 5px 0 0;
+}
+.node-attributes-box  .form-item__content{
+	margin-left: 80px;
+	position: relative;
+}
+
+.node-attributes-box .front-id-label{
+	width: 30%;
+}
+.node-attributes-box .front-id{
+	width: 80%;
+	text-align: center
+}

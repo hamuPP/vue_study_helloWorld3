@@ -3,8 +3,6 @@
 */
 <template>
   <div>
-    <!--<div id="paper" class="block"></div>-->
-    <!--<div id="paper2" class="block"></div>-->
     <div id="paper3" class="block">
       <div v-for="(it, index) in dataList"
            :key="index"
@@ -18,6 +16,14 @@
       >
         <span class="flow-icon iconfont" :class="getNodeIcon(it)"></span>
       </div>
+
+      <!-- 悬浮显示的信息-->
+      <div class="node-info-block top black" v-show="nodeInfoVisible" :style="nodeInfoStyleObj">
+        <div class="node-info-arrow"></div>
+        <div class="node-info-container">
+          {{currentHoveredNode.tipInfo}}
+        </div>
+      </div>
     </div>
   </div>
 
@@ -28,7 +34,7 @@
   import Raphael from 'raphael';
 
   export default {
-    name: "demo1",
+    name: "demo2",
     data() {
       return {
         raphael: null,
@@ -48,16 +54,15 @@
         chartInitX: 60,
         chartInitY: 60,
         offSetPoint: {},
-        dataList: {}
+        dataList: {},
+        nodeInfoStyleObj: {},
+        currentHoveredNode: {},// 当前鼠标悬浮的节点的信息
+        nodeInfoVisible: false,//
       }
     },
 
     mounted() {
-      debugger;
-      //检查此时的 toleft等值是
       this.setInitParams();// 设置初始参数：toLeft，toRight这些的
-      // this.initDemo1();
-      // this.initDemo2();
       this.initDemo3();
     },
     methods: {
@@ -69,18 +74,6 @@
         this.toTop = Math.floor(1 / 3 * this.intiHeight);
         //节点y坐标距离图形下边框的距离
         this.toBotom = Math.floor(2 / 3 * this.intiHeight);
-      },
-      initDemo1() {
-        var R = Raphael("paper", 400, 200);
-        var p = R.path('M0 0L100 0L50 80Z');
-
-        p.attr({"fill": "green", 'opacity': 0.8});
-      },
-      // 实例第二个图像
-      initDemo2() {
-        var R = Raphael("paper2", 400, 200);
-        var p = R.path('M0 0L100 0L50 80Z');
-        p.attr({"fill": "pink", 'opacity': 0.8});
       },
       getImageSource() {
         return json;
@@ -145,9 +138,7 @@
 
         return {
           offSetX: chartInitX,
-          offSetY: chartInitY,
-          // canvasWidth: xArray[xArray.length - 1] * 1 + initWidth - chartInitX,// todo 这两个值似乎没啥用
-          // canvasHeight: yArray[yArray.length - 1] * 1 + intiHeight - chartInitY // todo 这两个值似乎没啥用
+          offSetY: chartInitY
         };
       },
       //画节点间的连线
@@ -158,12 +149,41 @@
             var link = node["link" + i];
             //画箭头和连线
             var instance = this.drawArrow(link);
-            //获取连线的填充颜色
-            // var linkColor = getLinkFillColor(link, node);
+            // 获取连线的填充颜色
+            var linkColor = this.getLineColor(link, node);
             //为联系填充颜色
-            // fillColor4Link(instance, linkColor);
+            this.fillColor4Link(instance, linkColor);
           }
         }
+      },
+      // 设置连接线的颜色，现在没有node，后面整理一下数据格式
+      getLineColor(data, node) {
+        let color = 'lightgray';// 默认色
+        let linkType = data.linkType;
+        if (linkType == 1) {// 回退
+          color = '#00FF00'
+        } else if (linkType == 0) {
+          //如果是开始节点上的连线；判断是否流程已经启动
+          if (node.isBegin == "1") {
+            //开始节点(流程已经启动)
+            if (node.nodeType == 4) {
+              color = "#529d2f";
+            } else if (node.nodeState == 'yes') {
+              //几点审批完成
+              color = "#529d2f";
+            } else {
+              color = "#CACACA";
+            }
+          } else {
+            //开始节点(流程未启动)
+            if (node.nodeType == 4) {
+              color = "#529d2f";
+            } else {
+              color = "#CACACA";
+            }
+          }
+        }
+        return color
       },
       //画节点，并返回节点的集合
       drawImage(raphael, source) {
@@ -199,7 +219,6 @@
       drawArrow(obj) {
         var instance = {};
         var path1 = this.getArrow(obj, 8);
-        console.log('drawArrow')
         instance.arrPath = this.raphael.path(path1);
         return instance;
       },
@@ -236,7 +255,6 @@
         }
         mapPath += lastPoint.x + "," + lastPoint.y + "," + x2a + "," + y2a + "," + "M," + lastPoint.x + "," + lastPoint.y + ",L," + x2b + "," + y2b;
         var result = mapPath.split(",");
-        console.log(result)
         return result;
       },
       //对连线的终点坐标进行调整
@@ -247,7 +265,6 @@
         var y2 = obj.secondLastPoint.y;
         var x = 0;
         var y = 0;
-        debugger;
         if (x2 < x1 && y1 == y2) {
           //从左到右
           y = y1;
@@ -289,19 +306,15 @@
           }
         }
         //终点坐标
-        console.log(x, y)
         return {
           lastPointX: x,
           lastPointY: y
         };
-        // delete x;
-        // delete y; // todo 注释掉，似乎没必要啊2020年04月22日10:11:13
       },
-      //画节点.节点是div样式，不用svg画图
+      // 画节点.节点是div样式，不用svg画图
       drawNode(i, node, raphael) {
         let offSetPoint = this.offSetPoint
         //获取节点类型
-        // var imageSrc = "/epms/theme/images/liucheng/" + getNodeImageSrc(node); todo 这个方法不需要了，改成获取icon的方法
         //经过挪动后的node的新的位置
         var adjustNodeX = node.xPoint - offSetPoint.offSetX;
         var adjustNodey = node.yPoint - offSetPoint.offSetY;
@@ -310,19 +323,6 @@
           x: adjustNodeX * 1,
           y: adjustNodey * 1
         });
-        // 不采用svg画图了
-        // var imageNode = raphael.image(imageSrc, adjustNodeX * 1, adjustNodey * 1, this.initWidth, this.intiHeight);
-        //为节点添加动作
-
-        //    todo 悬浮显示详情的方法， 改成我的版本的
-        // if (node.nodeState) {
-        //   imageNode.mouseover(function () {
-        //     showNodeInfo(imageNode, node);
-        //   });
-        //   imageNode.mouseout(function () {
-        //     closePhotoInfo();
-        //   });
-        // }
       },
       //画审批角色名称
       drawNodeText(obj, raphael) {
@@ -332,8 +332,21 @@
       // 设置节点的样式
       getNodeCls(it) {
         let clsList = [];
+        // 是否可悬浮
         if (it.nodeState) {
           clsList.push('hoverable')
+        }
+        //是否显示灰色
+        if(it.nodeType == 1){
+          //已经审批
+          if(it.nodeState == 'yes'){
+            clsList.push('done')
+          }
+          // 未审批
+          if(!it.nodeState){
+            clsList.push('undo')
+          }
+
         }
         return clsList.join(' ')
       },
@@ -356,7 +369,7 @@
         } else if (nodeType == 1) {
           if (data.nodeState == 'yes') {
             //已经审批
-            cls = "icon-jurassic_ing";// todo 这几个找几个不同的图标
+            cls = "icon-jurassic_complete";
           } else if (data.nodeState == 'no') {
             //当前审批
             cls = "icon-jurassic_ing";
@@ -367,6 +380,40 @@
         }
         return cls;
       },
+      // 获取悬浮节点的div元素。
+      getclickedDivElement(ele) {
+        let divElement = ele;
+        if (divElement.dataset.type !== 'flowNode') {
+          divElement = divElement.parentNode;
+        }
+        return divElement;
+      },
+      showInfo(data) {
+        if (data.nodeState) {
+          // 获取到当前点击的节点div元素？
+          this.currentHoveredNode = data;
+          let clickedDivElement = this.getclickedDivElement(event.target);
+          debugger;
+          //经过挪动后的node的新的位置
+          var adjustNodeX = data.xPoint - this.offSetPoint.offSetX;
+          var adjustNodey = data.yPoint - this.offSetPoint.offSetY;
+
+          this.nodeInfoStyleObj = {
+            left: clickedDivElement.offsetLeft - clickedDivElement.offsetWidth / 2 + 'px',
+            top: clickedDivElement.offsetTop - 50 + 'px'// 悬浮框放在节点的上面
+            // left:adjustNodeX - 50 + 'px',
+            // top: adjustNodey - 50 + 'px'
+          };
+          this.nodeInfoVisible = true;
+        }
+      },
+      hideInfo() {
+        this.nodeInfoVisible = false;
+      },
+      //为连线填充颜色
+      fillColor4Link(instance, color) {
+        instance.arrPath.attr({fill: color, stroke: color, "fill-opacity": 0, "stroke-width": 2});
+      }
     }
   }
 </script>
@@ -383,7 +430,8 @@
   .item {
     width: 40px;
     height: 40px;
-    background: pink;
+    background: #b5d2fc;
+    border: 1px solid #619bef;
     position: absolute;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -392,7 +440,74 @@
     &.hoverable {
       cursor: pointer;
       &:hover {
-        color: red;
+        color: red !important;
+      }
+    }
+    &.done{
+      background: #67c23a;
+      border: 1px solid #5fb336;
+    }
+    &.undo{
+      background: #909399;
+      border:1px solid #82858a;
+    }
+  }
+
+  .flow-icon {
+    line-height: 40px;
+    font-size: 20px;
+    color: #fff;
+  }
+
+  .node-info-block {
+    position: absolute;
+    padding-top: 8px;
+    font-size: 14px;
+    color: #333;
+
+    .node-info-arrow {
+      left: 50%;
+      margin-left: -5px;
+      top: 3px;
+      border-width: 0 5px 5px;
+      border-color: transparent;
+      border-bottom-color: hsla(0, 0%, 85%, .5);
+      display: block;
+      width: 0;
+      height: 0;
+      position: absolute;
+      border-style: solid;
+    }
+    .node-info-container {
+      -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+      -moz-box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+      box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      padding: 7px;
+    }
+    // 黑底白字的配色
+    &.black {
+
+      .node-info-container {
+        color: #fff;
+        background-color: rgba(70, 76, 91, .9);
+        font-size: 12px;
+      }
+      // 小三角
+      .node-info-arrow {
+        border-width: 5px 5px 0;
+        border-top-color: rgba(70, 76, 91, .9);
+      }
+    }
+    // 悬浮在上方的样式。
+    &.top {
+      padding: 5px 0 8px;
+      // 小三角
+      .node-info-arrow {
+        top: auto; // 取消掉默认的top的值
+        bottom: 3px;
       }
     }
   }

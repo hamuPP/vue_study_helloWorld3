@@ -1,40 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<mxfile host="localhost" modified="2020-05-12T01:52:05.313Z" agent="5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Safari/537.36" version="13.0.1" etag="G-J-j4cvGh4rdGT5rUxm" type="device">
-  <diagram id="0" name="第 1 页">
-    <mxGraphModel dx="786" dy="142" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
-      <root>
-        <mxCell id="0" />
-        <mxCell id="1" parent="0" />
-        <mxCell id="v94Mt_HmdupTfH-hHV7U-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="_qqMNqDcDc5f0k_cYbmv-1" target="v94Mt_HmdupTfH-hHV7U-1">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="_qqMNqDcDc5f0k_cYbmv-1" value="" style="image;html=1;labelBackgroundColor=#ffffff;image=images/iconImg/ic_lc1.png" parent="1" vertex="1">
-          <mxGeometry x="20" y="70" width="40" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="_qqMNqDcDc5f0k_cYbmv-2" value="" style="image;html=1;labelBackgroundColor=#ffffff;image=images/iconImg/ic_lc6.png" parent="1" vertex="1">
-          <mxGeometry x="480" y="70" width="40" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="v94Mt_HmdupTfH-hHV7U-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="v94Mt_HmdupTfH-hHV7U-1" target="_qqMNqDcDc5f0k_cYbmv-2">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <object label="" myKey="00000" myKey2="7777" myKey3="888" id="v94Mt_HmdupTfH-hHV7U-7">
-          <mxCell style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="v94Mt_HmdupTfH-hHV7U-1" target="_qqMNqDcDc5f0k_cYbmv-1">
-            <mxGeometry relative="1" as="geometry" />
-          </mxCell>
-        </object>
-        <mxCell id="v94Mt_HmdupTfH-hHV7U-1" value="" style="image;html=1;labelBackgroundColor=#ffffff;image=images/iconImg/ic_lc4.png" vertex="1" parent="1">
-          <mxGeometry x="270" y="70" width="40" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="v94Mt_HmdupTfH-hHV7U-4" value="测试A" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
-          <mxGeometry x="15" y="119" width="50" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="v94Mt_HmdupTfH-hHV7U-5" value="测试B" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
-          <mxGeometry x="265" y="119" width="50" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="v94Mt_HmdupTfH-hHV7U-6" value="测试C" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
-          <mxGeometry x="473" y="119" width="50" height="20" as="geometry" />
-        </mxCell>
-      </root>
-    </mxGraphModel>
-  </diagram>
+<mxfile host="localhost" modified="2020-05-21T10:46:10.141Z"
+		agent="5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.61 Safari/537.36"
+		etag="NF31A5t8rh1KSQR3175T" version="13.0.1" type="device">
+	<diagram id="56mie0M_ouUm7kLTb9Eh" name="第 1 页">
+		<mxGraphModel dx="786" dy="161" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1"
+					  page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+			<root>
+				<mxCell id="0"/>
+				<mxCell id="1" parent="0"/>
+				<td xmlns="http://www.w3.org/1999/xhtml"
+					节点信息="{&quot;children&quot;:[{&quot;name&quot;:&quot;name&quot;,&quot;zhName&quot;:&quot;名称&quot;,&quot;field&quot;:&quot;name&quot;,&quot;type&quot;:&quot;input&quot;,&quot;defaultValue&quot;:&quot;看看&quot;},{&quot;name&quot;:&quot;sequenceNumber&quot;,&quot;field&quot;:&quot;sequenceNumber&quot;,&quot;zhName&quot;:&quot;节点编号&quot;,&quot;type&quot;:&quot;input&quot;,&quot;defaultValue&quot;:&quot;1&quot;},{&quot;name&quot;:&quot;huiheguanxi&quot;,&quot;zhName&quot;:&quot;汇合关系&quot;,&quot;field&quot;:&quot;huiheguanxi&quot;,&quot;type&quot;:&quot;select&quot;,&quot;optionList&quot;:[{&quot;text&quot;:&quot;111&quot;,&quot;value&quot;:11},{&quot;text&quot;:&quot;222&quot;,&quot;value&quot;:22},{&quot;text&quot;:&quot;333&quot;,&quot;value&quot;:33},{&quot;text&quot;:&quot;444&quot;,&quot;value&quot;:44}],&quot;defaultValue&quot;:&quot;11&quot;},{&quot;name&quot;:&quot;renwuchaoshi&quot;,&quot;zhName&quot;:&quot;任务超时&quot;,&quot;field&quot;:&quot;renwuchaoshi&quot;,&quot;type&quot;:&quot;input&quot;,&quot;defaultValue&quot;:&quot;9&quot;},{&quot;name&quot;:&quot;renwucuiban&quot;,&quot;zhName&quot;:&quot;任务催办&quot;,&quot;field&quot;:&quot;renwucuiban&quot;,&quot;type&quot;:&quot;input&quot;,&quot;defaultValue&quot;:&quot;9&quot;},{&quot;name&quot;:&quot;renwuduban&quot;,&quot;zhName&quot;:&quot;任务督办&quot;,&quot;field&quot;:&quot;renwuduban&quot;,&quot;type&quot;:&quot;input&quot;,&quot;defaultValue&quot;:&quot;9&quot;},{&quot;name&quot;:&quot;renyuanchuandi&quot;,&quot;zhName&quot;:&quot;人员传递&quot;,&quot;field&quot;:&quot;renyuanchuandi&quot;,&quot;type&quot;:&quot;select&quot;,&quot;defaultValue&quot;:&quot;11&quot;,&quot;optionList&quot;:[{&quot;text&quot;:&quot;111&quot;,&quot;value&quot;:11},{&quot;text&quot;:&quot;222&quot;,&quot;value&quot;:22},{&quot;text&quot;:&quot;333&quot;,&quot;value&quot;:33},{&quot;text&quot;:&quot;444&quot;,&quot;value&quot;:44}]},{&quot;name&quot;:&quot;bingfaqidian&quot;,&quot;zhName&quot;:&quot;并发起点&quot;,&quot;field&quot;:&quot;bingfaqidian&quot;,&quot;type&quot;:&quot;select&quot;,&quot;defaultValue&quot;:&quot;11&quot;,&quot;optionList&quot;:[{&quot;text&quot;:&quot;111&quot;,&quot;value&quot;:11},{&quot;text&quot;:&quot;222&quot;,&quot;value&quot;:22},{&quot;text&quot;:&quot;333&quot;,&quot;value&quot;:33},{&quot;text&quot;:&quot;444&quot;,&quot;value&quot;:44}]},{&quot;name&quot;:&quot;morenchuliren&quot;,&quot;zhName&quot;:&quot;设置默认处理人节点(特殊用途)&quot;,&quot;field&quot;:&quot;morenchuliren&quot;,&quot;type&quot;:&quot;select&quot;,&quot;defaultValue&quot;:&quot;11&quot;,&quot;optionList&quot;:[{&quot;text&quot;:&quot;111&quot;,&quot;value&quot;:11},{&quot;text&quot;:&quot;222&quot;,&quot;value&quot;:22},{&quot;text&quot;:&quot;333&quot;,&quot;value&quot;:33},{&quot;text&quot;:&quot;444&quot;,&quot;value&quot;:44}]}]}"
+					实体定义="{&quot;children&quot;:[]}"
+					url定义="{&quot;children&quot;:[{&quot;name&quot;:&quot;basicURL&quot;,&quot;zhName&quot;:&quot;基础URL&quot;,&quot;field&quot;:&quot;basicURL&quot;,&quot;type&quot;:&quot;input&quot;,&quot;defaultValue&quot;:&quot;的顶顶顶顶顶&quot;},{&quot;name&quot;:&quot;daibanxianshi&quot;,&quot;zhName&quot;:&quot;待办显示&quot;,&quot;field&quot;:&quot;daibanxianshi&quot;,&quot;type&quot;:&quot;radio&quot;,&quot;radioList&quot;:[{&quot;value&quot;:1,&quot;text&quot;:&quot;显示&quot;},{&quot;value&quot;:2,&quot;text&quot;:&quot;不显示&quot;}],&quot;defaultValue&quot;:&quot;2&quot;},{&quot;name&quot;:&quot;quanxian&quot;,&quot;zhName&quot;:&quot;权限&quot;,&quot;field&quot;:&quot;quanxian&quot;,&quot;type&quot;:&quot;radio&quot;,&quot;radioList&quot;:[{&quot;value&quot;:1,&quot;text&quot;:&quot;可写&quot;},{&quot;value&quot;:2,&quot;text&quot;:&quot;只读&quot;}],&quot;defaultValue&quot;:&quot;1&quot;}]}"
+					id="1590057959517">
+					<div class="textarea-group">
+						<input type="text" style="width: 100%;"/>
+					</div>
+					<mxCell xmlns="" style="image;html=1;labelBackgroundColor=#ffffff;image=images/iconImg/ic_lc5.png"
+							vertex="1" parent="1">
+						<mxGeometry x="150" y="90" width="40" height="40" as="geometry"/>
+					</mxCell>
+				</td>
+			</root>
+		</mxGraphModel>
+	</diagram>
 </mxfile>
