@@ -95,7 +95,6 @@ Editor.pageCounter = 0;
 /**
  * Specifies if local storage should be used (eg. on the iPad which has no filesystem)
  */
-debugger;// mxClient没有？
 Editor.useLocalStorage = typeof(Storage) != 'undefined' && mxClient.IS_IOS;
 
 /**

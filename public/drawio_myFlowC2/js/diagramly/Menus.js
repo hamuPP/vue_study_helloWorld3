@@ -2114,13 +2114,6 @@
           }, parent);
         }
 
-        if (urlParams['confLib'] == '1') {
-          menu.addSeparator(parent);
-
-          menu.addItem(mxResources.get('confluenceCloud') + '...', null, function () {
-            editorUi.showRemotelyStoredLibrary(mxResources.get('libraries'));
-          }, parent);
-        }
       }));
     }
 

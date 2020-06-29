@@ -2432,16 +2432,12 @@
 				this.showSplash();
 			}
 		});
-	
+
+		debugger;
 		if (file != null)
 		{
 			try
 			{
-				// Workaround for delayed scroll repaint with min UI in Safari
-				if (mxClient.IS_SF && uiTheme == 'min')
-				{
-					this.diagramContainer.style.visibility = '';
-				}
 				
 				// Order is significant, current file needed for correct
 				// file format for initial save after starting realtime
@@ -2481,7 +2477,7 @@
 				{
 					this.editor.setStatus('');
 				}
-	
+	      debugger;
 				if (!this.editor.isChromelessView() || this.editor.editable)
 				{
 					this.editor.graph.selectUnlockedLayer();
@@ -2740,7 +2736,9 @@
 	/**
 	 * Hook for subclassers.
 	 */
-	EditorUi.prototype.restoreLibraries = function() { };
+	EditorUi.prototype.restoreLibraries = function() {
+	  debugger;
+  };
 
 	/**
 	 * Hook for subclassers.
@@ -12517,149 +12515,7 @@
 		this.editor.graph.setEnabled(true);
 		return allPagesTxt;
 	};
-	
-	EditorUi.prototype.showRemotelyStoredLibrary = function(title)
-	{
-		var selectedLibs = {};
-		var div = document.createElement('div');
-		div.style.whiteSpace = 'nowrap';
-		var graph = this.editor.graph;
-		
-		var hd = document.createElement('h3');
-		mxUtils.write(hd, mxUtils.htmlEntities(title));
-		hd.style.cssText = 'width:100%;text-align:center;margin-top:0px;margin-bottom:12px';
-		div.appendChild(hd);
 
-		var libsSection = document.createElement('div');
-		libsSection.style.cssText = 'border:1px solid lightGray;overflow: auto;height:300px';
-
-		libsSection.innerHTML = '<div style="text-align:center;padding:8px;"><img src="/images/spin.gif"></div>';
-		
-		var loadedLibs = {};
-		
-		try
-		{
-			var custLibs = mxSettings.getCustomLibraries();
-			
-			for (var j = 0; j < custLibs.length; j++)
-			{
-				var l = custLibs[j];
-				
-				if (l.substring(0, 1) == 'R')
-				{
-					var libDesc = JSON.parse(decodeURIComponent(l.substring(1)));
-					loadedLibs[libDesc[0]] = {
-						id: libDesc[0], 
-               			title: libDesc[1], 
-               			downloadUrl: libDesc[2]
-					};
-				}
-			}
-		}
-		catch(e){}
-
-		this.remoteInvoke('getCustomLibraries', null, null, function(libsList)
-		{
-			libsSection.innerHTML = '';
-			
-			if (libsList.length == 0)
-			{
-				libsSection.innerHTML = '<div style="text-align:center;padding-top:20px;color:gray;">' +
-					mxUtils.htmlEntities(mxResources.get('noLibraries')) + '</div>';
-			}
-			else
-			{
-				for (var i = 0; i < libsList.length; i++)
-				{
-					var lib = libsList[i];
-					
-					if (loadedLibs[lib.id])
-					{
-						selectedLibs[lib.id] = lib;
-					}
-					
-					var libCheck = this.addCheckbox(libsSection, lib.title, loadedLibs[lib.id]); 
-	
-					(function(lib2, check)
-					{
-						mxEvent.addListener(check, 'change', function()
-						{
-							if (this.checked)
-							{
-								selectedLibs[lib2.id] = lib2;
-							}
-							else
-							{
-								delete selectedLibs[lib2.id];
-							}
-						});
-					})(lib, libCheck)
-				}
-			}
-		}, mxUtils.bind(this, function(e)
-		{
-			libsSection.innerHTML = '';
-			var status = document.createElement('div');
-			status.style.padding = '8px';
-			status.style.textAlign = 'center';
-			mxUtils.write(status, mxResources.get('error') + ': ');
-			mxUtils.write(status, (e != null && e.message != null) ?
-				e.message : mxResources.get('unknownError'));
-			libsSection.appendChild(status);
-		}));
-
-		div.appendChild(libsSection);
-		
-		var dlg = new CustomDialog(this, div, mxUtils.bind(this, function()
-		{
-			this.spinner.spin(document.body, mxResources.get('loading'));
-			var pendingLibs = 0;
-			
-			for (var id in selectedLibs)
-			{
-				if (loadedLibs[id] != null) continue; //already loaded!
-				
-				pendingLibs++;
-				
-				(mxUtils.bind(this, function(lib)
-				{
-					this.remoteInvoke('getFileContent', [lib.downloadUrl], null, mxUtils.bind(this, function(libContent)
-					{
-						pendingLibs--;
-						
-						if (pendingLibs == 0) this.spinner.stop();
-						
-						try
-						{
-							this.loadLibrary(new RemoteLibrary(this, libContent, lib));
-						}
-						catch (e)
-						{
-							this.handleError(e, mxResources.get('errorLoadingFile'));
-						}
-					}), mxUtils.bind(this, function()
-					{
-						pendingLibs--;
-						
-						if (pendingLibs == 0) this.spinner.stop();
-						
-						this.handleError(null, mxResources.get('errorLoadingFile'));
-					}));
-				}))(selectedLibs[id]);
-			}
-			
-			for (var id in loadedLibs)
-			{
-				if (!selectedLibs[id]) //Removed
-				{
-					this.closeLibrary(new RemoteLibrary(this, null, loadedLibs[id])); //create a dummy library such that we can call closeLibrary
-				}
-			}
-			
-			if (pendingLibs == 0) this.spinner.stop();
-		}), null, null, 'https://desk.draw.io/support/solutions/articles/16000092763');
-		this.showDialog(dlg.container, 340, 375, true, true, null, null, null, null, true);
-	};
 	
 	//Remote invokation, currently limited to functions in EditorUi (and its sub objects) for security reasons
 	//White-listed functions and some info about it

@@ -20632,3 +20632,5 @@ mxCodecRegistry.register(function () {
   };
   return a
 }());
+
+window.testMe = 333;

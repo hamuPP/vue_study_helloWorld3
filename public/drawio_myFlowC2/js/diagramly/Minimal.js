@@ -1498,19 +1498,13 @@ EditorUi.initMinimalTheme = function()
 	var initialized = false;
 	
 	// ChromeApp has async local storage
-	if (uiTheme == 'min' && !initialized && !mxClient.IS_CHROMEAPP)
-	{
-		EditorUi.initMinimalTheme();
-		initialized = true;
-	}
-	
+
 	var uiInitTheme = EditorUi.initTheme;
 	
 	// For async startup like chromeos
-	EditorUi.initTheme = function()
-	{
+	EditorUi.initTheme = function() {
 		uiInitTheme.apply(this, arguments);
-		
+		debugger;
 		if (uiTheme == 'min' && !initialized)
 		{
 			this.initMinimalTheme();

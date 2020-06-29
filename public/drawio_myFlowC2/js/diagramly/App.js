@@ -353,139 +353,9 @@ App.getStoredMode = function()
 /**
  * Static Application initializer executed at load-time.
  */
-(function()
-{
-	if (!mxClient.IS_CHROMEAPP)
-	{
-		if (urlParams['offline'] != '1')
-		{
-			// Switches to dropbox mode for db.draw.io
-			if (window.location.hostname == 'db.draw.io' && urlParams['mode'] == null)
-			{
-				urlParams['mode'] = 'dropbox';
-			}
-			
-			App.mode = urlParams['mode'];
-		}
-			
-		if (App.mode == null)
-		{
-			// Stored mode overrides preferred mode
-			App.mode = App.getStoredMode();
-		}
-		
-		/**
-		 * Lazy loading backends.
-		 */
-		if (window.mxscript != null)
-		{
-			// Loads gapi for all browsers but IE8 and below if not disabled or if enabled and in embed mode
-			if (urlParams['embed'] != '1')
-			{
-				if (typeof window.DriveClient === 'function') {
-
-          if (urlParams['gapi'] != '0' && isSvgBrowser &&
-						(document.documentMode == null || document.documentMode >= 10))
-					{
-					  if (urlParams['chrome'] == '0' && (window.location.hash == null ||
-							window.location.hash.substring(0, 45) !== '#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D'))
-						{
-							// Disables loading of client
-							window.DriveClient = null;
-						}
-					}
-					else
-					{
-						// Disables loading of client
-						window.DriveClient = null;
-					}
-				}
-	
-				// Loads dropbox for all browsers but IE8 and below (no CORS) if not disabled or if enabled and in embed mode
-				// KNOWN: Picker does not work in IE11 (https://dropbox.zendesk.com/requests/1650781)
-				if (typeof window.DropboxClient === 'function')
-				{
-					if (urlParams['db'] != '0' && isSvgBrowser &&
-						(document.documentMode == null || document.documentMode > 9))
-					{
-						// Immediately loads client
-						if (App.mode == App.MODE_DROPBOX || (window.location.hash != null &&
-							window.location.hash.substring(0, 2) == '#D'))
-						{
-							mxscript(App.DROPBOX_URL);
-							
-							// Must load this after the dropbox SDK since they use the same namespace
-							mxscript(App.DROPINS_URL, null, 'dropboxjs', App.DROPBOX_APPKEY);
-						}
-						else if (urlParams['chrome'] == '0')
-						{
-							window.DropboxClient = null;
-						}
-					}
-					else
-					{
-						// Disables loading of client
-						window.DropboxClient = null;
-					}
-				}
-				
-				// Loads OneDrive for all browsers but IE6/IOS if not disabled or if enabled and in embed mode
-				if (typeof window.OneDriveClient === 'function')
-				{
-					if (urlParams['od'] != '0' && (navigator.userAgent == null ||
-						navigator.userAgent.indexOf('MSIE') < 0 || document.documentMode >= 10))
-					{
-						// Immediately loads client
-						if (App.mode == App.MODE_ONEDRIVE || (window.location.hash != null &&
-							window.location.hash.substring(0, 2) == '#W'))
-						{
-							mxscript(App.ONEDRIVE_URL);
-						}
-						else if (urlParams['chrome'] == '0')
-						{
-							window.OneDriveClient = null;
-						}
-					}
-					else
-					{
-						// Disables loading of client
-						window.OneDriveClient = null;
-					}
-				}
-				
-				// Loads Trello for all browsers but < IE10 if not disabled or if enabled and in embed mode
-				if (typeof window.TrelloClient === 'function')
-				{
-					if (urlParams['tr'] != '0' && isSvgBrowser &&
-							(document.documentMode == null || document.documentMode >= 10))
-					{
-						// Immediately loads client
-						if (App.mode == App.MODE_TRELLO || (window.location.hash != null &&
-							window.location.hash.substring(0, 2) == '#T'))
-						{
-							mxscript(App.TRELLO_JQUERY_URL);
-							mxscript(App.TRELLO_URL);
-						}
-						else if (urlParams['chrome'] == '0')
-						{
-							window.TrelloClient = null;
-						}
-					}
-					else
-					{
-						// Disables loading of client
-						window.TrelloClient = null;
-					}
-				}
-			}
-			
-			// Loads JSON for older browsers
-			if (typeof(JSON) == 'undefined')
-			{
-				mxscript('js/json/json2.min.js');
-			}
-		}
-	}
+(function() {
+  // 这个似乎没有必要？具体用到mode的地方似乎都写死是device？
+  App.mode = 'device';
 })();
 
 /**
@@ -505,54 +375,6 @@ App.main = function(callback, createUi)
 
 	
 	if (window.mxscript != null) {
-		// Runs as progressive web app if service workers are supported
-		try
-		{
-			if ('serviceWorker' in navigator && (/.*\.diagrams\.net$/.test(window.location.hostname) ||
-				/.*\.draw\.io$/.test(window.location.hostname) || urlParams['offline'] == '1'))
-			{
-				if (urlParams['offline'] == '0' || (urlParams['offline'] != '1' && urlParams['dev'] == '1'))
-				{
-					navigator.serviceWorker.getRegistrations().then(function(registrations)
-					{
-						for(var i = 0; i < registrations.length; i++)
-						{
-							registrations[i].unregister();
-						}
-					});
-				}
-				else
-				{
-					mxscript('js/shapes.min.js');
-					mxscript('js/stencils.min.js');
-					mxscript('js/extensions.min.js');
-		
-					// Use the window load event to keep the page load performant
-					window.addEventListener('load', function()
-					{
-						navigator.serviceWorker.register('/service-worker.js');
-					});
-				}
-			}
-		}
-		catch (e)
-		{
-			if (window.console != null)
-			{
-				console.error(e);
-			}
-		}
-		
-		// Loads Pusher API
-		if (('ArrayBuffer' in window) && !mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp &&
-			DrawioFile.SYNC == 'auto' && urlParams['embed'] != '1' && urlParams['local'] != '1' &&
-			(urlParams['chrome'] != '0' || urlParams['rt'] == '1') &&
-			urlParams['stealth'] != '1' && urlParams['offline'] != '1')
-		{
-			// TODO: Check if async loading is fast enough
-			mxscript(App.PUSHER_URL);
-		}
-		
 		// Loads plugins
 		if (urlParams['plugins'] != '0' && urlParams['offline'] != '1')
 		{
@@ -1181,136 +1003,6 @@ App.prototype.init = function() {
 	 */	
 	this.descriptorChangedListener = mxUtils.bind(this, this.descriptorChanged);
 
-
-
-	/**
-	 * Lazy-loading for individual backends
-	 */
-	if (urlParams['embed'] != '1' || urlParams['od'] == '1') {
-		/**
-		 * Creates onedrive client if all required libraries are available.
-		 */
-		var initOneDriveClient = mxUtils.bind(this, function()
-		{
-			if (typeof OneDrive !== 'undefined')
-			{
-				/**
-				 * Holds the x-coordinate of the point.
-				 */
-				this.oneDrive = new OneDriveClient(this);
-				
-				this.oneDrive.addListener('userChanged', mxUtils.bind(this, function()
-				{
-					this.updateUserElement();
-					this.restoreLibraries();
-				}));
-				
-				// Notifies listeners of new client
-				this.fireEvent(new mxEventObject('clientLoaded', 'client', this.oneDrive));
-			}
-			else if (window.DrawOneDriveClientCallback == null)
-			{
-				window.DrawOneDriveClientCallback = initOneDriveClient;
-			}
-		});
-
-		initOneDriveClient();
-	}
-
-	/**
-	 * Lazy-loading for Trello
-	 */
-	if (urlParams['embed'] != '1' || urlParams['tr'] == '1')
-	{
-		/**
-		 * Creates Trello client if all required libraries are available.
-		 */
-		var initTrelloClient = mxUtils.bind(this, function()
-		{
-			if (typeof window.Trello !== 'undefined')
-			{
-				try
-				{
-					this.trello = new TrelloClient(this);
-					
-					//TODO we have no user info from Trello so we don't set a user
-					this.trello.addListener('userChanged', mxUtils.bind(this, function()
-					{
-						this.updateUserElement();
-						this.restoreLibraries();
-					}));
-					
-					// Notifies listeners of new client
-					this.fireEvent(new mxEventObject('clientLoaded', 'client', this.trello));
-				}
-				catch (e)
-				{
-					if (window.console != null)
-					{
-						console.error(e);
-					}
-				}
-			}
-			else if (window.DrawTrelloClientCallback == null)
-			{
-				window.DrawTrelloClientCallback = initTrelloClient;
-			}
-		});
-
-		initTrelloClient();
-	}
-
-	/**
-	 * Creates drive client with all required libraries are available.
-	 */
-
-	if (urlParams['embed'] != '1' || urlParams['db'] == '1')
-	{
-		/**
-		 * Creates dropbox client if all required libraries are available.
-		 */
-		var initDropboxClient = mxUtils.bind(this, function()
-		{
-			if (typeof Dropbox === 'function' && typeof Dropbox.choose !== 'undefined')
-			{
-				/**
-				 * Clears dropbox client callback.
-				 */
-				window.DrawDropboxClientCallback = null;
-				
-				/**
-				 * Holds the x-coordinate of the point.
-				 */
-				try
-				{
-					this.dropbox = new DropboxClient(this);
-					
-					this.dropbox.addListener('userChanged', mxUtils.bind(this, function()
-					{
-						this.updateUserElement();
-						this.restoreLibraries();
-					}));
-					
-					// Notifies listeners of new client
-					this.fireEvent(new mxEventObject('clientLoaded', 'client', this.dropbox));
-				}
-				catch (e)
-				{
-					if (window.console != null)
-					{
-						console.error(e);
-					}
-				}
-			}
-			else if (window.DrawDropboxClientCallback == null)
-			{
-				window.DrawDropboxClientCallback = initDropboxClient;
-			}
-		});
-
-		initDropboxClient();
-	}
-
 	if (urlParams['embed'] != '1')
 	{
 		/**
@@ -1323,29 +1015,9 @@ App.prototype.init = function() {
 		this.hsplit.style.display = 'none';
 		this.sidebarContainer.style.display = 'none';
     this.sidebarFooterContainer && (this.sidebarFooterContainer.style.display = 'none');
+    this.mode = 'device';
 
-		// Sets the initial mode
-		if (urlParams['local'] == '1')
-		{
-			this.setMode(App.MODE_DEVICE);
-		}
-		else
-		{
-			this.mode = App.mode;
-		}
-		
-		// Add to Home Screen dialog for mobile devices
-		if ('serviceWorker' in navigator && (mxClient.IS_ANDROID || mxClient.IS_IOS))
-		{
-			window.addEventListener('beforeinstallprompt', mxUtils.bind(this, function(e)
-			{
-				this.showBanner('AddToHomeScreenFooter', mxResources.get('installApp'), function()
-				{
-				    e.prompt();
-				});
-			}));
-		}
-		
+
 		if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp && !this.isOffline() &&
 			!mxClient.IS_ANDROID && !mxClient.IS_IOS &&
 			urlParams['open'] == null && (!this.editor.chromeless || this.editor.editable))
@@ -2455,7 +2127,6 @@ App.prototype.showAlert = function(message)
 				mxEvent.consume(evt);
 			}
 		});
-		debugger;
 		document.body.appendChild(div);
 		
 		// Delayed to get smoother animation after DOM rendering
@@ -3831,20 +3502,18 @@ App.prototype.createFile = function(title, data, libs, mode, done, replace, fold
  * 
  * @param {number} dx X-coordinate of the translation.
  * @param {number} dy Y-coordinate of the translation.
+ * ================
+ * 2020年06月29日09:32:20 现在没有clibs，删除所有clibs相关的代码
  */
-App.prototype.fileCreated = function(file, libs, replace, done, clibs)
-{
+App.prototype.fileCreated = function(file, libs, replace, done, clibs) {
+  debugger;
 	var url = window.location.pathname;
-	
+
 	if (libs != null && libs.length > 0)
 	{
 		url += '?libs=' + libs;
 	}
 
-	if (clibs != null && clibs.length > 0)
-	{
-		url += '?clibs=' + clibs;
-	}
 	
 	url = this.getUrl(url);
 
@@ -3910,19 +3579,6 @@ App.prototype.fileCreated = function(file, libs, replace, done, clibs)
 				if (libs != null)
 				{
 					this.sidebar.showEntries(libs);
-				}
-				
-				if (clibs != null)
-				{
-					var temp = [];
-					var tokens = clibs.split(';');
-					
-					for (var i = 0; i < tokens.length; i++)
-					{
-						temp.push(decodeURIComponent(tokens[i]));
-					}
-					
-					this.loadLibraries(temp);
 				}
 			});
 
@@ -4420,9 +4076,10 @@ App.prototype.getLibraryStorageHint = function(file)
  */
 App.prototype.restoreLibraries = function()
 {
+  debugger;
 	this.loadLibraries(mxSettings.getCustomLibraries(), mxUtils.bind(this, function()
 	{
-		this.loadLibraries((urlParams['clibs'] || '').split(';'));
+		this.loadLibraries(''.split(';'));
 	}));
 };
 
@@ -4474,7 +4131,8 @@ App.prototype.loadLibraries = function(libs, done)
 				}
 			}
 		});
-		
+
+		// todo libs是撒，能不能删了
 		if (libs != null)
 		{
 			for (var i = 0; i < libs.length; i++)
@@ -4497,8 +4155,7 @@ App.prototype.loadLibraries = function(libs, done)
 							checkDone();
 						});
 						
-						var onerror = mxUtils.bind(this, function(keep)
-						{
+						var onerror = mxUtils.bind(this, function(keep) {
 							ignore(id, keep);
 							waiting--;
 							checkDone();
@@ -5974,161 +5631,6 @@ App.prototype.updateUserElement = function()
 						}
 					});
 
-					debugger;
-					if (this.dropbox != null) {
-						addUser(this.dropbox.getUser(), IMAGE_PATH + '/dropbox-logo.svg', mxUtils.bind(this, function()
-						{
-							var file = this.getCurrentFile();
-
-							if (file != null && file.constructor == DropboxFile)
-							{
-								var doLogout = mxUtils.bind(this, function()
-								{
-									this.dropbox.logout();
-									window.location.hash = '';
-								});
-								
-								if (!file.isModified())
-								{
-									doLogout();
-								}
-								else
-								{
-									this.confirm(mxResources.get('allChangesLost'), null, doLogout,
-										mxResources.get('cancel'), mxResources.get('discardChanges'));
-								}
-							}
-							else
-							{
-								this.dropbox.logout();
-							}
-						}), mxResources.get('dropbox'));
-					}
-
-					if (this.oneDrive != null)
-					{
-						addUser(this.oneDrive.getUser(), IMAGE_PATH + '/onedrive-logo.svg', mxUtils.bind(this, function()
-						{
-							var file = this.getCurrentFile();
-
-							if (file != null && file.constructor == OneDriveFile)
-							{
-								var doLogout = mxUtils.bind(this, function()
-								{
-									this.oneDrive.logout();
-									window.location.hash = '';
-								});
-								
-								if (!file.isModified())
-								{
-									doLogout();
-								}
-								else
-								{
-									this.confirm(mxResources.get('allChangesLost'), null, doLogout,
-										mxResources.get('cancel'), mxResources.get('discardChanges'));
-								}
-							}
-							else
-							{
-								this.oneDrive.logout();
-							}
-						}), mxResources.get('oneDrive'));
-					}
-
-					if (this.gitHub != null)
-					{
-						addUser(this.gitHub.getUser(), IMAGE_PATH + '/github-logo.svg', mxUtils.bind(this, function()
-						{
-							var file = this.getCurrentFile();
-
-							if (file != null && file.constructor == GitHubFile)
-							{
-								var doLogout = mxUtils.bind(this, function()
-								{
-									this.gitHub.logout();
-									window.location.hash = '';
-								});
-								
-								if (!file.isModified())
-								{
-									doLogout();
-								}
-								else
-								{
-									this.confirm(mxResources.get('allChangesLost'), null, doLogout,
-										mxResources.get('cancel'), mxResources.get('discardChanges'));
-								}
-							}
-							else
-							{
-								this.gitHub.logout();
-							}
-						}), mxResources.get('github'));
-					}
-					
-					if (this.gitLab != null)
-					{
-						addUser(this.gitLab.getUser(), IMAGE_PATH + '/gitlab-logo.svg', mxUtils.bind(this, function()
-						{
-							var file = this.getCurrentFile();
-
-							if (file != null && file.constructor == GitLabFile)
-							{
-								var doLogout = mxUtils.bind(this, function()
-								{
-									this.gitLab.logout();
-									window.location.hash = '';
-								});
-
-								if (!file.isModified())
-								{
-									doLogout();
-								}
-								else
-								{
-									this.confirm(mxResources.get('allChangesLost'), null, doLogout,
-										mxResources.get('cancel'), mxResources.get('discardChanges'));
-								}
-							}
-							else
-							{
-								this.gitLab.logout();
-							}
-						}), mxResources.get('gitlab'));
-					}
-					
-					//TODO We have no user info from Trello, how we can create a user?
-					if (this.trello != null)
-					{
-						addUser(this.trello.getUser(), IMAGE_PATH + '/trello-logo.svg', mxUtils.bind(this, function()
-						{
-							var file = this.getCurrentFile();
-
-							if (file != null && file.constructor == TrelloFile)
-							{
-								var doLogout = mxUtils.bind(this, function()
-								{
-									this.trello.logout();
-									window.location.hash = '';
-								});
-								
-								if (!file.isModified())
-								{
-									doLogout();
-								}
-								else
-								{
-									this.confirm(mxResources.get('allChangesLost'), null, doLogout,
-										mxResources.get('cancel'), mxResources.get('discardChanges'));
-								}
-							}
-							else
-							{
-								this.trello.logout();
-							}
-						}), mxResources.get('trello'));
-					}
 					
 					if (!connected)
 					{
