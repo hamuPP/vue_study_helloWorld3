@@ -1744,6 +1744,7 @@
 	EditorUi.prototype.downloadFile = function(format, uncompressed, addShadow, ignoreSelection, currentPage,
 		pageVisible, transparent, scale, border, grid, includeXml)
 	{
+	  debugger;
 		try
 		{
 			ignoreSelection = (ignoreSelection != null) ? ignoreSelection : this.editor.graph.isSelectionEmpty();
@@ -6854,7 +6855,8 @@
 				error({message: mxResources.get('serviceUnavailableOrBlocked')});
 			}
 		});
-		
+
+		debugger;
 		if (typeof window.LucidImporter === 'undefined' &&
 			!this.loadingExtensions && !this.isOffline(true))
 		{
@@ -7149,12 +7151,14 @@
 	 */
 	EditorUi.prototype.insertTextAt = function(text, dx, dy, html, asImage, crop, resizeImages)
 	{
+	  debugger;
 		crop = (crop != null) ? crop : true;
 		resizeImages = (resizeImages != null) ? resizeImages : true;
 		
 		// Handles special case for Gliffy data which requires async server-side for parsing
 		if (text != null)
 		{
+		  debugger;
 			if (Graph.fileSupport && !this.isOffline() && new XMLHttpRequest().upload && this.isRemoteFileFormat(text))
 			{
 				// Fixes possible parsing problems with ASCII 160 (non-breaking space)

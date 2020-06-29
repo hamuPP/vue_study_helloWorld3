@@ -1,7 +1,5 @@
-if (urlParams['dev'] == '1')
-{
-	(function()
-	{
+
+	(function() {
 		var graphGetTooltipForCell = Graph.prototype.getTooltipForCell;
 
 		/**
@@ -72,4 +70,4 @@ if (urlParams['dev'] == '1')
 			return tip;
 		};
 	})();
-}
+

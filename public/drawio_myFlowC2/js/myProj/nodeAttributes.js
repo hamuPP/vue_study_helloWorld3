@@ -106,7 +106,6 @@ function userTree(h, loadNode) {
 
 
 function showUserSelectDialog(parentElment, mxCellObj, labelText) {
-  debugger;// 检查每次打开时，mxCellObj是否变化已经设置到组件里
   // 如果已经有之前创建的dialog，则显示其即可，不要再创建新的了,同时，更新数据
   if (window.$refs && window.$refs.userDialog) {
     window.$refs.userDialog.dialogVisible = true;
@@ -261,7 +260,6 @@ mxFormDiv.prototype.addText = function (a, b, c, opt) {
 };
 
 mxFormDiv.prototype.addElInput = function (opt, labelText, value, type) {
-  debugger;// todo 第二次点击是否会触发？
   var graph = opt.graph;
   var cell = opt.cell;
   var obj = opt.obj;

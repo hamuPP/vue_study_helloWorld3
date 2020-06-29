@@ -1513,7 +1513,6 @@ var EditDataDialogInline = function (ui, cell) {
           );
         break;
       case 'input':
-        debugger;// 注意检查第二次obj没有？
         texts[index] = form.addElInput(
           {graph: ui.editor.graph,
             cell: cell,

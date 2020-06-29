@@ -863,7 +863,6 @@
           if (typeof mxOrgChartLayout === 'undefined' && !editorUi.loadingOrgChart && !editorUi.isOffline(true)) {
             if (editorUi.spinner.spin(document.body, mxResources.get('loading'))) {
               editorUi.loadingOrgChart = true;
-
               if (urlParams['dev'] == '1') {
                 mxscript('js/orgchart.min.js', delayed);
               }
