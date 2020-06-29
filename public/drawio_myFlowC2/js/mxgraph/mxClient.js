@@ -466,8 +466,8 @@ var mxEffects = {
         window.setTimeout(k, e)
       } else a.style.visibility = "hidden", c && a.parentNode && a.parentNode.removeChild(a)
     }
-  },
-  mxUtils = {
+  };
+var mxUtils = {
     errorResource: "none" != mxClient.language ? "error" : "",
     closeResource: "none" != mxClient.language ? "close" : "",
     errorImage: mxClient.imageBasePath + "/error.gif",
@@ -1541,8 +1541,21 @@ var mxEffects = {
         return b
       }));
       return a
+    },
+  /**
+   *  移除元素的class名字
+   *  ty
+   *  2020年06月29日11:17:31
+   */
+  removeElementClass: function(ele, txt){
+    var str =  ele.className;
+    var index = str.indexOf(txt);
+    if(index > -1){
+      ele.className = str.replace(txt,"");
     }
-  }, mxConstants = {
+  }
+  };
+var mxConstants = {
     DEFAULT_HOTSPOT: .3,
     MIN_HOTSPOT_SIZE: 8,
     MAX_HOTSPOT_SIZE: 0,
@@ -10501,7 +10514,7 @@ mxStylesheet.prototype.createDefaultVertexStyle = function () {
   a[mxConstants.STYLE_PERIMETER] = mxPerimeter.RectanglePerimeter;
   a[mxConstants.STYLE_VERTICAL_ALIGN] = mxConstants.ALIGN_MIDDLE;
   a[mxConstants.STYLE_ALIGN] = mxConstants.ALIGN_CENTER;
-  a[mxConstants.STYLE_FILLCOLOR] = "#C3D9FF";
+  // a[mxConstants.STYLE_FILLCOLOR] = "pink";// #C3D9FF
   a[mxConstants.STYLE_STROKECOLOR] = "#6482B9";
   a[mxConstants.STYLE_FONTCOLOR] = "#774400";
   return a

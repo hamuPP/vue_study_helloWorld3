@@ -1193,6 +1193,7 @@ DrawioFile.prototype.patchDescriptor = function(desc, patch)
  */
 DrawioFile.prototype.startSync = function()
 {
+  debugger;
 	if ((DrawioFile.SYNC == 'auto' && urlParams['stealth'] != '1') &&
 		(urlParams['rt'] == '1' || !this.ui.editor.chromeless ||
 		this.ui.editor.editable))

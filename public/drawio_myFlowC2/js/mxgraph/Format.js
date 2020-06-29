@@ -22,10 +22,6 @@ Format.prototype.currentIndex = 0;
  */
 Format.prototype.showCloseButton = true;
 
-/**
- * Background color for inactive tabs.
- */
-Format.prototype.inactiveTabBackgroundColor = '#f1f3f4';
 
 /**
  * Background color for inactive tabs.
@@ -362,17 +358,8 @@ Format.prototype.refresh = function()
 	div.style.cursor = 'default';
 	
 	var label = document.createElement('div');
-	label.className = 'geFormatSection';
-	label.style.textAlign = 'center';
-	label.style.fontWeight = 'bold';
-	label.style.paddingTop = '8px';
-	label.style.fontSize = '13px';
-	label.style.borderWidth = '0px 0px 1px 1px';
-	label.style.borderStyle = 'solid';
-	label.style.display = (mxClient.IS_QUIRKS) ? 'inline' : 'inline-block';
-	label.style.height = (mxClient.IS_QUIRKS) ? '34px' : '25px';
-	label.style.overflow = 'hidden';
-	label.style.width = '100%';
+	label.className = 'geFormatSection geFormatSection-label';
+	// label.style.width = '100%';
 	this.container.appendChild(div);
 	
 	// Prevents text selection
@@ -381,10 +368,11 @@ Format.prototype.refresh = function()
 	{
 		evt.preventDefault();
 	}));
-	
-	if (graph.isSelectionEmpty())
-	{
-		mxUtils.write(label, mxResources.get('diagram'));
+   console.log('graph.isSelectionEmpty()', graph.isSelectionEmpty())
+  // 没有点击某个节点时。
+	if (graph.isSelectionEmpty()) {
+    label.className = 'geFormatSection geFormatSection-label';
+    mxUtils.write(label, mxResources.get('diagram'));
 		label.style.borderLeftWidth = '0px';
 		
 		// Adds button to hide the format panel since
@@ -417,6 +405,7 @@ Format.prototype.refresh = function()
 		div.appendChild(label);
 		this.panels.push(new DiagramFormatPanel(this, ui, div));
 	}
+  // 点击了具体某个节点时
 	else {
 		var containsLabel = this.getSelectionState().containsLabel;
 		var currentLabel = null;
@@ -439,13 +428,13 @@ Format.prototype.refresh = function()
 
 					if (currentLabel != null)
 					{
-						currentLabel.style.backgroundColor = this.inactiveTabBackgroundColor;
+						mxUtils.removeElementClass(currentLabel, 'active');
 						currentLabel.style.borderBottomWidth = '1px';
 					}
 
 					currentLabel = elt;
-					currentLabel.style.backgroundColor = '';
 					currentLabel.style.borderBottomWidth = '0px';
+          currentLabel.className += ' active';
 
 					if (currentPanel != panel)
 					{
@@ -461,7 +450,6 @@ Format.prototype.refresh = function()
 			});
 
 			mxEvent.addListener(elt, 'click', clickHandler);
-
 			// Prevents text selection
 		    mxEvent.addListener(elt, (mxClient.IS_POINTER) ? 'pointerdown' : 'mousedown',
 	        	mxUtils.bind(this, function(evt)
@@ -478,17 +466,13 @@ Format.prototype.refresh = function()
 
 		var idx = 0;
 
-		label.style.backgroundColor = this.inactiveTabBackgroundColor;
 		label.style.borderLeftWidth = '1px';
-		label.style.cursor = 'pointer';
-		label.style.width = (containsLabel) ? '50%' : '33.3%';
-		label.style.width = (containsLabel) ? '50%' : '33.3%';
-		var label2 = label.cloneNode(false);
-		var label3 = label2.cloneNode(false);
+    label.className += ' nodes-attributes-label';
+    var label2 = label.cloneNode(false);
+    var label3 = label2.cloneNode(false);
+		var label4 = label2.cloneNode(false);
+		var label5 = label2.cloneNode(false);
 
-		// Workaround for ignored background in IE
-		label2.style.backgroundColor = this.inactiveTabBackgroundColor;
-		label3.style.backgroundColor = this.inactiveTabBackgroundColor;
 
 		// Style
 		if (containsLabel) {
@@ -496,28 +480,58 @@ Format.prototype.refresh = function()
 		} else {
 			label.style.borderLeftWidth = '0px';
 
-      // 加入我的面板
-      mxUtils.write(label3, '节点属性');
-      div.appendChild(label3);
+      // 加入我的面板并且激活该面板：节点属性
+      mxUtils.write(label, '节点属性');
+      div.appendChild(label);
 
       var myNodeAttributesPanel = div.cloneNode(false);
       myNodeAttributesPanel.style.display = 'none';
       this.panels.push(new MyNodeAttributePanel(this, ui, myNodeAttributesPanel));
       this.container.appendChild(myNodeAttributesPanel);
 
-      addClickHandler(label3, myNodeAttributesPanel, idx++);
+      addClickHandler(label, myNodeAttributesPanel, idx++);
 		}
 
-    // mxUtils.write(label, mxResources.get('style'));
-    // div.appendChild(label);
-    //
-    // var stylePanel = div.cloneNode(false);
-    // stylePanel.style.display = 'none';
-    // // 单击图形，右侧显示样式面板
-    // this.panels.push(new StyleFormatPanel(this, ui, stylePanel));
-    // this.container.appendChild(stylePanel);
-    //
-    // addClickHandler(label, stylePanel, idx++);
+		// 加入我的面板(非激活状态): 实体定义
+    mxUtils.write(label2, '实体定义');
+    div.appendChild(label2);
+
+    var myNodeEntryDefinePanel = div.cloneNode(false);
+    myNodeEntryDefinePanel.style.display = 'none';
+    this.panels.push(new MyNodeEntryDefinePanel(this, ui, myNodeEntryDefinePanel));
+    this.container.appendChild(myNodeEntryDefinePanel);
+
+		// 加入我的面板(非激活状态): 人员定义
+    mxUtils.write(label3, '人员定义');
+    div.appendChild(label3);
+
+    var myPeopleDefinePanel = div.cloneNode(false);
+    myPeopleDefinePanel.style.display = 'none';
+    this.panels.push(new MyPeopleDefinePanel(this, ui, myPeopleDefinePanel));
+    this.container.appendChild(myPeopleDefinePanel);
+
+		// 加入我的面板(非激活状态): URL定义
+    mxUtils.write(label4, 'URL定义');
+    div.appendChild(label4);
+
+    var myURLDefinePanel = div.cloneNode(false);
+    myURLDefinePanel.style.display = 'none';
+    this.panels.push(new MyURLDefinePanel(this, ui, myURLDefinePanel));
+    this.container.appendChild(myURLDefinePanel);
+
+		// 加入我的面板(非激活状态): 子流程
+    mxUtils.write(label5, '子流程');
+    div.appendChild(label5);
+
+    var mySubprocessPanel = div.cloneNode(false);
+    mySubprocessPanel.style.display = 'none';
+    this.panels.push(new MySubprocessPanel(this, ui, mySubprocessPanel));
+    this.container.appendChild(mySubprocessPanel);
+
+    addClickHandler(label2, myNodeEntryDefinePanel, idx++);
+    addClickHandler(label3, myPeopleDefinePanel, idx++);
+    addClickHandler(label4, myURLDefinePanel, idx++);
+    addClickHandler(label5, mySubprocessPanel, idx++);
 	}
 };
 
@@ -696,8 +710,7 @@ BaseFormatPanel.prototype.installInputHandler = function(input, key, defaultValu
 /**
  * Adds the given option.
  */
-BaseFormatPanel.prototype.createPanel = function()
-{
+BaseFormatPanel.prototype.createPanel = function() {
 	var div = document.createElement('div');
 	div.className = 'geFormatSection';
 	div.style.padding = '12px 0px 12px 18px';
@@ -2654,7 +2667,6 @@ mxUtils.extend(MyNodeAttributePanel, BaseFormatPanel);
 
 MyNodeAttributePanel.prototype.init = function() {
   this.container.style.borderBottom = 'none';
-
   // 当前操作的节点的数据们：
   var ui = this.editorUi;
   var ss = this.format.getSelectionState();
@@ -2706,6 +2718,49 @@ MyNodeAttributePanel.prototype.addMyInput2 = function(container) {
   container.appendChild(dom);
 
   return container;
+};
+
+// 我的实体定义的模板
+MyNodeEntryDefinePanel = function(format, editorUi, container) {
+  BaseFormatPanel.call(this, format, editorUi, container);
+  this.init();
+};
+mxUtils.extend(MyNodeEntryDefinePanel, BaseFormatPanel);
+
+MyNodeEntryDefinePanel.prototype.init = function() {
+
+};
+
+// 人员定义弹窗
+MyPeopleDefinePanel = function(format, editorUi, container) {
+  BaseFormatPanel.call(this, format, editorUi, container);
+  this.init();
+};
+mxUtils.extend(MyPeopleDefinePanel, BaseFormatPanel);
+
+MyPeopleDefinePanel.prototype.init = function() {
+
+};
+
+// URL定义弹窗
+MyURLDefinePanel = function(format, editorUi, container) {
+  BaseFormatPanel.call(this, format, editorUi, container);
+  this.init();
+};
+mxUtils.extend(MyURLDefinePanel, BaseFormatPanel);
+
+MyURLDefinePanel.prototype.init = function() {
+
+};
+// 子流程
+MySubprocessPanel = function(format, editorUi, container) {
+  BaseFormatPanel.call(this, format, editorUi, container);
+  this.init();
+};
+mxUtils.extend(MySubprocessPanel, BaseFormatPanel);
+
+MySubprocessPanel.prototype.init = function() {
+
 };
 
 /**
@@ -4627,160 +4682,6 @@ StyleFormatPanel.prototype.addStroke = function(container)
 		mxUtils.br(stylePanel2);
 		mxUtils.br(stylePanel2);
 	}
-	
-	// var edgeStyle = this.editorUi.toolbar.addMenuFunctionInContainer(stylePanel2, 'geSprite-orthogonal', mxResources.get('waypoints'), false, mxUtils.bind(this, function(menu)
-	// {
-	// 	if (ss.style.shape != 'arrow')
-	// 	{
-	// 		this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_EDGE, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], [null, null, null], 'geIcon geSprite geSprite-straight', null, true).setAttribute('title', mxResources.get('straight'));
-	// 		this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_EDGE, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['orthogonalEdgeStyle', null, null], 'geIcon geSprite geSprite-orthogonal', null, true).setAttribute('title', mxResources.get('orthogonal'));
-	// 		this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_EDGE, mxConstants.STYLE_ELBOW, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['elbowEdgeStyle', null, null, null], 'geIcon geSprite geSprite-horizontalelbow', null, true).setAttribute('title', mxResources.get('simple'));
-	// 		this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_EDGE, mxConstants.STYLE_ELBOW, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['elbowEdgeStyle', 'vertical', null, null], 'geIcon geSprite geSprite-verticalelbow', null, true).setAttribute('title', mxResources.get('simple'));
-	// 		this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_EDGE, mxConstants.STYLE_ELBOW, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['isometricEdgeStyle', null, null, null], 'geIcon geSprite geSprite-horizontalisometric', null, true).setAttribute('title', mxResources.get('isometric'));
-	// 		this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_EDGE, mxConstants.STYLE_ELBOW, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['isometricEdgeStyle', 'vertical', null, null], 'geIcon geSprite geSprite-verticalisometric', null, true).setAttribute('title', mxResources.get('isometric'));
-	//
-	// 		if (ss.style.shape == 'connector')
-	// 		{
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_EDGE, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['orthogonalEdgeStyle', '1', null], 'geIcon geSprite geSprite-curved', null, true).setAttribute('title', mxResources.get('curved'));
-	// 		}
-	//
-	// 		this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_EDGE, mxConstants.STYLE_CURVED, mxConstants.STYLE_NOEDGESTYLE], ['entityRelationEdgeStyle', null, null], 'geIcon geSprite geSprite-entity', null, true).setAttribute('title', mxResources.get('entityRelation'));
-	// 	}
-	// }));
-
-	// var lineStart = this.editorUi.toolbar.addMenuFunctionInContainer(stylePanel2, 'geSprite-startclassic', mxResources.get('linestart'), false, mxUtils.bind(this, function(menu)
-	// {
-	// 	if (ss.style.shape == 'connector' || ss.style.shape == 'flexArrow' || ss.style.shape == 'filledEdge')
-	// 	{
-	// 		var item = this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.NONE, 0], 'geIcon', null, false);
-	// 		item.setAttribute('title', mxResources.get('none'));
-	// 		item.firstChild.firstChild.innerHTML = '<font style="font-size:10px;">' + mxUtils.htmlEntities(mxResources.get('none')) + '</font>';
-  //
-	// 		if (ss.style.shape == 'connector' || ss.style.shape == 'filledEdge')
-	// 		{
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_CLASSIC, 1], 'geIcon geSprite geSprite-startclassic', null, false).setAttribute('title', mxResources.get('classic'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_CLASSIC_THIN, 1], 'geIcon geSprite geSprite-startclassicthin', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_OPEN, 0], 'geIcon geSprite geSprite-startopen', null, false).setAttribute('title', mxResources.get('openArrow'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_OPEN_THIN, 0], 'geIcon geSprite geSprite-startopenthin', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['openAsync', 0], 'geIcon geSprite geSprite-startopenasync', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_BLOCK, 1], 'geIcon geSprite geSprite-startblock', null, false).setAttribute('title', mxResources.get('block'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_BLOCK_THIN, 1], 'geIcon geSprite geSprite-startblockthin', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['async', 1], 'geIcon geSprite geSprite-startasync', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_OVAL, 1], 'geIcon geSprite geSprite-startoval', null, false).setAttribute('title', mxResources.get('oval'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_DIAMOND, 1], 'geIcon geSprite geSprite-startdiamond', null, false).setAttribute('title', mxResources.get('diamond'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_DIAMOND_THIN, 1], 'geIcon geSprite geSprite-startthindiamond', null, false).setAttribute('title', mxResources.get('diamondThin'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_CLASSIC, 0], 'geIcon geSprite geSprite-startclassictrans', null, false).setAttribute('title', mxResources.get('classic'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_CLASSIC_THIN, 0], 'geIcon geSprite geSprite-startclassicthintrans', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_BLOCK, 0], 'geIcon geSprite geSprite-startblocktrans', null, false).setAttribute('title', mxResources.get('block'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_BLOCK_THIN, 0], 'geIcon geSprite geSprite-startblockthintrans', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['async', 0], 'geIcon geSprite geSprite-startasynctrans', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_OVAL, 0], 'geIcon geSprite geSprite-startovaltrans', null, false).setAttribute('title', mxResources.get('oval'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_DIAMOND, 0], 'geIcon geSprite geSprite-startdiamondtrans', null, false).setAttribute('title', mxResources.get('diamond'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], [mxConstants.ARROW_DIAMOND_THIN, 0], 'geIcon geSprite geSprite-startthindiamondtrans', null, false).setAttribute('title', mxResources.get('diamondThin'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['box', 0], 'geIcon geSprite geSvgSprite geSprite-box', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['halfCircle', 0], 'geIcon geSprite geSvgSprite geSprite-halfCircle', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['dash', 0], 'geIcon geSprite geSprite-startdash', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['cross', 0], 'geIcon geSprite geSprite-startcross', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['circlePlus', 0], 'geIcon geSprite geSprite-startcircleplus', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['circle', 1], 'geIcon geSprite geSprite-startcircle', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['ERone', 0], 'geIcon geSprite geSprite-starterone', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['ERmandOne', 0], 'geIcon geSprite geSprite-starteronetoone', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['ERmany', 0], 'geIcon geSprite geSprite-startermany', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['ERoneToMany', 0], 'geIcon geSprite geSprite-starteronetomany', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['ERzeroToOne', 1], 'geIcon geSprite geSprite-starteroneopt', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW, 'startFill'], ['ERzeroToMany', 1], 'geIcon geSprite geSprite-startermanyopt', null, false);
-	// 		}
-	// 		else
-	// 		{
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_STARTARROW], [mxConstants.ARROW_BLOCK], 'geIcon geSprite geSprite-startblocktrans', null, false).setAttribute('title', mxResources.get('block'));
-	// 		}
-	// 	}
-	// }));
-
-	// var lineEnd = this.editorUi.toolbar.addMenuFunctionInContainer(stylePanel2, 'geSprite-endclassic', mxResources.get('lineend'), false, mxUtils.bind(this, function(menu)
-	// {
-	// 	if (ss.style.shape == 'connector' || ss.style.shape == 'flexArrow' || ss.style.shape == 'filledEdge')
-	// 	{
-	// 		var item = this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.NONE, 0], 'geIcon', null, false);
-	// 		item.setAttribute('title', mxResources.get('none'));
-	// 		item.firstChild.firstChild.innerHTML = '<font style="font-size:10px;">' + mxUtils.htmlEntities(mxResources.get('none')) + '</font>';
-	//
-	// 		if (ss.style.shape == 'connector' || ss.style.shape == 'filledEdge')
-	// 		{
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_CLASSIC, 1], 'geIcon geSprite geSprite-endclassic', null, false).setAttribute('title', mxResources.get('classic'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_CLASSIC_THIN, 1], 'geIcon geSprite geSprite-endclassicthin', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_OPEN, 0], 'geIcon geSprite geSprite-endopen', null, false).setAttribute('title', mxResources.get('openArrow'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_OPEN_THIN, 0], 'geIcon geSprite geSprite-endopenthin', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['openAsync', 0], 'geIcon geSprite geSprite-endopenasync', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_BLOCK, 1], 'geIcon geSprite geSprite-endblock', null, false).setAttribute('title', mxResources.get('block'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_BLOCK_THIN, 1], 'geIcon geSprite geSprite-endblockthin', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['async', 1], 'geIcon geSprite geSprite-endasync', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_OVAL, 1], 'geIcon geSprite geSprite-endoval', null, false).setAttribute('title', mxResources.get('oval'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_DIAMOND, 1], 'geIcon geSprite geSprite-enddiamond', null, false).setAttribute('title', mxResources.get('diamond'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_DIAMOND_THIN, 1], 'geIcon geSprite geSprite-endthindiamond', null, false).setAttribute('title', mxResources.get('diamondThin'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_CLASSIC, 0], 'geIcon geSprite geSprite-endclassictrans', null, false).setAttribute('title', mxResources.get('classic'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_CLASSIC_THIN, 0], 'geIcon geSprite geSprite-endclassicthintrans', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_BLOCK, 0], 'geIcon geSprite geSprite-endblocktrans', null, false).setAttribute('title', mxResources.get('block'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_BLOCK_THIN, 0], 'geIcon geSprite geSprite-endblockthintrans', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['async', 0], 'geIcon geSprite geSprite-endasynctrans', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_OVAL, 0], 'geIcon geSprite geSprite-endovaltrans', null, false).setAttribute('title', mxResources.get('oval'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_DIAMOND, 0], 'geIcon geSprite geSprite-enddiamondtrans', null, false).setAttribute('title', mxResources.get('diamond'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], [mxConstants.ARROW_DIAMOND_THIN, 0], 'geIcon geSprite geSprite-endthindiamondtrans', null, false).setAttribute('title', mxResources.get('diamondThin'));
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['box', 0], 'geIcon geSprite geSvgSprite geFlipSprite geSprite-box', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['halfCircle', 0], 'geIcon geSprite geSvgSprite geFlipSprite geSprite-halfCircle', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['dash', 0], 'geIcon geSprite geSprite-enddash', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['cross', 0], 'geIcon geSprite geSprite-endcross', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['circlePlus', 0], 'geIcon geSprite geSprite-endcircleplus', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['circle', 1], 'geIcon geSprite geSprite-endcircle', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['ERone', 0], 'geIcon geSprite geSprite-enderone', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['ERmandOne', 0], 'geIcon geSprite geSprite-enderonetoone', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['ERmany', 0], 'geIcon geSprite geSprite-endermany', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['ERoneToMany', 0], 'geIcon geSprite geSprite-enderonetomany', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['ERzeroToOne', 1], 'geIcon geSprite geSprite-enderoneopt', null, false);
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW, 'endFill'], ['ERzeroToMany', 1], 'geIcon geSprite geSprite-endermanyopt', null, false);
-	// 		}
-	// 		else
-	// 		{
-	// 			this.editorUi.menus.edgeStyleChange(menu, '', [mxConstants.STYLE_ENDARROW], [mxConstants.ARROW_BLOCK], 'geIcon geSprite geSprite-endblocktrans', null, false).setAttribute('title', mxResources.get('block'));
-	// 		}
-	// 	}
-	// }));
-
-	// this.addArrow(edgeShape, 8);
-	// this.addArrow(edgeStyle);
-	// this.addArrow(lineStart);
-	// this.addArrow(lineEnd);
-	
-	// var symbol = this.addArrow(pattern, 9);
-	// symbol.className = 'geIcon';
-	// symbol.style.width = '84px';
-	//
-	// var altSymbol = this.addArrow(altPattern, 9);
-	// altSymbol.className = 'geIcon';
-	// altSymbol.style.width = '22px';
-	
-	// var solid = document.createElement('div');
-	// solid.style.width = '85px';
-	// solid.style.height = '1px';
-	// solid.style.borderBottom = '1px solid ' + this.defaultStrokeColor;
-	// solid.style.marginBottom = '9px';
-	// symbol.appendChild(solid);
-	
-	// var altSolid = document.createElement('div');
-	// altSolid.style.width = '23px';
-	// altSolid.style.height = '1px';
-	// altSolid.style.borderBottom = '1px solid ' + this.defaultStrokeColor;
-	// altSolid.style.marginBottom = '9px';
-	// altSymbol.appendChild(altSolid);
-
-	// pattern.style.height = '15px';
-	// altPattern.style.height = '15px';
-	// edgeShape.style.height = '15px';
-	// edgeStyle.style.height = '17px';
-	// lineStart.style.marginLeft = '3px';
-	// lineStart.style.height = '17px';
-	// lineEnd.style.marginLeft = '3px';
-	// lineEnd.style.height = '17px';
 
 	container.appendChild(colorPanel);
 	container.appendChild(altStylePanel);

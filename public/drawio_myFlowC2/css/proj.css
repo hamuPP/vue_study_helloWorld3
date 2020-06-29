@@ -62,3 +62,34 @@ div.picker {
 	cursor: pointer;
 	margin: 5px;
 }
+
+/* 右侧操作栏 */
+.geFormatContainer{
+	right: 0px;
+	z-index: 1;
+	top: 42px;
+	width: 240px;
+	bottom: 0px;
+}
+
+.geFormatSection-label{
+	text-align: center;
+	/*font-weight: 400;*/
+	color: #000;
+	padding-top: 8px;
+	font-size: 13px;
+	display: inline-block;
+	height: 25px;
+	overflow: hidden;
+	width: 100%;
+	cursor: pointer;
+	background: rgb(241, 243, 244);
+}
+.geFormatSection-label.active{
+	border-bottom-width: 0;
+	background: #fff;
+	color: #409eff;
+}
+.nodes-attributes-label{
+	width: 25%;
+}
