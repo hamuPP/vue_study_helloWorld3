@@ -7,6 +7,10 @@
  * files and the mxClient.js loads other files.
  */
 
+var mxscript = window.mxscript || window.mxscriptInVue;
+var drawDevUrl = window.drawDevUrl || window.drawDevUrlInVue;
+var geBasePath = window.geBasePath || window.geBasePathInVue;
+
 mxscript(drawDevUrl + 'js/cryptojs/aes.min.js');
 mxscript(drawDevUrl + 'js/spin/spin.min.js');
 mxscript(drawDevUrl + 'js/deflate/pako.min.js');
@@ -38,8 +42,6 @@ mxscript(drawDevUrl + 'js/diagramly/LocalFile.js');
 mxscript(drawDevUrl + 'js/diagramly/LocalLibrary.js');
 mxscript(drawDevUrl + 'js/diagramly/StorageFile.js');
 mxscript(drawDevUrl + 'js/diagramly/StorageLibrary.js');
-// mxscript(drawDevUrl + 'js/diagramly/RemoteFile.js');
-// mxscript(drawDevUrl + 'js/diagramly/RemoteLibrary.js');
 mxscript(drawDevUrl + 'js/diagramly/Dialogs.js');
 mxscript(drawDevUrl + 'js/diagramly/Editor.js');
 mxscript(drawDevUrl + 'js/diagramly/EditorUi.js');
@@ -62,18 +64,12 @@ mxscript(drawDevUrl + 'js/diagramly/App.js');
 mxscript(drawDevUrl + 'js/diagramly/Menus.js');
 mxscript(drawDevUrl + 'js/diagramly/Pages.js');
 mxscript(drawDevUrl + 'js/diagramly/Trees.js');
-mxscript(drawDevUrl + 'js/diagramly/Minimal.js');
+// mxscript(drawDevUrl + 'js/diagramly/Minimal.js');
 mxscript(drawDevUrl + 'js/diagramly/DistanceGuides.js');
 mxscript(drawDevUrl + 'js/diagramly/mxRuler.js');
 mxscript(drawDevUrl + 'js/diagramly/mxFreehand.js');
 mxscript(drawDevUrl + 'js/diagramly/DevTools.js');
 
-// Vsdx/vssx support
-mxscript(drawDevUrl + 'js/diagramly/vsdx/VsdxExport.js');
-mxscript(drawDevUrl + 'js/diagramly/vsdx/mxVsdxCanvas2D.js');
-mxscript(drawDevUrl + 'js/diagramly/vsdx/bmpDecoder.js');
-mxscript(drawDevUrl + 'js/diagramly/vsdx/importer.js');
-mxscript(drawDevUrl + 'js/jszip/jszip.min.js');
 
 // GraphMl Import
 mxscript(drawDevUrl + 'js/diagramly/graphml/mxGraphMlCodec.js');

@@ -18,8 +18,8 @@
  */
 
 //TODO integrate this code in mxGuide (Especially as this is now affecting the other guides)
-(function()
-{
+(
+  function() {
 	var guideMove = mxGuide.prototype.move;
 	
 	mxGuide.prototype.move = function (bounds, delta, gridEnabled, clone)

@@ -881,28 +881,6 @@
         'Palm_Treo', 'Signal_tower_off', 'Signal_tower_on'],
       ['BlackBerry', 'Cellphone', 'HTC smartphone', 'iPhone',
         'Palm Treo', 'Signaltower off', 'Signaltower on']);
-
-    // this.addFlowchartPalette();
-    // this.addActiveDirectoryPalette();
-    // this.addAndroidPalette();
-    // this.addAtlassianPalette();
-    // this.addBootstrapPalette();
-    // this.addDFDPalette();
-    // this.addErPalette();
-    // this.addIos7Palette();
-    // this.addIosPalette();
-    // this.addKubernetesPalette();
-    // this.addMockupPalette();
-    // this.addSitemapPalette();
-    // this.addUmlPalette(false);
-    // this.addAlliedTelesisPalette();
-    // this.addAWS3Palette();
-    // this.addAWS4bPalette();
-    // this.addAWS4Palette();
-    // this.addAWS3DPalette();
-    // this.addAzurePalette();
-    // this.addMSCAEPalette();
-    // this.addC4Palette();
     for (var i = 0; i < cisco.length; i++) {
       this.addStencilPalette('cisco' + cisco[i], 'Cisco / ' + cisco[i],
         dir + '/cisco/' + cisco[i].toLowerCase().replace(/ /g, '_') + '.xml',

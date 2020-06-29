@@ -1493,7 +1493,6 @@ GraphViewer.prototype.showLocalLightbox = function()
 	// ID which must be done before calling EditorUi constructor
 	var previousShadowId = Graph.prototype.shadowId;
 	Graph.prototype.shadowId = 'lightboxDropShadow';
-	debugger;
 	var ui = new EditorUi(new Editor(true), document.createElement('div'), true);
 	ui.editor.editBlankUrl = this.editBlankUrl;
 	

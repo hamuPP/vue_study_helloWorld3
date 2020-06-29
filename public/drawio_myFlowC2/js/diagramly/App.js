@@ -376,8 +376,7 @@ App.main = function(callback, createUi)
 	
 	if (window.mxscript != null) {
 		// Loads plugins
-		if (urlParams['plugins'] != '0' && urlParams['offline'] != '1')
-		{
+		if (urlParams['plugins'] != '0' && urlParams['offline'] != '1') {
 			// mxSettings is not yet initialized in configure mode, redirect parameter
 			// to p URL parameter in caller for plugins in embed mode
 			var plugins = (mxSettings.settings != null) ? mxSettings.getPlugins() : null;
@@ -400,74 +399,11 @@ App.main = function(callback, createUi)
 					// ignore
 				}
 			}
-
-			var temp = urlParams['p'];
 			App.initPluginCallback();
 
-			if (temp != null)
-			{
-				// Mapping from key to URL in App.plugins
-				App.loadPlugins(temp.split(';'));
-			}
-			
-			if (plugins != null && plugins.length > 0 && urlParams['plugins'] != '0')
-			{
-				// Loading plugins inside the asynchronous block below stops the page from loading so a 
-				// hardcoded message for the warning dialog is used since the resources are loadd below
-				var warning = 'The page has requested to load the following plugin(s):\n \n {1}\n \n Would you like to load these plugin(s) now?\n \n NOTE : Only allow plugins to run if you fully understand the security implications of doing so.\n';
-				var tmp = window.location.protocol + '//' + window.location.host;
-				var local = true;
-				
-				for (var i = 0; i < plugins.length && local; i++)
-				{
-					if (plugins[i].charAt(0) != '/' && plugins[i].substring(0, tmp.length) != tmp)
-					{
-						local = false;
-					}
-				}
-				
-				if (local || mxUtils.confirm(mxResources.replacePlaceholders(warning, [plugins.join('\n')]).replace(/\\n/g, '\n')))
-				{
-					for (var i = 0; i < plugins.length; i++)
-					{
-						try
-						{
-							if (App.pluginsLoaded[plugins[i]] == null)
-							{
-								App.pluginsLoaded[plugins[i]] = true;
-								App.embedModePluginsCount++;
-								
-								if (plugins[i].charAt(0) == '/')
-								{
-									plugins[i] = PLUGINS_BASE_PATH + plugins[i];
-								}
-								
-								mxscript(plugins[i]);
-							}
-						}
-						catch (e)
-						{
-							// ignore
-						}
-					}
-				}
-			}
 		}
-		
-		// Loads gapi for all browsers but IE8 and below if not disabled or if enabled and in embed mode
-		// Special case: Cannot load in asynchronous code below
-		if (typeof window.DriveClient === 'function' &&
-			(typeof gapi === 'undefined' && (((urlParams['embed'] != '1' && urlParams['gapi'] != '0') ||
-			(urlParams['embed'] == '1' && urlParams['gapi'] == '1')) && isSvgBrowser &&
-			isLocalStorage && (document.documentMode == null || document.documentMode >= 10))))
-		{
-		  // 尝试把线上地址改为本地地址 -ty 2020年06月23日11:02:07
-			// mxscript('https://apis.google.com/js/api.js?onload=DrawGapiClientCallback', null, null, null, mxClient.IS_SVG);
-			mxscript('js/other/api.js?onload=DrawGapiClientCallback', null, null, null, mxClient.IS_SVG);
-		}
-		// Disables client
-		else if (typeof window.gapi === 'undefined')
-		{
+
+    if (typeof window.gapi === 'undefined') {
 			window.DriveClient = null;
 		}
 	}
@@ -1252,67 +1188,7 @@ App.prototype.showNameChangeBanner = function()
 	}));
 };
 
-/**
- * 
- */
-App.prototype.checkLicense = function()
-{
-	var driveUser = this.drive.getUser();
-	var email = ((urlParams['dev'] == '1') ? urlParams['lic'] : null) ||
-		((driveUser != null) ? driveUser.email : null);
-	
-	if (!this.isOffline() && !this.editor.chromeless && email != null)
-	{
-		// Anonymises the local part of the email address
-		var at = email.lastIndexOf('@');
-		var domain = email;
-		
-		if (at >= 0)
-		{
-			domain = email.substring(at + 1);
-			email = Editor.crc32(email.substring(0, at)) + '@' + domain;
-		}
 
-		// Timestamp is workaround for cached response in certain environments
-		mxUtils.post('/license', 'domain=' + encodeURIComponent(domain) + '&email=' + encodeURIComponent(email) + 
-				'&lc=' + encodeURIComponent(driveUser.locale) + '&ts=' + new Date().getTime(),
-			mxUtils.bind(this, function(req)
-			{
-				try
-				{
-					if (req.getStatus() >= 200 && req.getStatus() <= 299)
-					{
-						var value = req.getText();
-						
-						if (value.length > 0)
-						{
-							var lic = JSON.parse(value);
-							
-							if (lic != null)
-							{
-								this.handleLicense(lic, domain);
-							}
-						}
-					}
-				}
-				catch (e)
-				{
-					// ignore
-				}
-			}));
-	}
-};
-
-/**
- * Returns true if the current domain is for the new drive app.
- */
-App.prototype.handleLicense = function(lic, domain)
-{
-	if (lic != null && lic.plugins != null)
-	{
-		App.loadPlugins(lic.plugins.split(';'), true);
-	}
-};
 
 /**
  * 
@@ -2527,7 +2403,6 @@ App.prototype.start = function()
  * Checks for orphaned drafts.
  */
 App.prototype.loadDraft = function(xml, success) {
-  debugger;
 	this.createFile(this.defaultFilename, xml, null, null, mxUtils.bind(this, function()
 	{
 		window.setTimeout(mxUtils.bind(this, function()
@@ -3506,7 +3381,6 @@ App.prototype.createFile = function(title, data, libs, mode, done, replace, fold
  * 2020年06月29日09:32:20 现在没有clibs，删除所有clibs相关的代码
  */
 App.prototype.fileCreated = function(file, libs, replace, done, clibs) {
-  debugger;
 	var url = window.location.pathname;
 
 	if (libs != null && libs.length > 0)
@@ -3538,7 +3412,6 @@ App.prototype.fileCreated = function(file, libs, replace, done, clibs) {
 		if (dataNode != null && /\.svg$/i.test(file.getTitle()))
 		{
 			graph = this.createTemporaryGraph(this.editor.graph.getStylesheet());
-			debugger;
 			document.body.appendChild(graph.container);
 			node = this.decodeNodeIntoGraph(node, graph);
 		}
@@ -4076,7 +3949,6 @@ App.prototype.getLibraryStorageHint = function(file)
  */
 App.prototype.restoreLibraries = function()
 {
-  debugger;
 	this.loadLibraries(mxSettings.getCustomLibraries(), mxUtils.bind(this, function()
 	{
 		this.loadLibraries(''.split(';'));

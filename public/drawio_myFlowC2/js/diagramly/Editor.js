@@ -1351,6 +1351,7 @@
 	 */
 	Editor.initMath = function(src, config)
 	{
+	  var DRAW_MATH_URL = window.mathPathInVue ? window.mathPathInVue : window.DRAW_MATH_URL;
 		src = (src != null) ? src : DRAW_MATH_URL + '/MathJax.js';
 		Editor.mathJaxQueue = [];
 		
@@ -2417,7 +2418,7 @@
 		return c;
 	};
 
-	Editor.crc32 = function(str)
+	Editor.c = function(str)
 	{
 	    var crc = 0 ^ (-1);
 
@@ -5988,7 +5989,9 @@
 					}
 					
 					doc.writeln('</script>');
-					doc.writeln('<script type="text/javascript" src="' + DRAW_MATH_URL + '/MathJax.js"></script>');
+          debugger;
+
+          doc.writeln('<script type="text/javascript" src="' + DRAW_MATH_URL + '/MathJax.js"></script>');
 				}
 				
 				pv.closeDocument();

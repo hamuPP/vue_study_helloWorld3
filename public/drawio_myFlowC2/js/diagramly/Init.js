@@ -42,7 +42,7 @@ window.NEW_DIAGRAM_CATS_PATH = window.NEW_DIAGRAM_CATS_PATH || 'newDiagramCats';
 window.PLUGINS_BASE_PATH = window.PLUGINS_BASE_PATH || '';
 
 // Directory for i18 files and basename for main i18n file
-window.RESOURCES_PATH = window.RESOURCES_PATH || 'resources';
+window.RESOURCES_PATH = window.resourcesPathInVue || window.RESOURCES_PATH || 'resources';
 window.RESOURCE_BASE = window.RESOURCE_BASE || RESOURCES_PATH + '/dia';
 
 // Specifies global configuration via variable
@@ -67,7 +67,7 @@ window.mxLanguageMap = window.mxLanguageMap ||
 };
 
 if (typeof window.mxBasePath === 'undefined') {
-	window.mxBasePath = 'mxgraph';
+	window.mxBasePath = window.mxBasePathInVue || 'mxgraph';
 }
 
 window.mxLanguages = ['zh'];

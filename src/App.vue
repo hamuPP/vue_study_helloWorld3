@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" class="vue-app">
     <div id="nav" class="nav">
       <router-link to="/">Home</router-link>
       |
@@ -43,7 +43,7 @@
         </div>
       </div>
     </div>
-    <router-view/>
+    <router-view class="bottom-container"/>
   </div>
 </template>
 <script>
@@ -84,12 +84,11 @@
 </script>
 
 <style lang="scss">
-  #app {
-    font-family: Microsoft YaHei,Avenir, Helvetica, Arial, sans-serif;
+  .vue-app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
     color: #2c3e50;
+    height: 100%;
   }
 
   .nav {
@@ -133,5 +132,8 @@
     .child-name{
 
     }
+  }
+  .bottom-container{
+    height: calc(100% - 100px);
   }
 </style>

@@ -3491,7 +3491,6 @@ EditorUi.prototype.setStatusText = function(value)
  * Creates a new toolbar for the given container.
  */
 EditorUi.prototype.createToolbar = function(container) {
-	debugger;
   return new Toolbar(this, container);
 };
 
@@ -4016,21 +4015,9 @@ EditorUi.prototype.showLinkDialog = function(value, btnLabel, fn)
 	dlg.init();
 };
 
-/**
- * Hides the current menu.
- */
-// EditorUi.prototype.showDataDialog = function(mxCell) {
-//   debugger;
-// 	if (mxCell != null) {
-// 		var dlg = new EditDataDialog(this, mxCell);
-// 		this.showDialog(dlg.container, 480, 420, true, false, null, false);
-// 		dlg.init();
-// 	}
-// };
 
 EditorUi.prototype.showDataDialog = function(mxCell) {
 	if (mxCell != null) {
-	  debugger;
 		var dlg = new EditDataDialogInline(this, mxCell);
 		this.showDialog(dlg.container, 480, 420, true, false, null, false);
 		dlg.init();

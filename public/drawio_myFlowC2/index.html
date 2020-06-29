@@ -95,7 +95,6 @@
      */
     function mxscript(src, onLoad, id, dataAppKey, noWrite) {
       if (onLoad != null || noWrite) {
-        debugger;
         var s = document.createElement('script');
         s.setAttribute('type', 'text/javascript');
         s.setAttribute('src', src);
@@ -159,6 +158,7 @@
 
     var geBasePath = mxDevUrl + 'js/mxgraph/';
     var drawDevUrl = mxDevUrl;
+
     mxscript(drawDevUrl + 'js/PreConfig.js');
     mxscript(drawDevUrl + 'js/diagramly/Init.js');
     mxscript(geBasePath + '/Init.js');
@@ -219,12 +219,10 @@
 </body>
 <script>
   window.addEventListener('beforeunload', function () {
-    debugger;
     // 清除所有的refs
     window.$refs = null;
   }, false);
   window.addEventListener('unload', function () {
-    debugger;
     // 清除所有的refs
     window.$refs = null;
   }, false);

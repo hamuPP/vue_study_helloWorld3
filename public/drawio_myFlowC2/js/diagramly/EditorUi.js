@@ -2433,7 +2433,6 @@
 			}
 		});
 
-		debugger;
 		if (file != null)
 		{
 			try
@@ -2477,7 +2476,6 @@
 				{
 					this.editor.setStatus('');
 				}
-	      debugger;
 				if (!this.editor.isChromelessView() || this.editor.editable)
 				{
 					this.editor.graph.selectUnlockedLayer();
@@ -3489,6 +3487,7 @@
     {
     	if (uiTheme == 'atlas')
     	{
+    	  var STYLE_PATH = window.stylePathInVue ? window.stylePathInVue : window.STYLE_PATH;
     		mxClient.link('stylesheet', STYLE_PATH + '/atlas.css');
 
     		if (typeof Toolbar !== 'undefined')
@@ -3500,27 +3499,6 @@
     		Editor.prototype.initialTopSpacing = 3;
     		EditorUi.prototype.menubarHeight = 41;
     		EditorUi.prototype.toolbarHeight = 38;
-    	}
-    	else if (uiTheme == 'dark')
-    	{
-    		mxClient.link('stylesheet', STYLE_PATH + '/dark.css');
-
-			Dialog.backdropColor = '#2a2a2a';
-	    	Graph.prototype.defaultThemeName = 'darkTheme';
-			Graph.prototype.defaultPageBackgroundColor = '#2a2a2a';
-			Graph.prototype.defaultPageBorderColor = '#505759';
-			Format.prototype.inactiveTabBackgroundColor = 'black';
-			BaseFormatPanel.prototype.buttonBackgroundColor = '#2a2a2a';
-			Sidebar.prototype.dragPreviewBorder = '1px dashed #cccccc';
-			mxGraphHandler.prototype.previewColor = '#cccccc';
-			StyleFormatPanel.prototype.defaultStrokeColor = '#cccccc';
-			mxConstants.DROP_TARGET_COLOR = '#00ff00';
-			
-			if (mxClient.IS_SVG)
-			{
-				Editor.helpImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAP1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////9Du/pqAAAAFXRSTlMAT30qCJRBboyDZyCgRzUUdF46MJlgXETgAAAAeklEQVQY022O2w4DIQhEQUURda/9/28tUO2+7CQS5sgQ4F1RapX78YUwRqQjTU8ILqQfKerTKTvACJ4nLX3krt+8aS82oI8aQC4KavRgtvEW/mDvsICgA03PSGRr79MqX1YPNIxzjyqtw8ZnnRo4t5a5undtJYRywau+ds4Cyza3E6YAAAAASUVORK5CYII=';
-				Editor.checkmarkImage = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAVCAMAAACeyVWkAAAARVBMVEUAAACZmZkICAgEBASNjY2Dg4MYGBiTk5N5eXl1dXVmZmZQUFBCQkI3NzceHh4MDAykpKSJiYl+fn5sbGxaWlo/Pz8SEhK96uPlAAAAAXRSTlMAQObYZgAAAE5JREFUGNPFzTcSgDAQQ1HJGUfy/Y9K7V1qeOUfzQifCQZai1XHaz11LFysbDbzgDSSWMZiETz3+b8yNUc/MMsktxuC8XQBSncdLwz+8gCCggGXzBcozAAAAABJRU5ErkJggg==';
-			}
     	}
     };
     

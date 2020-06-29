@@ -72,13 +72,11 @@
     // 2020年06月28日13:53:34
     // by: ty
     editorUi.actions.addAction('myOpenNew...', function () {
-      debugger;
       var title = '新建流程';//新建时的默认名称
 
       if (title && title.length) {
         editorUi.pickFolder('device',
           function(folderId) {
-          debugger;
           editorUi.createFile(title, undefined, null, null, function() {
 
           }, null, folderId, null, null);
@@ -89,12 +87,10 @@
     });
 
     editorUi.actions.addAction('new...', function () {
-      debugger;
       var compact = editorUi.isOffline();
       var dlg = new NewDialog(editorUi, compact);
 
       editorUi.showDialog(dlg.container, (compact) ? 350 : 620, (compact) ? 70 : 440, true, true, function (cancel) {
-        debugger;
         if (cancel && editorUi.getCurrentFile() == null) {
           editorUi.showSplash();
         }
