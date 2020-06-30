@@ -42,9 +42,13 @@
   window.imagePathInVue = 'drawio_myFlowC2/images';
   window.mxBasePath = 'drawio_myFlowC2/mxgraph';
 
+  // import 'public/drawio_myFlowC2/js/myProj/nodeAttributes.js'
+  // import '../../../public/drawio_myFlowC2/js/myProj/nodeAttributes'
+  // import '../../../public/drawio_myFlowC2/js/myProj/test'
   export default {
     name: "can-iframe-use",
     created() {
+      debugger
       window.urlParams = (function () {
         var result = new Object();
         var params = window.location.search.slice(1).split('&');

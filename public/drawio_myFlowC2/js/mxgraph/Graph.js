@@ -165,6 +165,7 @@ mxShape.prototype.getConstraints = function(style, w, h)
  */
 Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 {
+  debugger;
 	mxGraph.call(this, container, model, renderHint, stylesheet);
 	
 	this.themes = themes || this.defaultThemes;
@@ -5571,6 +5572,7 @@ if (typeof mxVertexHandler != 'undefined')
 		 */
 		Graph.prototype.loadStylesheet = function()
 		{
+		  debugger;
 			var node = (this.themes != null) ? this.themes[this.defaultThemeName] :
 				(!mxStyleRegistry.dynamicLoading) ? null :
 				mxUtils.load(STYLE_PATH + '/default.xml').getDocumentElement();

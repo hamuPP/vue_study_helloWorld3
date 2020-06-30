@@ -7151,32 +7151,13 @@
 	 */
 	EditorUi.prototype.insertTextAt = function(text, dx, dy, html, asImage, crop, resizeImages)
 	{
-	  debugger;
 		crop = (crop != null) ? crop : true;
 		resizeImages = (resizeImages != null) ? resizeImages : true;
 		
 		// Handles special case for Gliffy data which requires async server-side for parsing
 		if (text != null)
 		{
-		  debugger;
-			if (Graph.fileSupport && !this.isOffline() && new XMLHttpRequest().upload && this.isRemoteFileFormat(text))
-			{
-				// Fixes possible parsing problems with ASCII 160 (non-breaking space)
-				this.parseFile(new Blob([text.replace(/\s+/g,' ')], {type: 'application/octet-stream'}), mxUtils.bind(this, function(xhr)
-				{
-					if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status <= 299)
-					{
-						this.editor.graph.setSelectionCells(this.insertTextAt(
-							xhr.responseText, dx, dy, true));
-					}
-				}));
-				
-				// Returns empty cells array as it is aysynchronous
-				return [];
-			}
-			// Handles special case of data URI which requires async loading for finding size
-			else if (text.substring(0, 5) == 'data:' || (!this.isOffline() &&
-				(asImage || (/\.(gif|jpg|jpeg|tiff|png|svg)$/i).test(text))))
+		 if (text.substring(0, 5) == 'data:' || ((asImage || (/\.(gif|jpg|jpeg|tiff|png|svg)$/i).test(text))))
 			{
 				var graph = this.editor.graph;
 				
@@ -7278,96 +7259,12 @@
 			}
 			else
 			{
+			  debugger;
 				text = Graph.zapGremlins(mxUtils.trim(text));
 			
 				if (this.isCompatibleString(text))
 				{
 					return this.importXml(text, dx, dy, crop);
-				}
-				else if (text.length > 0)
-				{
-					if (this.isLucidChartData(text))
-					{
-						this.convertLucidChart(text, mxUtils.bind(this, function(xml)
-						{
-							this.editor.graph.setSelectionCells(
-								this.importXml(xml, dx, dy, crop));
-							
-							if (!this.isOffline() &&
-								(/.*\.diagrams\.net$/.test(window.location.hostname) ||
-								/.*\.appspot\.com$/.test(window.location.hostname) ||
-								/.*\.draw\.io$/.test(window.location.hostname)))
-							{
-								this.showBanner('LucidChartImportSurvey', mxResources.get('notSatisfiedWithImport'),
-									mxUtils.bind(this, function()
-								{
-									var dlg = new FeedbackDialog(this, 'Lucidchart Import Feedback', true, text);
-									this.showDialog(dlg.container, 610, 360, true, false);
-									dlg.init();
-								}));
-							}
-						}), mxUtils.bind(this, function(e)
-						{
-							this.handleError(e);
-						}));
-					}
-					else
-					{
-						var graph = this.editor.graph;
-						var cell = null;
-						
-				    	graph.getModel().beginUpdate();
-				    	try
-				    	{
-				    		// Fires cellsInserted to apply the current style to the inserted text.
-				    		// This requires the value to be empty when the event is fired.
-				    		cell = graph.insertVertex(graph.getDefaultParent(), null, '',
-								graph.snap(dx), graph.snap(dy), 1, 1, 'text;whiteSpace=wrap;' + ((html) ? 'html=1;' : ''));
-				    		graph.fireEvent(new mxEventObject('textInserted', 'cells', [cell]));
-						
-				    		// Single tag is converted
-				    		if (text.charAt(0) == '<' && text.indexOf('>') == text.length - 1)
-				    		{
-				    			text = mxUtils.htmlEntities(text);
-				    		}
-
-				    		//TODO Refuse unsupported file types early as at this stage a lot of processing has beed done and time is wasted. 
-				    		//		For example, 5 MB PDF files is processed and then only 0.5 MB of meaningless text is added!
-				    		//Limit labels to maxTextBytes
-				    		if (text.length > this.maxTextBytes)
-			    			{
-				    			text = text.substring(0, this.maxTextBytes) + '...';
-			    			}
-				    		
-							// Apply value and updates the cell size to fit the text block
-							cell.value = text;
-							graph.updateCellSize(cell);
-							
-							// Adds wrapping for large text blocks
-							if (this.maxTextWidth > 0 && cell.geometry.width > this.maxTextWidth)
-							{
-								var size = graph.getPreferredSizeForCell(cell, this.maxTextWidth);
-								cell.geometry.width = size.width;
-								cell.geometry.height = size.height;
-							}
-							
-							// See https://stackoverflow.com/questions/5717093/check-if-a-javascript-string-is-a-url
-							if (Graph.isLink(cell.value))
-							{
-								graph.setLinkForCell(cell, cell.value);
-							}
-							
-							// Adds spacing
-							cell.geometry.width += graph.gridSize;
-							cell.geometry.height += graph.gridSize;
-				    	}
-				    	finally
-				    	{
-				    		graph.getModel().endUpdate();
-				    	}
-						
-						return [cell];
-					}
 				}
 			}
 		}
@@ -9807,6 +9704,7 @@
 	 */
 	EditorUi.prototype.addFileDropHandler = function(elts)
 	{
+	  debugger
 		// Installs drag and drop handler for files
 		if (Graph.fileSupport)
 		{
@@ -9817,6 +9715,7 @@
 				// Setup the dnd listeners
 				mxEvent.addListener(elts[i], 'dragleave', function(evt)
 				{
+				  console.log('leav')
 					if (dropElt != null)
 				    {
 				    	dropElt.parentNode.removeChild(dropElt);
@@ -9829,7 +9728,9 @@
 		
 				mxEvent.addListener(elts[i], 'dragover', mxUtils.bind(this, function(evt)
 				{
-					if (this.editor.graph.isEnabled() || urlParams['embed'] != '1')
+          console.log('over')
+
+          if (this.editor.graph.isEnabled() || urlParams['embed'] != '1')
 					{
 						// IE 10 does not implement pointer-events so it can't have a drop highlight
 						if (dropElt == null && (!mxClient.IS_IE || (document.documentMode > 10 && document.documentMode < 12)))
@@ -9844,8 +9745,10 @@
 				
 				mxEvent.addListener(elts[i], 'drop', mxUtils.bind(this, function(evt)
 				{
-					if (dropElt != null)
-				    {
+				  debugger;
+          console.log('drop')
+          if (dropElt != null)
+					{
 					    dropElt.parentNode.removeChild(dropElt);
 					    dropElt = null;
 				    }
@@ -10060,7 +9963,8 @@
 						{
 							var data = e.target.result;
 							var name = file.name;
-							
+
+							debugger;
 							if (name != null && name.length > 0)
 							{
 								if (!this.useCanvasForExport && /(\.png)$/i.test(name))
@@ -10122,28 +10026,6 @@
 									{
 										this.spinner.stop();
 										handleResult(xml);
-									}));
-								}
-								else if (Graph.fileSupport && !this.isOffline() && new XMLHttpRequest().upload &&
-									this.isRemoteFileFormat(data, name))
-								{
-									this.parseFile(file, mxUtils.bind(this, function(xhr)
-									{
-										if (xhr.readyState == 4)
-										{
-											this.spinner.stop();
-											
-											if (xhr.status >= 200 && xhr.status <= 299)
-											{
-												handleResult(xhr.responseText);
-											}
-											else
-											{
-												this.handleError({message: mxResources.get((xhr.status == 413) ?
-				            						'drawingTooLarge' : 'invalidOrMissingFile')},
-				            						mxResources.get('errorLoadingFile'));
-											}
-										}
 									}));
 								}
 								else if (this.isLucidChartData(data))
