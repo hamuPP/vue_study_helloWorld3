@@ -13,7 +13,7 @@ window.RESOURCES_PATH = window.resourcesPathInVue || window.RESOURCES_PATH || 'r
 window.RESOURCE_BASE = window.RESOURCE_BASE || window.RESOURCES_PATH + '/grapheditor';
 window.STENCIL_PATH = window.STENCIL_PATH || 'stencils';
 window.IMAGE_PATH = window.imagePathInVue || window.IMAGE_PATH || 'images';
-window.STYLE_PATH = window.STYLE_PATH || 'styles';
+window.STYLE_PATH = window.stylePathInVue || window.STYLE_PATH || 'styles';
 window.CSS_PATH = window.CSS_PATH || 'styles';
 window.OPEN_FORM = window.OPEN_FORM || 'open.html';
 

@@ -1744,7 +1744,6 @@
 	EditorUi.prototype.downloadFile = function(format, uncompressed, addShadow, ignoreSelection, currentPage,
 		pageVisible, transparent, scale, border, grid, includeXml)
 	{
-	  debugger;
 		try
 		{
 			ignoreSelection = (ignoreSelection != null) ? ignoreSelection : this.editor.graph.isSelectionEmpty();
@@ -6812,71 +6811,7 @@
 			delayed();
 		}
 	};
-	
-	/**
-	 * Imports the given Lucidchart data.
-	 */
-	EditorUi.prototype.convertLucidChart = function(data, success, error)
-	{
-		var delayed = mxUtils.bind(this, function()
-		{
-			this.loadingExtensions = false;
-			
-			// Checks for signature method
-			if (typeof window.LucidImporter !== 'undefined')
-			{
-				try
-				{
-					EditorUi.logEvent({category: 'LUCIDCHART-IMPORT-FILE',
-						action: 'size_' + data.length});
-					EditorUi.debug('convertLucidChart', data);
-				}
-				catch (e)
-				{
-					// ignore
-				}
-				
-				try
-				{
-					success(LucidImporter.importState(JSON.parse(data)));
-				}
-				catch (e)
-				{
-					if (window.console != null)
-					{
-						console.error(e);
-					}
-					
-					error(e);
-				}
-			}
-			else
-			{
-				error({message: mxResources.get('serviceUnavailableOrBlocked')});
-			}
-		});
 
-		debugger;
-		if (typeof window.LucidImporter === 'undefined' &&
-			!this.loadingExtensions && !this.isOffline(true))
-		{
-			this.loadingExtensions = true;
-			
-			if (urlParams['dev'] == '1')
-			{
-				mxscript('js/diagramly/Extensions.js', delayed);
-			}
-			else
-			{
-				mxscript('js/extensions.min.js', delayed);
-			}
-		}
-		else
-		{
-			// Async needed for selection
-			window.setTimeout(delayed, 0);
-		}
-	};
 
 	/**
 	 * Generates a Mermaid image.
@@ -7316,16 +7251,7 @@
 	{
 		return /(\"contentType\":\s*\"application\/gliffy\+json\")/.test(data);
 	};
-	
-	/**
-	 * Returns true for Gliffy
-	 */
-	EditorUi.prototype.isLucidChartData = function(data)
-	{
-		return data != null && (data.substring(0, 26) ==
-			'{"state":"{\\"Properties\\":' ||
-			data.substring(0, 14) == '{"Properties":');
-	};
+
 
 	/**
 	 * Imports a local file from the device or local storage.
@@ -9539,41 +9465,7 @@
 			}
 			
 			var spans = elt.getElementsByTagName('span');
-		
-			if (spans != null && spans.length > 0 && spans[0].getAttribute('data-lucid-type') ===
-				'application/vnd.lucid.chart.objects')
-			{
-				var content = spans[0].getAttribute('data-lucid-content');
-				
-				if (content != null && content.length > 0)
-				{
-					this.convertLucidChart(content, mxUtils.bind(this, function(xml)
-					{
-						var graph = this.editor.graph;
-						
-						if (graph.lastPasteXml == xml)
-						{
-							graph.pasteCounter++;
-						}
-						else
-						{
-							graph.lastPasteXml = xml;
-							graph.pasteCounter = 0;
-						}
-						
-						var dx = graph.pasteCounter * graph.gridSize;
-						graph.setSelectionCells(this.importXml(xml, dx, dx));
-						graph.scrollCellToVisible(graph.getSelectionCell());
-					}), mxUtils.bind(this, function(e)
-					{
-						this.handleError(e);
-					}));
-			
-					mxEvent.consume(evt);
-				}
-			}
-			else
-			{
+
 				// KNOWN: Paste from IE11 to other browsers on Windows
 				// seems to paste the contents of index.html
 				var xml = (asHtml) ? elt.innerHTML :
@@ -9693,7 +9585,6 @@
 				{
 					this.handleError(e);
 				}
-			}
 		}
 		
 		realElt.innerHTML = '&nbsp;';
@@ -9704,7 +9595,6 @@
 	 */
 	EditorUi.prototype.addFileDropHandler = function(elts)
 	{
-	  debugger
 		// Installs drag and drop handler for files
 		if (Graph.fileSupport)
 		{
@@ -9759,16 +9649,9 @@
 						{
 							this.hideDialog();
 							
-							// Never open files in embed mode
-							if (urlParams['embed'] == '1')
-							{
-								this.importFiles(evt.dataTransfer.files, 0, 0, this.maxImageSize, null, null,
-									null, null, !mxEvent.isControlDown(evt) && !mxEvent.isShiftDown(evt));
-							}
-							else
-							{
+
 								this.openFiles(evt.dataTransfer.files, true);
-							}
+
 						}
 						else
 						{
@@ -10012,38 +9895,12 @@
 									}
 								});
 								
-								if  (/(\.v(dx|sdx?))($|\?)/i.test(name) || /(\.vs(x|sx?))($|\?)/i.test(name))
-								{
-									this.importVisio(file, mxUtils.bind(this, function(xml)
-									{
-										this.spinner.stop();
-										handleResult(xml);
-									}));
-								}
-								else if (/(\.*<graphml )/.test(data)) 
+							if (/(\.*<graphml )/.test(data))
 								{
 									this.importGraphML(data, mxUtils.bind(this, function(xml)
 									{
 										this.spinner.stop();
 										handleResult(xml);
-									}));
-								}
-								else if (this.isLucidChartData(data))
-								{
-									if (/(\.json)$/i.test(name))
-									{
-										name = name.substring(0, name.length - 5) + '.drawio';
-									}
-	
-									// LATER: Add import step that produces cells and use callback
-									this.convertLucidChart(data, mxUtils.bind(this, function(xml)
-									{
-										this.spinner.stop();
-										this.openLocalFile(xml, name, temp);
-									}), mxUtils.bind(this, function(e)
-									{
-										this.spinner.stop();
-										this.handleError(e);
 									}));
 								}
 								else if (e.target.result.substring(0, 10) == '<mxlibrary')
@@ -11100,16 +10957,6 @@
 						doLoad(xhr.responseText, evt);
 					}
 				}), '');
-			}
-			else if (data != null && typeof data.substring === 'function' && this.isLucidChartData(data))
-			{
-				this.convertLucidChart(data, mxUtils.bind(this, function(xml)
-				{
-					doLoad(xml);
-				}), mxUtils.bind(this, function(e)
-				{
-					this.handleError(e);
-				}));
 			}
 			else
 			{
@@ -12247,7 +12094,6 @@
 		this.actions.get('copyStyle').setEnabled(active && !graph.isSelectionEmpty());
 		this.actions.get('pasteStyle').setEnabled(active && !graph.isSelectionEmpty());
 		this.actions.get('editGeometry').setEnabled(graph.getModel().isVertex(graph.getSelectionCell()));
-		this.actions.get('createShape').setEnabled(active);
 		this.actions.get('createRevision').setEnabled(active);
 		this.actions.get('moveToFolder').setEnabled(file != null);
 		this.actions.get('editDiagram').setEnabled(active && (file == null || !file.isRestricted()));

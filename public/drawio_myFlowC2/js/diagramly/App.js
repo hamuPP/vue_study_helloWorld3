@@ -115,7 +115,6 @@ App = function(editor, container, lightbox)
 	});
 
 	// Handles opening files via drag and drop
-  debugger;
 	if (!this.editor.chromeless || this.editor.editable)
 	{
 		this.addFileDropHandler([document]);
@@ -422,6 +421,7 @@ App.main = function(callback, createUi)
 		// Prefetches asynchronous requests so that below code runs synchronous
 		// Loading the correct bundle (one file) via the fallback system in mxResources. The stylesheet
 		// is compiled into JS in the build process and is only needed for local development.
+    debugger;
 		mxUtils.getAll([bundle, STYLE_PATH + '/default.xml', STYLE_PATH + '/dark-default.xml'],
       function(xhr) {
 			// Adds bundle text to resources
@@ -2120,7 +2120,6 @@ App.prototype.start = function()
 		}
 		
 		// Redirects old url URL parameter to new #U format
-    debugger;
 		if (this.getCurrentFile() == null)
 		{
 			var done = mxUtils.bind(this, function()
@@ -2247,7 +2246,6 @@ App.prototype.start = function()
 				}
 			});
 	
-			debugger;
 			done();
 
 		}
@@ -2362,16 +2360,13 @@ App.prototype.showSplash.bk = function(force) {
 
 	var showSecondDialog = mxUtils.bind(this, function() {
 		var dlg = new SplashDialog(this);
-		debugger;
 		this.showDialog(dlg.container, 340, 160, true, true,
 			mxUtils.bind(this, function(cancel)
 			{
 				// Creates a blank diagram if the dialog is closed
-        debugger;
 
         if (cancel && !mxClient.IS_CHROMEAPP) {
 					var prev = Editor.useLocalStorage;
-          debugger;
 
           this.createFile(this.defaultFilename, null, null, null, null, null, null,
 						urlParams['local'] != '1');
@@ -2380,7 +2375,6 @@ App.prototype.showSplash.bk = function(force) {
 			}), true);
 	});
 
-	debugger;
 	if (this.editor.isChromelessView()) {
 		this.handleError({message: mxResources.get('noFileSelected')},
 			mxResources.get('errorLoadingFile'), mxUtils.bind(this, function()
@@ -2389,7 +2383,6 @@ App.prototype.showSplash.bk = function(force) {
 		}));
 	}
 	else if (!mxClient.IS_CHROMEAPP && (this.mode == null || force)) {
-	  debugger;
     this.setMode('device', true);
     mxUtils.bind(this, function() {
       this.hideDialog();
@@ -2611,7 +2604,6 @@ App.prototype.pickFile = function(mode)
  * @param {number} dy Y-coordinate of the translation.
  */
 App.prototype.pickLibrary = function(mode) {
-  debugger;
 	mode = (mode != null) ? mode : this.mode;
 	
 	if (mode == App.MODE_GOOGLE || mode == App.MODE_DROPBOX || mode == App.MODE_ONEDRIVE ||
@@ -3313,7 +3305,6 @@ App.prototype.fileCreated = function(file, libs, replace, done, clibs) {
  */
 App.prototype.loadFile = function(id, sameWindow, file, success, force)
 {
-  debugger;
 	this.hideDialog();
 	
 	var fn2 = mxUtils.bind(this, function()

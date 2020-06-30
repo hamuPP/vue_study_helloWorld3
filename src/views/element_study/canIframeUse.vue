@@ -43,25 +43,24 @@
   window.mxBasePath = 'drawio_myFlowC2/mxgraph';
 
   // import 'public/drawio_myFlowC2/js/myProj/nodeAttributes.js'
-  // import '../../../public/drawio_myFlowC2/js/myProj/nodeAttributes'
+  import '../../../public/drawio_myFlowC2/js/myProj/nodeAttributes4vue'
   // import '../../../public/drawio_myFlowC2/js/myProj/test'
   export default {
     name: "can-iframe-use",
     created() {
-      debugger
-      window.urlParams = (function () {
-        var result = new Object();
-        var params = window.location.search.slice(1).split('&');
-
-        for (var i = 0; i < params.length; i++) {
-          var idx = params[i].indexOf('=');
-          if (idx > 0) {
-            result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
-          }
-        }
-
-        return result;
-      })();
+      // window.urlParams = (function () {
+      //   var result = new Object();
+      //   var params = window.location.search.slice(1).split('&');
+      //
+      //   for (var i = 0; i < params.length; i++) {
+      //     var idx = params[i].indexOf('=');
+      //     if (idx > 0) {
+      //       result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
+      //     }
+      //   }
+      //
+      //   return result;
+      // })();
 
 
       var LazyLoad = window.LazyLoad;
@@ -127,13 +126,11 @@
             drawDevUrl + 'js/diagramly/DevTools.js',
 
           ], function(){
-            debugger;
             window.App.main();
           });
         });
     },
     mounted() {
-      debugger;
     }
   }
 </script>

@@ -10,7 +10,6 @@
   <meta name="msapplication-config" content="images/browserconfig.xml">
   <meta name="mobile-web-app-capable" content="yes">
   <script type="text/javascript">
-    var mxIsElectron = window && window.process && window.process.type;
 
     /**
      * URL Parameters and protocol description are here:
@@ -124,7 +123,6 @@
         }
       }
       else {
-        console.log(src)
         document.write('<script src="' + src + '"' + ((id != null) ? ' id="' + id + '" ' : '') +
           ((dataAppKey != null) ? ' data-app-key="' + dataAppKey + '" ' : '') + '></scr' + 'ipt>');
       }
@@ -171,17 +169,6 @@
     mxscript(drawDevUrl + 'js/PostConfig.js')
 
 
-    // Electron
-    if (mxIsElectron) {
-      mxscript('js/PreConfig.js');
-      mxscript('js/diagramly/DesktopLibrary.js');
-      mxscript('js/diagramly/ElectronApp.js');
-      mxscript('js/extensions.min.js');
-      mxscript('js/stencils.min.js');
-      mxscript('js/shapes.min.js');
-      mxscript('js/PostConfig.js');
-    }
-
     // Adds basic error handling
     window.onerror = function () {
       var status = document.getElementById('geStatus');
@@ -198,10 +185,10 @@
   <div class="geBlock" style="text-align:center;min-width:50%;">
     <h1>Flowchart Maker and Online Diagram Software</h1>
     <p>
-      diagrams.net (formerly draw.io) is free online diagram software. You can use it as a flowchart maker, network
-      diagram software, to create UML online, as an ER diagram tool,
-      to design database schema, to build BPMN online, as a circuit diagram maker, and more. draw.io can import .vsdx,
-      Gliffy&trade; and Lucidchart&trade; files .
+      <!--diagrams.net (formerly draw.io) is free online diagram software. You can use it as a flowchart maker, network-->
+      <!--diagram software, to create UML online, as an ER diagram tool,-->
+      <!--to design database schema, to build BPMN online, as a circuit diagram maker, and more. draw.io can import .vsdx,-->
+      <!--Gliffy&trade; and Lucidchart&trade; files .-->
     </p>
     <h2 id="geStatus">Loading...</h2>
     <p>

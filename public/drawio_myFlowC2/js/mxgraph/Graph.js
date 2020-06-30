@@ -165,7 +165,6 @@ mxShape.prototype.getConstraints = function(style, w, h)
  */
 Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 {
-  debugger;
 	mxGraph.call(this, container, model, renderHint, stylesheet);
 	
 	this.themes = themes || this.defaultThemes;
@@ -2871,7 +2870,10 @@ Graph.prototype.getLinkForCell = function(cell)
 Graph.prototype.getCellStyle = function(cell)
 {
 	var style = mxGraph.prototype.getCellStyle.apply(this, arguments);
-	
+  if(style && style.shape && style.shape === 'label'){
+    // debugger;
+  }
+	console.log(cell, this.layoutManager)
 	if (cell != null && this.layoutManager != null)
 	{
 		var parent = this.model.getParent(cell);
@@ -2886,7 +2888,9 @@ Graph.prototype.getCellStyle = function(cell)
 			}
 		}
 	}
-	
+	if(style && style.shape && style.shape === 'label'){
+	  // debugger;
+  }
 	return style;
 };
 
@@ -5412,6 +5416,7 @@ if (typeof mxVertexHandler != 'undefined')
 		// Overrides highlight shape for connection points
 		mxConstraintHandler.prototype.createHighlightShape = function()
 		{
+		  debugger;
 			var hl = new mxEllipse(null, this.highlightColor, this.highlightColor, 0);
 			hl.opacity = mxConstants.HIGHLIGHT_OPACITY;
 			
@@ -5572,7 +5577,6 @@ if (typeof mxVertexHandler != 'undefined')
 		 */
 		Graph.prototype.loadStylesheet = function()
 		{
-		  debugger;
 			var node = (this.themes != null) ? this.themes[this.defaultThemeName] :
 				(!mxStyleRegistry.dynamicLoading) ? null :
 				mxUtils.load(STYLE_PATH + '/default.xml').getDocumentElement();

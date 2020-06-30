@@ -11084,6 +11084,7 @@ mxCellRenderer.prototype.initializeShape = function (a) {
   a.shape.init(a.view.getDrawPane())
 };
 mxCellRenderer.prototype.createShape = function (a) {
+  debugger;
   var b = null;
   null != a.style && (b = mxStencilRegistry.getStencil(a.style[mxConstants.STYLE_SHAPE]), b = null != b ? new mxShape(b) : new (this.getShapeConstructor(a)));
   return b
@@ -12219,10 +12220,25 @@ mxGraphView.prototype.updateEdgeLabelOffset = function (a) {
     }
   }
 };
-mxGraphView.prototype.getState = function (a, b) {
-  b = b || !1;
+mxGraphView.prototype.getState = function (a, _b) {
+  var b = _b || false;
   var c = null;
-  null != a && (c = this.states.get(a), b && (null == c || this.updateStyle) && this.graph.isCellVisible(a) && (null == c ? (c = this.createState(a), this.states.put(a, c)) : c.style = this.graph.getCellStyle(a)));
+  if(null != a){
+    var testVV = this.states.get(a);
+    if(testVV && testVV.style && testVV.style.shape == 'label'){
+      // debugger;
+    }
+
+    c = this.states.get(a);
+    if(b && (null == c || this.updateStyle) && this.graph.isCellVisible(a)){
+      if(c == null){
+        c = this.createState(a), this.states.put(a, c)
+      }else{
+        c.style = this.graph.getCellStyle(a)
+      }
+    }
+  }
+
   return c
 };
 mxGraphView.prototype.isRendering = function () {
@@ -12257,6 +12273,9 @@ mxGraphView.prototype.removeState = function (a) {
   return b
 };
 mxGraphView.prototype.createState = function (a) {
+  if(this.graph.getCellStyle(a) && this.graph.getCellStyle(a).style && this.graph.getCellStyle(a).style.shape == 'label'){
+    debugger;
+  }
   return new mxCellState(this, a, this.graph.getCellStyle(a))
 };
 mxGraphView.prototype.getCanvas = function () {
@@ -12944,7 +12963,9 @@ mxGraph.prototype.getCurrentCellStyle = function (a, b) {
 mxGraph.prototype.getCellStyle = function (a) {
   var b = this.model.getStyle(a);
   a = this.model.isEdge(a) ? this.stylesheet.getDefaultEdgeStyle() : this.stylesheet.getDefaultVertexStyle();
-  null != b && (a = this.postProcessCellStyle(this.stylesheet.getCellStyle(b, a)));
+  if(null != b ){
+    a = this.postProcessCellStyle(this.stylesheet.getCellStyle(b, a))
+  }
   null == a && (a = {});
   return a
 };
@@ -17582,7 +17603,10 @@ mxVertexHandler.prototype.isSizerVisible = function (a) {
   return !0
 };
 mxVertexHandler.prototype.createSizerShape = function (a, b, c) {
-  return null != this.handleImage ? (a = new mxRectangle(a.x, a.y, this.handleImage.width, this.handleImage.height), a = new mxImageShape(a, this.handleImage.src), a.preserveImageAspect = !1, a) : b == mxEvent.ROTATION_HANDLE ? new mxEllipse(a, c || mxConstants.HANDLE_FILLCOLOR, mxConstants.HANDLE_STROKECOLOR) : new mxRectangleShape(a, c || mxConstants.HANDLE_FILLCOLOR, mxConstants.HANDLE_STROKECOLOR)
+  return null != this.handleImage ?
+    (a = new mxRectangle(a.x, a.y, this.handleImage.width, this.handleImage.height),
+      a = new mxImageShape(a, this.handleImage.src), a.preserveImageAspect = !1, a)
+    : b == mxEvent.ROTATION_HANDLE ? new mxEllipse(a, c || mxConstants.HANDLE_FILLCOLOR, mxConstants.HANDLE_STROKECOLOR) : new mxRectangleShape(a, c || mxConstants.HANDLE_FILLCOLOR, mxConstants.HANDLE_STROKECOLOR)
 };
 mxVertexHandler.prototype.moveSizerTo = function (a, b, c) {
   null != a && (a.bounds.x = Math.floor(b - a.bounds.width / 2), a.bounds.y = Math.floor(c - a.bounds.height / 2), null != a.node && "none" != a.node.style.display && a.redraw())

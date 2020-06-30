@@ -825,11 +825,6 @@ DrawioFileSync.prototype.catchup = function(desc, success, error, abort)
 										catch (e)
 										{
 											temp = [];
-											
-											if (window.console != null && urlParams['test'] == '1')
-											{
-												console.log(e);
-											}
 										}
 									}
 									

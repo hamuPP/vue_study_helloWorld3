@@ -36,7 +36,7 @@ Menus.prototype.defaultMenuItems = ['file', 'edit'];
  * Adds the label menu items to the given menu and parent.
  */
 Menus.prototype.defaultFonts = ['Helvetica', 'Verdana', 'Times New Roman', 'Garamond', 'Comic Sans MS',
-           		             'Courier New', 'Georgia', 'Lucida Console', 'Tahoma'];
+           		             'Courier New', 'Georgia', 'Tahoma'];
 
 /**
  * Adds the label menu items to the given menu and parent.

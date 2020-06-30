@@ -368,7 +368,6 @@ Format.prototype.refresh = function()
 	{
 		evt.preventDefault();
 	}));
-   console.log('graph.isSelectionEmpty()', graph.isSelectionEmpty())
   // 没有点击某个节点时。
 	if (graph.isSelectionEmpty()) {
     label.className = 'geFormatSection geFormatSection-label';
@@ -1522,7 +1521,6 @@ ArrangePanel.prototype.init = function()
 		span.style.padding = '10px 0 0 18px';
 		mxUtils.write(span, mxResources.get('style'));
 		this.container.appendChild(span);
-    console.log('new StyleFormatPanel')
 
     new StyleFormatPanel(this.format, this.editorUi, this.container);
 	}
