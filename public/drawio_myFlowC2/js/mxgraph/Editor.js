@@ -258,11 +258,6 @@ Editor.prototype.extendCanvas = true;
  */
 Editor.prototype.chromeless = false;
 
-/**
- * Specifies the order of OK/Cancel buttons in dialogs. Default is true.
- * Cancel first is used on Macs, Windows/Confluence uses cancel last.
- */
-Editor.prototype.cancelFirst = true;
 
 /**
  * Specifies if the editor is enabled. Default is true.

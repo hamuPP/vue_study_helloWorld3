@@ -11084,7 +11084,6 @@ mxCellRenderer.prototype.initializeShape = function (a) {
   a.shape.init(a.view.getDrawPane())
 };
 mxCellRenderer.prototype.createShape = function (a) {
-  debugger;
   var b = null;
   null != a.style && (b = mxStencilRegistry.getStencil(a.style[mxConstants.STYLE_SHAPE]), b = null != b ? new mxShape(b) : new (this.getShapeConstructor(a)));
   return b
@@ -12273,9 +12272,6 @@ mxGraphView.prototype.removeState = function (a) {
   return b
 };
 mxGraphView.prototype.createState = function (a) {
-  if(this.graph.getCellStyle(a) && this.graph.getCellStyle(a).style && this.graph.getCellStyle(a).style.shape == 'label'){
-    debugger;
-  }
   return new mxCellState(this, a, this.graph.getCellStyle(a))
 };
 mxGraphView.prototype.getCanvas = function () {

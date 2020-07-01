@@ -290,22 +290,22 @@ App.startTime = new Date();
  * Defines plugin IDs for loading via p URL parameter. Update the table at
  * https://desk.draw.io/solution/articles/16000042546
  */
-App.pluginRegistry = {'4xAKTrabTpTzahoLthkwPNUn': '/plugins/explore.js',
-	'ex': '/plugins/explore.js', 'p1': '/plugins/p1.js',
-	'ac': '/plugins/connect.js', 'acj': '/plugins/connectJira.js',
-	'ac148': '/plugins/cConf-1-4-8.js', 'voice': '/plugins/voice.js',
-	'tips': '/plugins/tooltips.js', 'svgdata': '/plugins/svgdata.js',
-	'electron': 'plugins/electron.js',
-	'number': '/plugins/number.js', 'sql': '/plugins/sql.js',
-	'props': '/plugins/props.js', 'text': '/plugins/text.js',
-	'anim': '/plugins/animation.js', 'update': '/plugins/update.js',
-	'trees': '/plugins/trees/trees.js', 'import': '/plugins/import.js',
-	'replay': '/plugins/replay.js', 'anon': '/plugins/anonymize.js',
-	'tr': '/plugins/trello.js', 'f5': '/plugins/rackF5.js',
-	'tickets': '/plugins/tickets.js', 'flow': '/plugins/flow.js',
-	'webcola': '/plugins/webcola/webcola.js', 'rnd': '/plugins/random.js',
-	'page': '/plugins/page.js', 'gd': '/plugins/googledrive.js',
-	'tags': '/plugins/tags.js'};
+// App.pluginRegistry = {'4xAKTrabTpTzahoLthkwPNUn': '/plugins/explore.js',
+// 	'ex': '/plugins/explore.js', 'p1': '/plugins/p1.js',
+// 	'ac': '/plugins/connect.js', 'acj': '/plugins/connectJira.js',
+// 	'ac148': '/plugins/cConf-1-4-8.js', 'voice': '/plugins/voice.js',
+// 	'tips': '/plugins/tooltips.js', 'svgdata': '/plugins/svgdata.js',
+// 	'electron': 'plugins/electron.js',
+// 	'number': '/plugins/number.js', 'sql': '/plugins/sql.js',
+// 	'props': '/plugins/props.js', 'text': '/plugins/text.js',
+// 	'anim': '/plugins/animation.js', 'update': '/plugins/update.js',
+// 	'trees': '/plugins/trees/trees.js', 'import': '/plugins/import.js',
+// 	'replay': '/plugins/replay.js', 'anon': '/plugins/anonymize.js',
+// 	'tr': '/plugins/trello.js', 'f5': '/plugins/rackF5.js',
+// 	'tickets': '/plugins/tickets.js', 'flow': '/plugins/flow.js',
+// 	'webcola': '/plugins/webcola/webcola.js', 'rnd': '/plugins/random.js',
+// 	'page': '/plugins/page.js', 'gd': '/plugins/googledrive.js',
+// 	'tags': '/plugins/tags.js'};
 
 /**
  * Function: authorize
@@ -421,7 +421,6 @@ App.main = function(callback, createUi)
 		// Prefetches asynchronous requests so that below code runs synchronous
 		// Loading the correct bundle (one file) via the fallback system in mxResources. The stylesheet
 		// is compiled into JS in the build process and is only needed for local development.
-    debugger;
 		mxUtils.getAll([bundle, STYLE_PATH + '/default.xml', STYLE_PATH + '/dark-default.xml'],
       function(xhr) {
 			// Adds bundle text to resources
@@ -435,10 +434,10 @@ App.main = function(callback, createUi)
 				{
 					var trustedPlugins = {};
 					
-					for (var key in App.pluginRegistry)
-					{
-						trustedPlugins[App.pluginRegistry[key]] = true;
-					}
+					// for (var key in App.pluginRegistry)
+					// {
+					// 	trustedPlugins[App.pluginRegistry[key]] = true;
+					// }
 					
 					// Only allows trusted plugins
 					function checkPlugins(plugins)
@@ -822,67 +821,67 @@ App.initPluginCallback = function()
 App.pluginsLoaded = {};
 App.embedModePluginsCount = 0;
 
-/**
- * Queue for loading plugins and wait for UI instance
- */
-App.loadPlugins = function(plugins, useInclude)
-{
-	EditorUi.debug('Loading plugins', plugins);
-
-	for (var i = 0; i < plugins.length; i++)
-	{
-		if (plugins[i] != null && plugins[i].length > 0)
-		{
-			try
-			{
-				var url = App.pluginRegistry[plugins[i]];
-				
-				if (url != null)
-				{
-					if (App.pluginsLoaded[url] == null)
-					{
-						App.pluginsLoaded[url] = true;
-						App.embedModePluginsCount++;
-						
-						if (typeof window.drawDevUrl === 'undefined')
-						{
-							if (useInclude)
-							{
-								mxinclude(url);
-							}
-							else
-							{
-								mxscript(url);
-							}
-						}
-						else
-						{
-							if (useInclude)
-							{
-								mxinclude(url);
-							}
-							else
-							{
-								mxscript(drawDevUrl + url);
-							}
-						}
-					}
-				}
-				else if (window.console != null)
-				{
-					console.log('Unknown plugin:', plugins[i]);
-				}
-			}
-			catch (e)
-			{
-				if (window.console != null)
-				{
-					console.log('Error loading plugin:', plugins[i], e);
-				}
-			}
-		}
-	}
-};
+// /**
+//  * Queue for loading plugins and wait for UI instance
+//  */
+// App.loadPlugins = function(plugins, useInclude)
+// {
+// 	EditorUi.debug('Loading plugins', plugins);
+//
+// 	for (var i = 0; i < plugins.length; i++)
+// 	{
+// 		if (plugins[i] != null && plugins[i].length > 0)
+// 		{
+// 			try
+// 			{
+// 				var url = App.pluginRegistry[plugins[i]];
+//
+// 				if (url != null)
+// 				{
+// 					if (App.pluginsLoaded[url] == null)
+// 					{
+// 						App.pluginsLoaded[url] = true;
+// 						App.embedModePluginsCount++;
+//
+// 						if (typeof window.drawDevUrl === 'undefined')
+// 						{
+// 							if (useInclude)
+// 							{
+// 								mxinclude(url);
+// 							}
+// 							else
+// 							{
+// 								mxscript(url);
+// 							}
+// 						}
+// 						else
+// 						{
+// 							if (useInclude)
+// 							{
+// 								mxinclude(url);
+// 							}
+// 							else
+// 							{
+// 								mxscript(drawDevUrl + url);
+// 							}
+// 						}
+// 					}
+// 				}
+// 				else if (window.console != null)
+// 				{
+// 					console.log('Unknown plugin:', plugins[i]);
+// 				}
+// 			}
+// 			catch (e)
+// 			{
+// 				if (window.console != null)
+// 				{
+// 					console.log('Error loading plugin:', plugins[i], e);
+// 				}
+// 			}
+// 		}
+// 	}
+// };
 
 /**
  * Delay embed mode initialization until all plugins are loaded
@@ -3754,52 +3753,52 @@ App.prototype.updateButtonContainer = function()
 		}
 		
 		// Share
-		if (file != null && file.constructor == DriveFile)
-		{
-			if (this.shareButton == null)
-			{
-				this.shareButton = document.createElement('div');
-				this.shareButton.className = 'geBtn gePrimaryBtn';
-				this.shareButton.style.display = 'inline-block';
-				this.shareButton.style.backgroundColor = '#F2931E';
-				this.shareButton.style.borderColor = '#F08705';
-				this.shareButton.style.backgroundImage = 'none';
-				this.shareButton.style.padding = '2px 10px 0 10px';
-				this.shareButton.style.marginTop = '-10px';
-				this.shareButton.style.height = '28px';
-				this.shareButton.style.lineHeight = '28px';
-				this.shareButton.style.minWidth = '0px';
-				this.shareButton.style.cssFloat = 'right';
-				this.shareButton.setAttribute('title', mxResources.get('share'));
-				
-				var icon = document.createElement('img');
-				icon.setAttribute('src', this.shareImage);
-				icon.setAttribute('align', 'absmiddle');
-				icon.style.marginRight = '4px';
-				icon.style.marginTop = '-3px';
-				this.shareButton.appendChild(icon);
-				
-				if (uiTheme != 'dark' && uiTheme != 'atlas')
-				{
-					this.shareButton.style.color = 'black';
-					icon.style.filter = 'invert(100%)';
-				}
-				
-				mxUtils.write(this.shareButton, mxResources.get('share'));
-				
-				mxEvent.addListener(this.shareButton, 'click', mxUtils.bind(this, function()
-				{
-					this.actions.get('share').funct();
-				}));
-				
-				this.buttonContainer.appendChild(this.shareButton);
-			}
-		}
-		else if (this.shareButton != null)
-		{
-			this.shareButton.parentNode.removeChild(this.shareButton);
-			this.shareButton = null;
-		}
+		// if (file != null && file.constructor == DriveFile)
+		// {
+		// 	if (this.shareButton == null)
+		// 	{
+		// 		this.shareButton = document.createElement('div');
+		// 		this.shareButton.className = 'geBtn gePrimaryBtn';
+		// 		this.shareButton.style.display = 'inline-block';
+		// 		this.shareButton.style.backgroundColor = '#F2931E';
+		// 		this.shareButton.style.borderColor = '#F08705';
+		// 		this.shareButton.style.backgroundImage = 'none';
+		// 		this.shareButton.style.padding = '2px 10px 0 10px';
+		// 		this.shareButton.style.marginTop = '-10px';
+		// 		this.shareButton.style.height = '28px';
+		// 		this.shareButton.style.lineHeight = '28px';
+		// 		this.shareButton.style.minWidth = '0px';
+		// 		this.shareButton.style.cssFloat = 'right';
+		// 		this.shareButton.setAttribute('title', mxResources.get('share'));
+		//
+		// 		var icon = document.createElement('img');
+		// 		icon.setAttribute('src', this.shareImage);
+		// 		icon.setAttribute('align', 'absmiddle');
+		// 		icon.style.marginRight = '4px';
+		// 		icon.style.marginTop = '-3px';
+		// 		this.shareButton.appendChild(icon);
+		//
+		// 		if (uiTheme != 'dark' && uiTheme != 'atlas')
+		// 		{
+		// 			this.shareButton.style.color = 'black';
+		// 			icon.style.filter = 'invert(100%)';
+		// 		}
+		//
+		// 		mxUtils.write(this.shareButton, mxResources.get('share'));
+		//
+		// 		mxEvent.addListener(this.shareButton, 'click', mxUtils.bind(this, function()
+		// 		{
+		// 			this.actions.get('share').funct();
+		// 		}));
+		//
+		// 		this.buttonContainer.appendChild(this.shareButton);
+		// 	}
+		// }
+		// else if (this.shareButton != null)
+		// {
+		// 	this.shareButton.parentNode.removeChild(this.shareButton);
+		// 	this.shareButton = null;
+		// }
 	}
 };
 

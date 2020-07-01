@@ -24,7 +24,6 @@
       <router-link to="/demo03_liucheng_edit">demo03_liucheng_edit.vue</router-link>
       |
       <p>drawio</p>
-      <router-link to="/indexVueVer">indexVueVer.vue</router-link>
       |
       <p>ueditor</p>
       <router-link to="/vue-ueditor-demo1">vue-ueditor-demo1</router-link>

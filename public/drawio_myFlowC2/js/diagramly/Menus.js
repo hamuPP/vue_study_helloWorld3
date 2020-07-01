@@ -182,26 +182,6 @@
       dlg.init();
     }).isEnabled = isGraphEnabled;
 
-    if (window.mxFreehand) {
-      editorUi.actions.put('insertFreehand', new Action(mxResources.get('freehand') + '...', function (evt) {
-        if (graph.isEnabled()) {
-          if (this.freehandWindow == null) {
-            this.freehandWindow = new FreehandWindow(editorUi, document.body.offsetWidth - 420, 102, 176, 104);
-          }
-
-          if (graph.freehand.isDrawing()) {
-            graph.freehand.stopDrawing();
-          }
-          else {
-            graph.freehand.startDrawing();
-          }
-
-          this.freehandWindow.window.setVisible(graph.freehand.isDrawing());
-        }
-      })).isEnabled = function () {
-        return isGraphEnabled() && mxClient.IS_SVG;
-      };
-    }
 
     editorUi.actions.put('exportXml', new Action(mxResources.get('formatXml') + '...', function () {
       var div = document.createElement('div');

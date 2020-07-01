@@ -6,13 +6,13 @@
     <div id="geInfo">
       <div class="geBlock" style="text-align:center;min-width:50%;">
         <h1>Flowchart Maker and Online Diagram Software</h1>
-        <p>
-          diagrams.net (formerly draw.io) is free online diagram software. You can use it as a flowchart maker, network
-          diagram software, to create UML online, as an ER diagram tool,
-          to design database schema, to build BPMN online, as a circuit diagram maker, and more. draw.io can import
-          .vsdx,
-          Gliffy&trade; and Lucidchart&trade; files .
-        </p>
+        <!--<p>-->
+          <!--diagrams.net (formerly draw.io) is free online diagram software. You can use it as a flowchart maker, network-->
+          <!--diagram software, to create UML online, as an ER diagram tool,-->
+          <!--to design database schema, to build BPMN online, as a circuit diagram maker, and more. draw.io can import-->
+          <!--.vsdx,-->
+          <!--Gliffy&trade; and Lucidchart&trade; files .-->
+        <!--</p>-->
         <h2 id="geStatus">Loading...</h2>
         <p>
           Please ensure JavaScript is enabled.
@@ -20,6 +20,9 @@
       </div>
     </div>
     <div id="myMainContainer" class="myMainContainer"></div>
+
+    <!-- 人员传递的弹窗-->
+    <userSelectDialog ref="userSelectDialog"></userSelectDialog>
   </div>
 </template>
 
@@ -28,6 +31,8 @@
 <!--</script>-->
 
 <script>
+
+  // import Vue from 'vue'
 
   var mxDevUrl = 'drawio_myFlowC2/';
 
@@ -42,52 +47,48 @@
   window.imagePathInVue = 'drawio_myFlowC2/images';
   window.mxBasePath = 'drawio_myFlowC2/mxgraph';
 
-  // import 'public/drawio_myFlowC2/js/myProj/nodeAttributes.js'
   import '../../../public/drawio_myFlowC2/js/myProj/nodeAttributes4vue'
-  // import '../../../public/drawio_myFlowC2/js/myProj/test'
+  import {showDialog_ME} from '../../../public/drawio_myFlowC2/js/myProj/ME'
+
+
+  import userSelectDialog from '../drawio_myFlowChart/userSelectDialog'
+
   export default {
     name: "can-iframe-use",
+    components: {userSelectDialog},
     created() {
-      // window.urlParams = (function () {
-      //   var result = new Object();
-      //   var params = window.location.search.slice(1).split('&');
-      //
-      //   for (var i = 0; i < params.length; i++) {
-      //     var idx = params[i].indexOf('=');
-      //     if (idx > 0) {
-      //       result[params[i].substring(0, idx)] = params[i].substring(idx + 1);
-      //     }
-      //   }
-      //
-      //   return result;
-      // })();
 
+      window.showDialog_ME = showDialog_ME;
 
       var LazyLoad = window.LazyLoad;
       // Load multiple JS files and execute a callback when they've all finished.
-      LazyLoad.js([drawDevUrl + 'js/PreConfig.js', drawDevUrl + 'js/diagramly/Init.js',
-          geBasePath + '/Init.js', mxDevUrl + '/js/mxgraph/mxClient.js'],
+      LazyLoad.js([
+          drawDevUrl + 'js/PreConfig.js',
+          drawDevUrl + 'js/diagramly/Init.js',
+          geBasePath + '/Init.js',
+          mxDevUrl + '/js/mxgraph/mxClient.js'
+        ],
         function () {
           LazyLoad.js([
-            drawDevUrl + 'js/cryptojs/aes.min.js',
+            // drawDevUrl + 'js/cryptojs/aes.min.js',
             drawDevUrl + 'js/spin/spin.min.js',
-            drawDevUrl + 'js/deflate/pako.min.js',
-            drawDevUrl + 'js/PostConfig.js',
+            // drawDevUrl + 'js/deflate/pako.min.js',
+            // drawDevUrl + 'js/PostConfig.js',
             drawDevUrl + 'js/deflate/base64.js',
             drawDevUrl + 'js/jscolor/jscolor.js',
             drawDevUrl + 'js/sanitizer/sanitizer.min.js',
             drawDevUrl + 'js/croppie/croppie.min.js',
 
-            geBasePath +'/Editor.js',
-            geBasePath +'/EditorUi.js',
-            geBasePath +'/Sidebar.js',
-            geBasePath +'/Graph.js',
-            geBasePath +'/Format.js',
-            geBasePath +'/Shapes.js',
-            geBasePath +'/Actions.js',
-            geBasePath +'/Menus.js',
-            geBasePath +'/Toolbar.js',
-            geBasePath +'/Dialogs.js',
+            geBasePath + '/Editor.js',
+            geBasePath + '/EditorUi.js',
+            geBasePath + '/Sidebar.js',
+            geBasePath + '/Graph.js',
+            geBasePath + '/Format.js',
+            geBasePath + '/Shapes.js',
+            geBasePath + '/Actions.js',
+            geBasePath + '/Menus.js',
+            geBasePath + '/Toolbar.js',
+            geBasePath + '/Dialogs.js',
 
             drawDevUrl + 'js/diagramly/sidebar/Sidebar.js',
 
@@ -111,9 +112,9 @@
 
             drawDevUrl + 'js/diagramly/DrawioClient.js',
             drawDevUrl + 'js/diagramly/DrawioUser.js',
-            drawDevUrl + 'js/diagramly/UrlLibrary.js',
-            drawDevUrl + 'js/diagramly/DriveFile.js',
-            drawDevUrl + 'js/diagramly/DriveLibrary.js',
+            // drawDevUrl + 'js/diagramly/UrlLibrary.js',
+            // drawDevUrl + 'js/diagramly/DriveFile.js',
+            // drawDevUrl + 'js/diagramly/DriveLibrary.js',
 
             drawDevUrl + 'js/diagramly/App.js',
             drawDevUrl + 'js/diagramly/Menus.js',
@@ -122,10 +123,9 @@
             drawDevUrl + 'js/diagramly/Trees.js',
             drawDevUrl + 'js/diagramly/DistanceGuides.js',
             drawDevUrl + 'js/diagramly/mxRuler.js',
-            drawDevUrl + 'js/diagramly/mxFreehand.js',
             drawDevUrl + 'js/diagramly/DevTools.js',
 
-          ], function(){
+          ], function () {
             window.App.main();
           });
         });
@@ -135,7 +135,7 @@
   }
 </script>
 
-<style >
+<style>
   @import "../../../public/drawio_myFlowC2/css/proj.css";
   @import "../../../public/drawio_myFlowC2/css/my-proj.css";
 </style>

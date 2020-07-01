@@ -48,6 +48,13 @@ window.myProj = {
       "name": "并发起点",
       "type": "bingfaQidianSelectDialog"
     }
+  ],
+  urlDefine: [
+    {
+      "name": "基础URL",
+      "type": "input",
+      "des": "这是URL定义里面的基础URL字段"
+    }
   ]
 };
 
@@ -236,14 +243,21 @@ function showUserSelectDialog(parentElment, mxCellObj, labelText) {
   document.body.appendChild(dom1)
 }
 
-// 仿照mxClient.js中的mxForm，做的，把table改成div，方便样式控制
-function mxFormDiv(clsName){
-  this.nodeAttributesForm = document.createElement("form");
 
-  this.nodeAttributesForm.className = 'my-node-attributes-form' + (clsName? ' ' + clsName: '');
+/**
+ * 仿照mxClient.js中的mxForm，做的，把table改成div，方便样式控制
+ * URLdefine
+ * @param formName 表单的名字,如果没有，则是默认的：nodeAttributesForm 节点信息
+ * @param clsName 自定义样式名
+ */
+function mxFormDiv(formName, clsName){
+  var _formName = formName || 'nodeAttributesForm';
+  this[_formName] = document.createElement("form");
+  this[_formName].className = 'my-node-attributes-form' + (clsName? ' ' + clsName: '');
 }
 
 mxFormDiv.prototype.nodeAttributesForm = null;
+mxFormDiv.prototype.URLdefine = null;
 
 mxFormDiv.prototype.addText = function (a, b, c, opt) {
   var isDisabled = opt? opt.disabled : '';
@@ -368,6 +382,7 @@ mxFormDiv.prototype.addElSelect = function (labelText, value, optionList) {
 };
 
 mxFormDiv.prototype.addField = function (labelText, b, clsName) {
+
   var itemDiv = document.createElement("div");
   itemDiv.className = 'form-item';
   var textLable = document.createElement("label");

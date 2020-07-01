@@ -485,6 +485,7 @@ Format.prototype.refresh = function()
 
       var myNodeAttributesPanel = div.cloneNode(false);
       myNodeAttributesPanel.style.display = 'none';
+      debugger;
       this.panels.push(new MyNodeAttributePanel(this, ui, myNodeAttributesPanel));
       this.container.appendChild(myNodeAttributesPanel);
 
@@ -515,6 +516,7 @@ Format.prototype.refresh = function()
 
     var myURLDefinePanel = div.cloneNode(false);
     myURLDefinePanel.style.display = 'none';
+    debugger;
     this.panels.push(new MyURLDefinePanel(this, ui, myURLDefinePanel));
     this.container.appendChild(myURLDefinePanel);
 
@@ -2693,7 +2695,6 @@ MyNodeAttributePanel.prototype.addMyInput2 = function(container) {
       return createElement('el-input',{
         on:{
           input: (value) => {
-            debugger;
             this.custom = value;
           },
         },
@@ -2748,7 +2749,12 @@ MyURLDefinePanel = function(format, editorUi, container) {
 mxUtils.extend(MyURLDefinePanel, BaseFormatPanel);
 
 MyURLDefinePanel.prototype.init = function() {
-
+  // 当前操作的节点的数据们：
+  var ui = this.editorUi;
+  var ss = this.format.getSelectionState();
+  var mxCell = ss.vertices[0];
+  var dlg = new EditDataDialogInline_URLdefine(ui, mxCell);
+  this.container.appendChild(dlg.container);
 };
 // 子流程
 MySubprocessPanel = function(format, editorUi, container) {

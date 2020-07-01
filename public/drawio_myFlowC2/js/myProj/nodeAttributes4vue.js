@@ -49,8 +49,16 @@ window.myProj = {
       "name": "并发起点",
       "type": "bingfaQidianSelectDialog"
     }
+  ],
+  urlDefine: [
+    {
+      "name": "基础URL",
+      "type": "input",
+      "des": "这是URL定义里面的基础URL字段"
+    }
   ]
 };
+
 
 // 例子：如果创建一个button
 function createDemoButton() {
@@ -108,6 +116,7 @@ function userTree(h, loadNode) {
 
 
 function showUserSelectDialog(parentElment, mxCellObj, labelText) {
+  debugger;
   // 如果已经有之前创建的dialog，则显示其即可，不要再创建新的了,同时，更新数据
   if (window.$refs && window.$refs.userDialog) {
     window.$refs.userDialog.dialogVisible = true;
@@ -237,18 +246,26 @@ function showUserSelectDialog(parentElment, mxCellObj, labelText) {
   document.body.appendChild(dom1)
 }
 
-// 仿照mxClient.js中的mxForm，做的，把table改成div，方便样式控制
-function mxFormDiv(clsName){
-  this.nodeAttributesForm = document.createElement("form");
-
-  this.nodeAttributesForm.className = 'my-node-attributes-form' + (clsName? ' ' + clsName: '');
+/**
+ * 仿照mxClient.js中的mxForm，做的，把table改成div，方便样式控制
+ * URLdefine
+ * @param formName 表单的名字,如果没有，则是默认的：nodeAttributesForm 节点信息
+ * @param clsName 自定义样式名
+ */
+function mxFormDiv(formName, clsName){
+  var _formName = formName || 'nodeAttributesForm';
+  this[_formName] = document.createElement("form");
+  this[_formName].className = 'my-node-attributes-form' + (clsName? ' ' + clsName: '');
 }
 
 mxFormDiv.prototype.nodeAttributesForm = null;
+mxFormDiv.prototype.URLdefine = null;
 
+// todo 注意往哪个表单里插
 mxFormDiv.prototype.addText = function (a, b, c, opt) {
   var isDisabled = opt? opt.disabled : '';
   var isReadonly = opt? opt.readonly : '';
+  var formName = opt? opt.formName || 'nodeAttributesForm' : 'nodeAttributesForm';
   var d = document.createElement("input");
   d.setAttribute("type", c || "text");
   if(isDisabled === 'disabled'){
@@ -258,13 +275,15 @@ mxFormDiv.prototype.addText = function (a, b, c, opt) {
     d.setAttribute("readonly", 'readonly');
   }
   d.value = b;
-  return this.addField(a, d)
+  return this.addField(a, d, formName)
 };
 
 mxFormDiv.prototype.addElInput = function (opt, labelText, value, type) {
   var graph = opt.graph;
   var cell = opt.cell;
   var obj = opt.obj;
+  var formName = opt.formName || 'nodeAttributesForm';
+
   var readonly = opt.readonly;
   var onClick = opt.onClick;
   var rawLableText = labelText.split(/:|；/)[0];//防止名称里有：与:,这里需要没有冒号的名称
@@ -274,7 +293,6 @@ mxFormDiv.prototype.addElInput = function (opt, labelText, value, type) {
       var params = {
         on:{
           input: function(value){
-            debugger;// todo 第二次没有obj?
             // 以下两个，同时使用。才能使页面上的element input内的值改变+mxcell中的值改变
             obj.setAttribute(rawLableText, value);// 改变mxCell的obj中的值
             myMount.custom = value;// 改变element组件的值
@@ -286,7 +304,6 @@ mxFormDiv.prototype.addElInput = function (opt, labelText, value, type) {
         nativeOn: {
           click: function(){
             if(onClick && onClick.constructor === Function){
-              debugger;// 第二次Obj没有？
               onClick(myMount, obj, rawLableText);
             }
           }
@@ -319,9 +336,14 @@ mxFormDiv.prototype.addElInput = function (opt, labelText, value, type) {
   myMount = new component().$mount();
   var dom = myMount.$el;
 
-  return this.addField(labelText, dom)
+  return this.addField(labelText, dom, formName)
 };
-mxFormDiv.prototype.addElSelect = function (labelText, value, optionList) {
+mxFormDiv.prototype.addElSelect = function (labelText, value, optionList, opt) {
+  var formName = 'nodeAttributesForm';
+  if(opt && opt.formName){
+    formName = opt.formName;
+  }
+
   // 把optionList整理成组件所需的格式
   var _generateElOption = function(createEle){
     var list = [];
@@ -365,10 +387,12 @@ mxFormDiv.prototype.addElSelect = function (labelText, value, optionList) {
   });
   var dom = new component().$mount().$el;
 
-  return this.addField(labelText, dom)
+  return this.addField(labelText, dom, formName)
 };
 
-mxFormDiv.prototype.addField = function (labelText, b, clsName) {
+mxFormDiv.prototype.addField = function (labelText, b, formName, clsName) {
+  var _formName = formName || 'nodeAttributesForm';
+
   var itemDiv = document.createElement("div");
   itemDiv.className = 'form-item';
   var textLable = document.createElement("label");
@@ -380,9 +404,63 @@ mxFormDiv.prototype.addField = function (labelText, b, clsName) {
   inputDiv.className = 'form-item__content';
   inputDiv.appendChild(b);
   itemDiv.appendChild(inputDiv);
-  this.nodeAttributesForm.appendChild(itemDiv);
+  // todo 注意往哪个表单里插入
+  this[_formName].appendChild(itemDiv);
   return b
 };
 
+var mergeSelectedCellAttribute = function(type, graph, cell, mine){
+  var doc = mxUtils.createXmlDocument();
+  var obj = doc.createElement('object');
+  var ifSavedValue = null;
+  try{
+    ifSavedValue = JSON.parse(sessionStorage.getItem(cell.id))[type];
+  }catch(e){
+    ifSavedValue = null;
+  }
+
+  // var attributesInCell = graph.getModel().getValue(cell).attributes;// 当前选中节点上带的数据，把这些值设置进节点信息的参数里
+
+  for (var meIdx = 0, melen = mine.length; meIdx < melen; meIdx++) {
+    var child = mine[meIdx];
+    var childValue = child.value || '';// 该属性的默认初始值
+    var name = child.name;
+    // 检查是否有上次保存的值，若有，则把这些值赋值到属性上
+    if(ifSavedValue){
+      childValue = ifSavedValue[name];
+    }
+    // var isCurrentAttribute = graph.getModel().getValue(cell).getAttribute(name);
+    // if(isCurrentAttribute !== null){
+    //   childValue = isCurrentAttribute
+    // }
+
+    if (child.type == 'flowId' && !childValue) {
+      childValue = new Date().getTime();
+    }
+    obj.setAttribute(child.name, childValue);
+  }
+
+  return obj;
+};
+
+var setValueToSessionStorage = function (type, cell, value) {
+  var cellId = cell.id;
+  var oldData = {};// 指定节点在保存前的全部数据
+  if(sessionStorage.getItem(cellId) && sessionStorage.getItem(cellId).length){
+    oldData = JSON.parse(sessionStorage.getItem(cellId))
+  }
+  debugger;
+  var attrs = value.attributes;
+  var attrsObj = {};
+  for(var i = 0,len = attrs.length; i < len;i++){
+    attrsObj[attrs[i].name] = attrs[i].value;
+  }
+  oldData[type] = attrsObj;
+  sessionStorage.setItem(cellId, JSON.stringify(oldData))
+};
+
+
 window.mxFormDiv = mxFormDiv;
 window.showUserSelectDialog = showUserSelectDialog;
+window.mergeSelectedCellAttribute = mergeSelectedCellAttribute;
+window.setValueToSessionStorage = setValueToSessionStorage;

@@ -3331,15 +3331,7 @@
 										dropTarget = null;
 									}
 								});
-								
-								if (file != null && img != null && ((/(\.v(dx|sdx?))($|\?)/i.test(img)) || /(\.vs(x|sx?))($|\?)/i.test(img)))
-								{
-									this.importVisio(file, function(xml)
-									{
-										doImport(xml, 'text/xml');
-									}, null, img);
-								}
-								else if (!this.isOffline() && new XMLHttpRequest().upload && this.isRemoteFileFormat(data, img) && file != null)
+							 if (!this.isOffline() && new XMLHttpRequest().upload && this.isRemoteFileFormat(data, img) && file != null)
 								{
 									this.parseFile(file, mxUtils.bind(this, function(xhr)
 									{
@@ -6582,235 +6574,6 @@
 		
 		return href;
 	};
-	
-	/**
-	 * Returns true for VSD, VDX and VSS, VSX files.
-	 */
-	EditorUi.prototype.isRemoteVisioFormat = function(filename)
-	{
-		return /(\.v(sd|dx))($|\?)/i.test(filename) || /(\.vs(s|x))($|\?)/i.test(filename);
-	};
-	
-	/**
-	 * Imports the given Visio file
-	 */
-	EditorUi.prototype.importVisio = function(file, done, onerror, filename)
-	{
-		//A reduced version of this code is used in conf/jira plugins, review that code whenever this function is changed
-		filename = (filename != null) ? filename : file.name; 
-
-		onerror = (onerror != null) ? onerror : mxUtils.bind(this, function(e)
-		{
-			this.handleError(e);
-		});
-		
-		var delayed = mxUtils.bind(this, function()
-		{
-			this.loadingExtensions = false;
-			
-			if (this.doImportVisio)
-			{
-				var remote = this.isRemoteVisioFormat(filename);
-				
-				try
-				{
-					var ext = 'UNKNOWN-VISIO';
-					var dot = filename.lastIndexOf('.');
-					
-					if (dot >= 0 && dot < filename.length)
-					{
-						ext = filename.substring(dot + 1).toUpperCase();
-					}
-					
-					EditorUi.logEvent({category: ext + '-MS-IMPORT-FILE',
-						action: 'filename_' + filename,
-						label: (remote) ? 'remote' : 'local'});
-				}
-				catch (e)
-				{
-					// ignore
-				}
-				
-				if (remote) 
-				{
-					if (VSD_CONVERT_URL != null && !this.isOffline())
-					{
-						var formData = new FormData();
-						formData.append('file1', file, filename);
-	
-						var xhr = new XMLHttpRequest();
-						xhr.open('POST', VSD_CONVERT_URL);
-						xhr.responseType = 'blob';
-						this.addRemoteServiceSecurityCheck(xhr);
-						
-						xhr.onreadystatechange = mxUtils.bind(this, function()
-						{
-							if (xhr.readyState == 4)
-							{	
-								if (xhr.status >= 200 && xhr.status <= 299)
-								{
-									try
-									{
-										var resp = xhr.response;
-
-										if (resp.type == 'text/xml')
-										{
-											var reader = new FileReader();
-											
-											reader.onload = mxUtils.bind(this, function(e)
-											{
-												try
-												{
-													done(e.target.result);
-												}
-												catch (e)
-												{
-													onerror({message: mxResources.get('errorLoadingFile')});
-												}
-											});
-					
-											reader.readAsText(resp);
-										}
-										else
-										{
-											this.doImportVisio(resp, done, onerror, filename);
-										}
-									}
-									catch (e)
-									{
-										onerror(e);
-									}
-								}
-								else
-								{
-									onerror({});
-								}
-							}
-						});
-						
-						xhr.send(formData);
-					}
-					else
-					{
-						onerror({message: this.getServiceName() == 'conf'? mxResources.get('vsdNoConfig') : mxResources.get('serviceUnavailableOrBlocked')});
-					}
-				}
-				else
-				{
-					try
-					{
-						this.doImportVisio(file, done, onerror, filename);
-					}
-					catch (e)
-					{
-						onerror(e);
-					}
-				}
-			}
-			else
-			{
-				this.spinner.stop();
-				this.handleError({message: mxResources.get('serviceUnavailableOrBlocked')});
-			}
-		});
-		
-		if (!this.doImportVisio && !this.loadingExtensions && !this.isOffline(true))
-		{
-			this.loadingExtensions = true;
-			mxscript('js/extensions.min.js', delayed);
-		}
-		else
-		{
-			delayed();
-		}
-	};
-
-	/**
-	 * Imports the given GraphML (yEd) file
-	 */
-	EditorUi.prototype.importGraphML = function(xmlData, done, onerror)
-	{
-		onerror = (onerror != null) ? onerror : mxUtils.bind(this, function(e)
-		{
-			this.handleError(e);
-		});
-		
-		var delayed = mxUtils.bind(this, function()
-		{
-			this.loadingExtensions = false;
-			
-			if (this.doImportGraphML)
-			{
-				
-				try
-				{
-					this.doImportGraphML(xmlData, done, onerror);
-				}
-				catch (e)
-				{
-					onerror(e);
-				}
-			}
-			else
-			{
-				this.spinner.stop();
-				this.handleError({message: mxResources.get('serviceUnavailableOrBlocked')});
-			}
-		});
-		
-		if (!this.doImportGraphML && !this.loadingExtensions && !this.isOffline(true))
-		{
-			this.loadingExtensions = true;
-			mxscript('js/extensions.min.js', delayed);
-		}
-		else
-		{
-			delayed();
-		}
-	};	
-	
-	/**
-	 * Export the diagram to VSDX
-	 */
-	EditorUi.prototype.exportVisio = function()
-	{
-		var delayed = mxUtils.bind(this, function()
-		{
-			this.loadingExtensions = false;
-			
-			if (typeof VsdxExport  !== 'undefined')
-			{
-				try
-				{
-					var expSuccess = new VsdxExport(this).exportCurrentDiagrams();
-					
-					if (!expSuccess)
-					{
-						this.handleError({message: mxResources.get('unknownError')});
-					}
-				}
-				catch (e)
-				{
-					this.handleError(e);
-				}
-			}
-			else
-			{
-				this.spinner.stop();
-				this.handleError({message: mxResources.get('serviceUnavailableOrBlocked')});
-			}
-		});
-		
-		if (typeof VsdxExport === 'undefined' && !this.loadingExtensions && !this.isOffline(true))
-		{
-			this.loadingExtensions = true;
-			mxscript('js/extensions.min.js', delayed);
-		}
-		else
-		{
-			delayed();
-		}
-	};
 
 
 	/**
@@ -7305,20 +7068,8 @@
 			
 			window.openFile.setConsumer(mxUtils.bind(this, function(xml, filename)
 			{
-				if (filename != null && Graph.fileSupport && /(\.v(dx|sdx?))($|\?)/i.test(filename))
-				{
-					// "Not a UTF 8 file" when opening VSDX in IE so this is never called
-					var file = new Blob([xml], {type: 'application/octet-stream'})
-					
-					this.importVisio(file, mxUtils.bind(this, function(xml)
-					{
-						this.importXml(xml, 0, 0, true);
-					}), null, filename);
-				}
-				else
-				{				
 					this.editor.graph.setSelectionCells(this.importXml(xml, 0, 0, true));
-				}
+
 			}));
 
 			// Removes openFile if dialog is closed
@@ -10160,11 +9911,6 @@
             	this.actions.layersWindow.window.setVisible(false);
             }
 
-            if (this.menus.tagsWindow != null)
-            {
-            	this.menus.tagsWindow.window.setVisible(false);
-            }
-
             if (this.menus.findWindow != null)
             {
             	this.menus.findWindow.window.setVisible(false);
@@ -10933,20 +10679,7 @@
 				}
 			});
 			
-			if (data != null && typeof data.substring === 'function' && data.substring(0, 34) == 'data:application/vnd.visio;base64,')
-			{
-				// Checks VND binary magic number in base64
-				var filename = (data.substring(34, 45) == '0M8R4KGxGuE') ? 'raw.vsd' : 'raw.vsdx';
-				
-				this.importVisio(this.base64ToBlob(data.substring(data.indexOf(',') + 1)), function(xml)
-				{
-					doLoad(xml, evt);
-				}, mxUtils.bind(this, function(e)
-				{
-					this.handleError(e);
-				}), filename);
-			}
-			else if (data != null && typeof data.substring === 'function' && !this.isOffline() && new XMLHttpRequest().upload && this.isRemoteFileFormat(data, ''))
+		if (data != null && typeof data.substring === 'function' && !this.isOffline() && new XMLHttpRequest().upload && this.isRemoteFileFormat(data, ''))
 			{
 				// Asynchronous parsing via server
 				this.parseFile(new Blob([data], {type: 'application/octet-stream'}), mxUtils.bind(this, function(xhr)

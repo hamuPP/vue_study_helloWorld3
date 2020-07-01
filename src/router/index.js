@@ -15,7 +15,6 @@ const RaphaelDemo02 = () => import(/* webpackChunkName: "about" */ '../views/Rap
 const demo03_liucheng_edit = () => import(/* webpackChunkName: "about" */ '../views/Raphael_study/demo03_liucheng_edit.vue');
 const login = () => import(/* webpackChunkName: "about" */ '../views/login.vue');
 const homepage = () => import(/* webpackChunkName: "about" */ '../views/homepage.vue');
-const indexVueVer = () => import(/* webpackChunkName: "about" */ '../views/drawio_myFlowChart/indexVueVer.vue');
 
 // element study
 const element_table = () => import(/* webpackChunkName: "about" */ '../views/element_study/table.vue');
@@ -92,11 +91,6 @@ const routes = [
     path: '/demo03_liucheng_edit',
     name: 'demo03_liucheng_edit',
     component: demo03_liucheng_edit
-  },
-  {
-    path: '/indexVueVer',
-    name: 'indexVueVer',
-    component: indexVueVer
   },
   {
     path: '/element_table',

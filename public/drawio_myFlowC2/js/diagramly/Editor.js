@@ -4282,11 +4282,6 @@
 	{
 		graphInit.apply(this, arguments);
 
-		//TODO initialize Freehand in the correct location!
-		if (window.mxFreehand)
-		{
-			this.freehand = new mxFreehand(this);
-		}
 		
 		// Override insert location for current mouse point
 		var mouseEvent = null;
@@ -5980,7 +5975,6 @@
 					}
 					
 					doc.writeln('</script>');
-          debugger;
 
           doc.writeln('<script type="text/javascript" src="' + DRAW_MATH_URL + '/MathJax.js"></script>');
 				}

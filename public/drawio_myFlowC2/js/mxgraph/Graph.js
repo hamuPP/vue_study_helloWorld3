@@ -2870,10 +2870,6 @@ Graph.prototype.getLinkForCell = function(cell)
 Graph.prototype.getCellStyle = function(cell)
 {
 	var style = mxGraph.prototype.getCellStyle.apply(this, arguments);
-  if(style && style.shape && style.shape === 'label'){
-    // debugger;
-  }
-	console.log(cell, this.layoutManager)
 	if (cell != null && this.layoutManager != null)
 	{
 		var parent = this.model.getParent(cell);
@@ -2888,9 +2884,6 @@ Graph.prototype.getCellStyle = function(cell)
 			}
 		}
 	}
-	if(style && style.shape && style.shape === 'label'){
-	  // debugger;
-  }
 	return style;
 };
 
