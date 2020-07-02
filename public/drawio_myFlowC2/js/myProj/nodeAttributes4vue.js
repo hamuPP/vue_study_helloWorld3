@@ -74,7 +74,39 @@ window.myProj = {
       "des": "这是子流程"
     },
   ],
-  params: []
+  params: [],
+  lineAttributes: [
+    {
+      "name": "名称",
+      "type": "input",
+      "des": "连线属性里的名称输入框"
+    },
+    {
+      "name": "线属性",
+      "type": "checkbox",
+      "optionList": [
+        {
+          "text": 'normal',
+          "value": 1
+        },
+        {
+          "text": '回退',
+          "value": 2
+        },
+      ]
+    },
+    {
+      "name": "是否缺省",
+      "type": "input",
+      "des": "连线属性里的名称输入框",
+      "optionList": [
+        {
+          "text": '缺省',
+          "value": 1
+        }
+      ]
+    },
+  ]
 };
 
 

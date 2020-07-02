@@ -3131,8 +3131,6 @@ EditorUi.prototype.updateActionStates = function()
 	
 	this.actions.get('setAsDefaultStyle').setEnabled(graph.getSelectionCount() == 1);
 	this.actions.get('clearWaypoints').setEnabled(!graph.isSelectionEmpty());
-	this.actions.get('copySize').setEnabled(graph.getSelectionCount() == 1);
-	this.actions.get('turn').setEnabled(!graph.isSelectionEmpty());
 	this.actions.get('curved').setEnabled(edgeSelected);
 	this.actions.get('rotation').setEnabled(vertexSelected);
 	this.actions.get('wordWrap').setEnabled(vertexSelected);
@@ -3498,7 +3496,6 @@ EditorUi.prototype.createToolbar = function(container) {
  * Creates a new sidebar for the given container.
  */
 EditorUi.prototype.createSidebar = function(container) {
-  console.log('new sidebar, container 是： ', container)
 	return new Sidebar(this, container);
 };
 
@@ -4118,7 +4115,6 @@ EditorUi.prototype.altShiftActions = {67: 'clearWaypoints', // Alt+Shift+C
   80: 'connectionPoints', // Alt+Shift+P
   84: 'editTooltip', // Alt+Shift+T
   86: 'pasteSize', // Alt+Shift+V
-  88: 'copySize' // Alt+Shift+X
 };
 
 /**

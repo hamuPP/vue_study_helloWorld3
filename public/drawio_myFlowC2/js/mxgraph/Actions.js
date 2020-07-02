@@ -151,21 +151,7 @@ Actions.prototype.init = function()
 			}
 		}
 	});
-	
-	this.addAction('copySize', function(evt)
-	{
-		var cell = graph.getSelectionCell();
-		
-		if (graph.isEnabled() && cell != null && graph.getModel().isVertex(cell))
-		{
-			var geo = graph.getCellGeometry(cell);
-			
-			if (geo != null)
-			{
-				ui.copiedSize = new mxRectangle(geo.x, geo.y, geo.width, geo.height);
-			}
-		}
-	}, null, null, 'Alt+Shift+X');
+
 
 	this.addAction('pasteSize', function(evt)
 	{

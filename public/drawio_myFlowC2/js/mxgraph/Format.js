@@ -403,6 +403,10 @@ Format.prototype.refresh = function()
 	}
   // 点击了具体某个节点时
 	else {
+	  var clickedCell = graph.getSelectionCell();
+    var isLine = graph.getModel().isEdge(clickedCell);
+    console.log('isLine', isLine);
+    // 区分连线和节点，配置不同的属性
 		var containsLabel = this.getSelectionState().containsLabel;
 		var currentLabel = null;
 		var currentPanel = null;
@@ -471,75 +475,90 @@ Format.prototype.refresh = function()
 		var label6 = label2.cloneNode(false);
 		var label7 = label2.cloneNode(false);
 
-
-		// Style
+		console.log('containsLabel', containsLabel)
 		if (containsLabel) {
 			label2.style.borderLeftWidth = '0px';
 		} else {
 			label.style.borderLeftWidth = '0px';
 
-      // 加入我的面板并且激活该面板：节点属性
-      mxUtils.write(label, '节点属性');
-      div.appendChild(label);
+			if(isLine){
+			  // 加入我的面板并且激活该面板：连线属性（）
+        mxUtils.write(label, '连线属性');
+        div.appendChild(label);
 
-      var myNodeAttributesPanel = div.cloneNode(false);
-      myNodeAttributesPanel.style.display = 'none';
-      this.panels.push(new MyNodeAttributePanel(this, ui, myNodeAttributesPanel));
-      this.container.appendChild(myNodeAttributesPanel);
+        var myLineAttributesPanel = div.cloneNode(false);
+        myLineAttributesPanel.style.display = 'none';
+        this.panels.push(new MyLineAttributesPanel(this, ui, myLineAttributesPanel));
+        this.container.appendChild(myLineAttributesPanel);
 
-      addClickHandler(label, myNodeAttributesPanel, idx++);
+        addClickHandler(label, myNodeAttributesPanel, idx++);
+      }else{
+        // 加入我的面板并且激活该面板：节点属性
+        mxUtils.write(label, '节点属性');
+        div.appendChild(label);
+
+        var myNodeAttributesPanel = div.cloneNode(false);
+        myNodeAttributesPanel.style.display = 'none';
+        this.panels.push(new MyNodeAttributePanel(this, ui, myNodeAttributesPanel));
+        this.container.appendChild(myNodeAttributesPanel);
+
+        addClickHandler(label, myNodeAttributesPanel, idx++);
+      }
 		}
 
-		// 加入我的面板(非激活状态): 实体定义
-    mxUtils.write(label2, '实体定义');
-    div.appendChild(label2);
+		if(!isLine){
+      // 加入我的面板(非激活状态): 实体定义
+      mxUtils.write(label2, '实体定义');
+      div.appendChild(label2);
 
-    var myNodeEntryDefinePanel = div.cloneNode(false);
-    myNodeEntryDefinePanel.style.display = 'none';
-    this.panels.push(new MyNodeEntryDefinePanel(this, ui, myNodeEntryDefinePanel));
-    this.container.appendChild(myNodeEntryDefinePanel);
+      var myNodeEntryDefinePanel = div.cloneNode(false);
+      myNodeEntryDefinePanel.style.display = 'none';
+      this.panels.push(new MyNodeEntryDefinePanel(this, ui, myNodeEntryDefinePanel));
+      this.container.appendChild(myNodeEntryDefinePanel);
 
-		// 加入我的面板(非激活状态): 人员定义
-    mxUtils.write(label3, '人员定义');
-    div.appendChild(label3);
+      // 加入我的面板(非激活状态): 人员定义
+      mxUtils.write(label3, '人员定义');
+      div.appendChild(label3);
 
-    var myPeopleDefinePanel = div.cloneNode(false);
-    myPeopleDefinePanel.style.display = 'none';
-    this.panels.push(new MyPeopleDefinePanel(this, ui, myPeopleDefinePanel));
-    this.container.appendChild(myPeopleDefinePanel);
+      var myPeopleDefinePanel = div.cloneNode(false);
+      myPeopleDefinePanel.style.display = 'none';
+      this.panels.push(new MyPeopleDefinePanel(this, ui, myPeopleDefinePanel));
+      this.container.appendChild(myPeopleDefinePanel);
 
-		// 加入我的面板(非激活状态): URL定义
-    mxUtils.write(label4, 'URL定义');
-    div.appendChild(label4);
+      // 加入我的面板(非激活状态): URL定义
+      mxUtils.write(label4, 'URL定义');
+      div.appendChild(label4);
 
-    var myURLDefinePanel = div.cloneNode(false);
-    myURLDefinePanel.style.display = 'none';
-    this.panels.push(new MyURLDefinePanel(this, ui, myURLDefinePanel));
-    this.container.appendChild(myURLDefinePanel);
+      var myURLDefinePanel = div.cloneNode(false);
+      myURLDefinePanel.style.display = 'none';
+      this.panels.push(new MyURLDefinePanel(this, ui, myURLDefinePanel));
+      this.container.appendChild(myURLDefinePanel);
 
-		// 加入我的面板(非激活状态): 子流程
-    mxUtils.write(label5, '子流程');
-    div.appendChild(label5);
+      // 加入我的面板(非激活状态): 子流程
+      mxUtils.write(label5, '子流程');
+      div.appendChild(label5);
 
-    var mySubprocessPanel = div.cloneNode(false);
-    mySubprocessPanel.style.display = 'none';
-    this.panels.push(new MySubprocessPanel(this, ui, mySubprocessPanel));
-    this.container.appendChild(mySubprocessPanel);
+      var mySubprocessPanel = div.cloneNode(false);
+      mySubprocessPanel.style.display = 'none';
+      this.panels.push(new MySubprocessPanel(this, ui, mySubprocessPanel));
+      this.container.appendChild(mySubprocessPanel);
 
-    // 加入我的面板(非激活状态): 参数
-    mxUtils.write(label6, '参数');
-    div.appendChild(label6);
+      // 加入我的面板(非激活状态): 参数
+      mxUtils.write(label6, '参数');
+      div.appendChild(label6);
 
-    var myParamsPanel = div.cloneNode(false);
-    myParamsPanel.style.display = 'none';
-    this.panels.push(new MyParamsPanel(this, ui, myParamsPanel));
-    this.container.appendChild(myParamsPanel);
+      var myParamsPanel = div.cloneNode(false);
+      myParamsPanel.style.display = 'none';
+      this.panels.push(new MyParamsPanel(this, ui, myParamsPanel));
+      this.container.appendChild(myParamsPanel);
 
-    addClickHandler(label2, myNodeEntryDefinePanel, idx++);
-    addClickHandler(label3, myPeopleDefinePanel, idx++);
-    addClickHandler(label4, myURLDefinePanel, idx++);
-    addClickHandler(label5, mySubprocessPanel, idx++);
-    addClickHandler(label6, myParamsPanel, idx++);
+      addClickHandler(label2, myNodeEntryDefinePanel, idx++);
+      addClickHandler(label3, myPeopleDefinePanel, idx++);
+      addClickHandler(label4, myURLDefinePanel, idx++);
+      addClickHandler(label5, mySubprocessPanel, idx++);
+      addClickHandler(label6, myParamsPanel, idx++);
+    }
+
 	}
 };
 
@@ -1712,21 +1731,15 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		count++;
 	}
 
-	if (ss.vertices.length > 0)
-	{
+	debugger;
+	if (ss.vertices.length > 0) {
 		if (count > 0)
 		{
 			mxUtils.br(div);
 			count = 0;
 		}
 
-		var btn = mxUtils.button(mxResources.get('copySize'), function(evt)
-		{
-			ui.actions.get('copySize').funct();
-		});
 
-		btn.setAttribute('title', mxResources.get('copySize') + ' (' +
-			this.editorUi.actions.get('copySize').shortcut + ')');
 		btn.style.width = '202px';
 		btn.style.marginBottom = '2px';
 
@@ -2663,6 +2676,22 @@ ArrangePanel.prototype.addEdgeGeometry = function(container)
 	graph.getModel().addListener(mxEvent.CHANGE, listener);
 	this.listeners.push({destroy: function() { graph.getModel().removeListener(listener); }});
 	listener();
+};
+// 我的自定义连线属性模板
+MyLineAttributesPanel = function(format, editorUi, container) {
+  BaseFormatPanel.call(this, format, editorUi, container);
+  this.init();
+};
+mxUtils.extend(MyLineAttributesPanel, BaseFormatPanel);
+
+MyLineAttributesPanel.prototype.init = function() {
+  this.container.style.borderBottom = 'none';
+  // 当前操作的节点的数据们：
+  var ui = this.editorUi;
+  var ss = this.format.getSelectionState();
+  var mxCell = ss.vertices[0];
+  var dlg = new EditDataDialogInline_line(ui, mxCell);
+  this.container.appendChild(dlg.container);
 };
 
 // 我的自定义节点属性模板
