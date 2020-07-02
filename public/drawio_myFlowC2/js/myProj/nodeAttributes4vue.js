@@ -56,7 +56,25 @@ window.myProj = {
       "type": "input",
       "des": "这是URL定义里面的基础URL字段"
     }
-  ]
+  ],
+  childProcess: [
+    {
+      "childName": "子流程",
+      "type": "select",
+      "optionList": [
+        {
+          "text": '或',
+          "value": 1
+        },
+        {
+          "text": '与',
+          "value": 2
+        },
+      ],
+      "des": "这是子流程"
+    },
+  ],
+  params: []
 };
 
 

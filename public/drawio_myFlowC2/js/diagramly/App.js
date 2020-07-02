@@ -232,15 +232,6 @@ App.MODE_TRELLO = 'trello';
  */
 App.DROPBOX_APPKEY = 'libwls2fa9szdji';
 
-/**
- * Sets URL to load the Dropbox SDK from
- */
-App.DROPBOX_URL = window.DRAWIO_BASE_URL + '/js/dropbox/Dropbox-sdk.min.js';
-
-/**
- * Sets URL to load the Dropbox dropins JS from.
- */
-App.DROPINS_URL = 'https://www.dropbox.com/static/api/2/dropins.js';
 
 /**
  * OneDrive Client JS (file/folder picker). This is a slightly modified version to allow using accessTokens
@@ -248,10 +239,6 @@ App.DROPINS_URL = 'https://www.dropbox.com/static/api/2/dropins.js';
  */
 App.ONEDRIVE_URL = mxClient.IS_IE11? 'https://js.live.net/v7.2/OneDrive.js' : window.DRAWIO_BASE_URL + '/js/onedrive/OneDrive.js';
 
-/**
- * Trello URL
- */
-App.TRELLO_URL = 'https://api.trello.com/1/client.js';
 
 /**
  * Trello JQuery dependency
@@ -534,28 +521,6 @@ App.main = function(callback, createUi)
 				else if (typeof window.OneDrive === 'undefined')
 				{
 					window.OneDriveClient = null;
-				}
-				
-				// Loads Trello for all browsers but < IE10 if not disabled or if enabled and in embed mode
-				if (typeof window.TrelloClient === 'function' &&
-					(typeof window.Trello === 'undefined' && window.DrawTrelloClientCallback != null &&
-					(((urlParams['embed'] != '1' && urlParams['tr'] != '0') || (urlParams['embed'] == '1' &&
-					urlParams['tr'] == '1')) && (navigator.userAgent == null ||
-					navigator.userAgent.indexOf('MSIE') < 0 || document.documentMode >= 10))))
-				{
-					mxscript(App.TRELLO_JQUERY_URL, function()
-					{
-						// Must load this after the dropbox SDK since they use the same namespace
-						mxscript(App.TRELLO_URL, function()
-						{
-							DrawTrelloClientCallback();
-						});
-					});
-				}
-				// Disables client
-				else if (typeof window.Trello === 'undefined')
-				{
-					window.TrelloClient = null;
 				}
 	
 			}
@@ -1147,19 +1112,6 @@ App.prototype.sanityCheck = function()
 };
 
 /**
- * Returns true if the current domain is for the new drive app.
- */
-App.prototype.isDriveDomain = function()
-{
-	return urlParams['drive'] != '0' &&
-		(window.location.hostname == 'test.draw.io' ||
-		window.location.hostname == 'www.draw.io' ||
-		window.location.hostname == 'drive.draw.io' ||
-		window.location.hostname == 'app.diagrams.net' ||
-		window.location.hostname == 'jgraph.github.io');
-};
-
-/**
  * Returns the pusher instance for notifications. Creates the instance of none exists.
  */
 App.prototype.getPusher = function()
@@ -1729,10 +1681,7 @@ App.prototype.appIconClicked = function(evt)
 				this.openLink('https://www.dropbox.com/');
 			}
 		}
-		else if (mode == App.MODE_TRELLO)
-		{
-			this.openLink('https://trello.com/');
-		}
+
 		else if (mode == App.MODE_DEVICE)
 		{
 			this.openLink('https://get.draw.io/');
@@ -2226,13 +2175,7 @@ App.prototype.start = function()
 						{
 							var id = this.getDiagramId();
 							
-							if (EditorUi.enableDrafts && urlParams['mode'] == null &&
-								this.getServiceName() == 'draw.io' &&
-								(id == null || id.length == 0))
-							{
-								this.checkDrafts();
-							}
-							else if (urlParams['splash'] != '0')
+						 if (urlParams['splash'] != '0')
 							{
 								this.loadFile(id);
 							}
@@ -2255,97 +2198,6 @@ App.prototype.start = function()
 	}
 };
 
-/**
- * Checks for orphaned drafts.
- */
-App.prototype.loadDraft = function(xml, success) {
-	this.createFile(this.defaultFilename, xml, null, null, mxUtils.bind(this, function()
-	{
-		window.setTimeout(mxUtils.bind(this, function()
-		{
-			var file = this.getCurrentFile();
-			
-			if (file != null)
-			{
-				file.fileChanged();
-				
-				if (success != null)
-				{
-					success();
-				}
-			}
-		}), 0);
-	}), null, null, true);
-};
-
-/**
- * Checks for orphaned drafts.
- */
-App.prototype.checkDrafts = function()
-{
-	try
-	{
-		// Triggers storage event for other windows to mark active drafts
-		var guid = Editor.guid();
-		localStorage.setItem('.draft-alive-check', guid);
-		
-		window.setTimeout(mxUtils.bind(this, function()
-		{
-			localStorage.removeItem('.draft-alive-check');
-
-			this.getDatabaseItems(mxUtils.bind(this, function(items)
-			{
-				// Collects orphaned drafts
-				var drafts = [];
-				
-				for (var i = 0; i < items.length; i++)
-				{
-					try
-					{
-						var key = items[i].key;
-						
-						if (key != null && key.substring(0, 7) == '.draft_')
-						{
-							var obj = JSON.parse(items[i].data);
-							
-							if (obj != null && obj.type == 'draft' && obj.aliveCheck != guid)
-							{
-								obj.key = key;
-								drafts.push(obj);
-							}
-						}
-					}
-					catch (e)
-					{
-						// ignore
-					}
-				}
-				if (urlParams['splash'] != '0')
-				{
-					this.loadFile();
-				}
-				else
-				{
-					this.createFile(this.defaultFilename, this.getFileData(), null, null, null, null, null, true);
-				}
-			}), mxUtils.bind(this, function()
-			{
-				if (urlParams['splash'] != '0')
-				{
-					this.loadFile();
-				}
-				else
-				{
-					this.createFile(this.defaultFilename, this.getFileData(), null, null, null, null, null, true);
-				}
-			}));
-		}), 0);
-	}
-	catch (e)
-	{
-		// ignore
-	}
-};
 
 /**
  * Translates this point by the given vector.
@@ -2597,340 +2449,6 @@ App.prototype.pickFile = function(mode)
 };
 
 /**
- * Translates this point by the given vector.
- * 
- * @param {number} dx X-coordinate of the translation.
- * @param {number} dy Y-coordinate of the translation.
- */
-App.prototype.pickLibrary = function(mode) {
-	mode = (mode != null) ? mode : this.mode;
-	
-	if (mode == App.MODE_GOOGLE || mode == App.MODE_DROPBOX || mode == App.MODE_ONEDRIVE ||
-		mode == App.MODE_GITHUB || mode == App.MODE_GITLAB || mode == App.MODE_TRELLO)
-	{
-		var peer = (mode == App.MODE_GOOGLE) ? this.drive :
-			((mode == App.MODE_ONEDRIVE) ? this.oneDrive :
-			((mode == App.MODE_GITHUB) ? this.gitHub :
-			((mode == App.MODE_GITLAB) ? this.gitLab :
-			((mode == App.MODE_TRELLO) ? this.trello :
-			this.dropbox))));
-		
-		if (peer != null)
-		{
-			peer.pickLibrary(mxUtils.bind(this, function(id, optionalFile)
-			{
-				if (optionalFile != null)
-				{
-					try
-					{
-						this.loadLibrary(optionalFile);
-					}
-					catch (e)
-					{
-						this.handleError(e, mxResources.get('errorLoadingFile'));
-					}
-				}
-				else
-				{
-					if (this.spinner.spin(document.body, mxResources.get('loading')))
-					{
-						peer.getLibrary(id, mxUtils.bind(this, function(file)
-						{
-							this.spinner.stop();
-							
-							try
-							{
-								this.loadLibrary(file);
-							}
-							catch (e)
-							{
-								this.handleError(e, mxResources.get('errorLoadingFile'));
-							}
-						}), mxUtils.bind(this, function(resp)
-						{
-							this.handleError(resp, (resp != null) ? mxResources.get('errorLoadingFile') : null);
-						}));
-					}
-				}
-			}));
-		}
-	}
-	else if (mode == App.MODE_DEVICE && Graph.fileSupport)
-	{
-		if (this.libFileInputElt == null) 
-		{
-			var input = document.createElement('input');
-			input.setAttribute('type', 'file');
-			
-			mxEvent.addListener(input, 'change', mxUtils.bind(this, function()
-			{
-				if (input.files != null)
-				{
-					for (var i = 0; i < input.files.length; i++)
-					{
-						(mxUtils.bind(this, function(file)
-						{
-							var reader = new FileReader();
-						
-							reader.onload = mxUtils.bind(this, function(e)
-							{
-								try
-								{
-									this.loadLibrary(new LocalLibrary(this, e.target.result, file.name));
-								}
-								catch (e)
-								{
-									this.handleError(e, mxResources.get('errorLoadingFile'));
-								}
-							});
-	
-							reader.readAsText(file);
-						}))(input.files[i]);
-					}
-					
-		    		// Resets input to force change event for same file (type reset required for IE)
-					input.type = '';
-					input.type = 'file';
-		    		input.value = '';
-				}
-			}));
-			
-			input.style.display = 'none';
-			document.body.appendChild(input);
-			this.libFileInputElt = input;
-		}
-		
-		this.libFileInputElt.click();
-	}
-	else
-	{
-		window.openNew = false;
-		window.openKey = 'open';
-		
-		window.listBrowserFiles = mxUtils.bind(this, function(success, error) 
-		{
-			StorageFile.listFiles(this, 'L', success, error);
-		});
-		
-		window.openBrowserFile = mxUtils.bind(this, function(title, success, error)
-		{
-			StorageFile.getFileContent(this, title, success, error);
-		});
-		
-		window.deleteBrowserFile = mxUtils.bind(this, function(title, success, error)
-		{
-			StorageFile.deleteFile(this, title, success, error);
-		});
-		
-		var prevValue = Editor.useLocalStorage;
-		Editor.useLocalStorage = mode == App.MODE_BROWSER;
-		
-		// Closes dialog after open
-		window.openFile = new OpenFile(mxUtils.bind(this, function(cancel)
-		{
-			this.hideDialog(cancel);
-		}));
-		
-		window.openFile.setConsumer(mxUtils.bind(this, function(xml, filename)
-		{
-			try
-			{
-				this.loadLibrary((mode == App.MODE_BROWSER) ? new StorageLibrary(this, xml, filename) :
-					new LocalLibrary(this, xml, filename));
-			}
-			catch (e)
-			{
-				this.handleError(e, mxResources.get('errorLoadingFile'));
-			}
-		}));
-
-		// Removes openFile if dialog is closed
-		this.showDialog(new OpenDialog(this).container, (Editor.useLocalStorage) ? 640 : 360,
-			(Editor.useLocalStorage) ? 480 : 220, true, true, function()
-		{
-			Editor.useLocalStorage = prevValue;
-			window.openFile = null;
-		});
-	}
-};
-
-/**
- * Translates this point by the given vector.
- * 
- * @param {number} dx X-coordinate of the translation.
- * @param {number} dy Y-coordinate of the translation.
- */
-App.prototype.saveLibrary = function(name, images, file, mode, noSpin, noReload, fn)
-{
-	try
-	{
-		mode = (mode != null) ? mode : this.mode;
-		noSpin = (noSpin != null) ? noSpin : false;
-		noReload = (noReload != null) ? noReload : false;
-		var xml = this.createLibraryDataFromImages(images);
-		
-		var error = mxUtils.bind(this, function(resp)
-		{
-			this.spinner.stop();
-			
-			if (fn != null)
-			{
-				fn();
-			}
-			
-			this.handleError(resp, (resp != null) ? mxResources.get('errorSavingFile') : null);
-		});
-	
-		// Handles special case for local libraries
-		if (file == null && mode == App.MODE_DEVICE)
-		{
-			file = new LocalLibrary(this, xml, name);
-		}
-		
-		if (file == null)
-		{
-			this.pickFolder(mode, mxUtils.bind(this, function(folderId)
-			{
-				if (mode == App.MODE_GOOGLE && this.drive != null && this.spinner.spin(document.body, mxResources.get('inserting')))
-				{
-					this.drive.insertFile(name, xml, folderId, mxUtils.bind(this, function(newFile)
-					{
-						this.spinner.stop();
-						this.hideDialog(true);
-						this.libraryLoaded(newFile, images);
-					}), error, this.drive.libraryMimeType);
-				}
-				else if (mode == App.MODE_GITHUB && this.gitHub != null && this.spinner.spin(document.body, mxResources.get('inserting')))
-				{
-					this.gitHub.insertLibrary(name, xml, mxUtils.bind(this, function(newFile)
-					{
-						this.spinner.stop();
-						this.hideDialog(true);
-						this.libraryLoaded(newFile, images);
-					}), error, folderId);
-				}
-				else if (mode == App.MODE_GITLAB && this.gitLab != null && this.spinner.spin(document.body, mxResources.get('inserting')))
-				{
-					this.gitLab.insertLibrary(name, xml, mxUtils.bind(this, function(newFile)
-					{
-						this.spinner.stop();
-						this.hideDialog(true);
-						this.libraryLoaded(newFile, images);
-					}), error, folderId);
-				}
-				else if (mode == App.MODE_TRELLO && this.trello != null && this.spinner.spin(document.body, mxResources.get('inserting')))
-				{
-					this.trello.insertLibrary(name, xml, mxUtils.bind(this, function(newFile)
-					{
-						this.spinner.stop();
-						this.hideDialog(true);
-						this.libraryLoaded(newFile, images);
-					}), error, folderId);
-				}
-				else if (mode == App.MODE_DROPBOX && this.dropbox != null && this.spinner.spin(document.body, mxResources.get('inserting')))
-				{
-					this.dropbox.insertLibrary(name, xml, mxUtils.bind(this, function(newFile)
-					{
-						this.spinner.stop();
-						this.hideDialog(true);
-						this.libraryLoaded(newFile, images);
-					}), error, folderId);
-				}
-				else if (mode == App.MODE_ONEDRIVE && this.oneDrive != null && this.spinner.spin(document.body, mxResources.get('inserting')))
-				{
-					this.oneDrive.insertLibrary(name, xml, mxUtils.bind(this, function(newFile)
-					{
-						this.spinner.stop();
-						this.hideDialog(true);
-						this.libraryLoaded(newFile, images);
-					}), error, folderId);
-				}
-				else if (mode == App.MODE_BROWSER)
-				{
-					var fn = mxUtils.bind(this, function()
-					{
-						var file = new StorageLibrary(this, xml, name);
-						
-						// Inserts data into local storage
-						file.saveFile(name, false, mxUtils.bind(this, function()
-						{
-							this.hideDialog(true);
-							this.libraryLoaded(file, images);
-						}), error);
-					});
-					
-					if (localStorage.getItem(name) == null)
-					{
-						fn();
-					}
-					else
-					{
-						this.confirm(mxResources.get('replaceIt', [name]), fn);
-					}
-				}
-				else
-				{
-					this.handleError({message: mxResources.get('serviceUnavailableOrBlocked')});
-				}
-			}));
-		}
-		else if (noSpin || this.spinner.spin(document.body, mxResources.get('saving')))
-		{
-			file.setData(xml);
-			
-			var doSave = mxUtils.bind(this, function()
-			{
-				file.save(true, mxUtils.bind(this, function(resp)
-				{
-					this.spinner.stop();
-					this.hideDialog(true);
-					
-					if (!noReload)
-					{
-						this.libraryLoaded(file, images);
-					}
-					
-					if (fn != null)
-					{
-						fn();
-					}
-				}), error);
-			});
-			
-			if (name != file.getTitle())
-			{
-				var oldHash = file.getHash();
-				
-				file.rename(name, mxUtils.bind(this, function(resp)
-				{
-					// Change hash in stored settings
-					if (file.constructor != LocalLibrary && oldHash != file.getHash())
-					{
-						mxSettings.removeCustomLibrary(oldHash);
-						mxSettings.addCustomLibrary(file.getHash());
-					}
-	
-					// Workaround for library files changing hash so
-					// the old library cannot be removed from the
-					// sidebar using the updated file in libraryLoaded
-					this.removeLibrarySidebar(oldHash);
-	
-					doSave();
-				}), error)
-			}
-			else
-			{
-				doSave();
-			}
-		}
-	}
-	catch (e)
-	{
-		this.handleError(e);
-	}
-};
-
-/**
  * Adds the label menu items to the given menu and parent.
  */
 App.prototype.saveFile = function(forceDialog, success)
@@ -3072,34 +2590,8 @@ App.prototype.saveFile = function(forceDialog, success)
  */
 App.prototype.getPeerForMode = function(mode)
 {
-	if (mode == App.MODE_GOOGLE)
-	{
-		return this.drive;
-	}
-	else if (mode == App.MODE_GITHUB)
-	{
-		return this.gitHub;
-	}
-	else if (mode == App.MODE_GITLAB)
-	{
-		return this.gitLab;
-	}
-	else if (mode == App.MODE_DROPBOX)
-	{
-		return this.dropbox;
-	}
-	else if (mode == App.MODE_ONEDRIVE)
-	{
-		return this.oneDrive;
-	}
-	else if (mode == App.MODE_TRELLO)
-	{
-		return this.trello;
-	} 
-	else
-	{
 		return null;
-	}
+
 };
 
 /**
@@ -4107,44 +3599,6 @@ App.prototype.descriptorChanged = function()
 };
 
 /**
- * Adds the listener for automatically saving the diagram for local changes.
- */
-App.prototype.showAuthDialog = function(peer, showRememberOption, fn, closeFn)
-{
-	var resume = this.spinner.pause();
-	
-	this.showDialog(new AuthDialog(this, peer, showRememberOption, mxUtils.bind(this, function(remember)
-	{
-		try
-		{
-			if (fn != null)
-			{
-				fn(remember, mxUtils.bind(this, function()
-				{
-					this.hideDialog();
-					resume();
-				}));
-			}
-		}
-		catch (e)
-		{
-			this.editor.setStatus(mxUtils.htmlEntities(e.message));
-		}
-	})).container, 300, (showRememberOption) ? 180 : 140, true, true, mxUtils.bind(this, function(cancel)
-	{
-		if (closeFn != null)
-		{
-			closeFn();
-		}
-		
-		if (cancel && this.getCurrentFile() == null && this.dialog == null)
-		{
-			this.showSplash();
-		}
-	}));
-};
-
-/**
  * Checks if the client is authorized and calls the next step. The optional
  * readXml argument is used for import. Default is false. The optional
  * readLibrary argument is used for reading libraries. Default is false.
@@ -4346,8 +3800,7 @@ App.prototype.convertFile = function(url, filename, mimeType, extension, success
  */ 
 App.prototype.updateHeader = function()
 {
-	if (this.menubar != null)
-	{
+	if (this.menubar != null) {
 		this.appIcon = document.createElement('a');
 		this.appIcon.style.display = 'block';
 		this.appIcon.style.position = 'absolute';
@@ -4381,47 +3834,7 @@ App.prototype.updateHeader = function()
 		this.appIcon.style.backgroundRepeat = 'no-repeat';
 		
 		mxUtils.setPrefixedStyle(this.appIcon.style, 'transition', 'all 125ms linear');
-	
-		mxEvent.addListener(this.appIcon, 'mouseover', mxUtils.bind(this, function()
-		{
-			var file = this.getCurrentFile();
-			
-			if (file != null)
-			{
-				var mode = file.getMode();
-				
-				if (mode == App.MODE_GOOGLE)
-				{
-					this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/google-drive-logo-white.svg)';
-					this.appIcon.style.backgroundSize = '70% 70%';
-				}
-				else if (mode == App.MODE_DROPBOX)
-				{
-					this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/dropbox-logo-white.svg)';
-					this.appIcon.style.backgroundSize = '70% 70%';
-				}
-				else if (mode == App.MODE_ONEDRIVE)
-				{
-					this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/onedrive-logo-white.svg)';
-					this.appIcon.style.backgroundSize = '70% 70%';
-				}
-				else if (mode == App.MODE_GITHUB)
-				{
-					this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/github-logo-white.svg)';
-					this.appIcon.style.backgroundSize = '70% 70%';
-				}
-				else if (mode == App.MODE_GITLAB)
-				{
-					this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/gitlab-logo-white.svg)';
-					this.appIcon.style.backgroundSize = '100% 100%';
-				}
-				else if (mode == App.MODE_TRELLO)
-				{
-					this.appIcon.style.backgroundImage = 'url(' + IMAGE_PATH + '/trello-logo-white-orange.svg)';
-					this.appIcon.style.backgroundSize = '70% 70%';
-				}
-			}
-		}));
+
 		
 		mxEvent.addListener(this.appIcon, 'mouseout', mxUtils.bind(this, function()
 		{

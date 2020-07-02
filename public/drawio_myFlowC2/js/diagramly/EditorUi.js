@@ -11725,12 +11725,6 @@
 		var libsEnabled = urlParams['embed'] != '1' ||
 				this.editor.graph.isEnabled();
 		
-		if (Editor.enableCustomLibraries)
-		{
-			this.menus.get('openLibraryFrom').setEnabled(libsEnabled);
-			this.menus.get('newLibrary').setEnabled(libsEnabled);
-		}
-		
 		// Disables actions in the toolbar
 		var editable = (urlParams['embed'] == '1' &&
 			this.editor.graph.isEnabled()) ||
@@ -11828,7 +11822,6 @@
 		this.actions.get('pasteStyle').setEnabled(active && !graph.isSelectionEmpty());
 		this.actions.get('editGeometry').setEnabled(graph.getModel().isVertex(graph.getSelectionCell()));
 		this.actions.get('createRevision').setEnabled(active);
-		this.actions.get('moveToFolder').setEnabled(file != null);
 		this.actions.get('editDiagram').setEnabled(active && (file == null || !file.isRestricted()));
 		this.actions.get('publishLink').setEnabled(file != null && !file.isRestricted());
 		this.actions.get('find').setEnabled(this.diagramContainer.style.visibility != 'hidden');

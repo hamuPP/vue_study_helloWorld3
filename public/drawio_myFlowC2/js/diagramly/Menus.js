@@ -947,32 +947,6 @@
         });
     }));
 
-    editorUi.actions.addAction('microsoftOffice...', function () {
-      editorUi.openLink('https://office.draw.io');
-    });
-
-    editorUi.actions.addAction('googleDocs...', function () {
-      editorUi.openLink('http://docsaddon.draw.io');
-    });
-
-    editorUi.actions.addAction('googleSlides...', function () {
-      editorUi.openLink('https://slidesaddon.draw.io');
-    });
-
-    editorUi.actions.addAction('googleSheets...', function () {
-      editorUi.openLink('https://sheetsaddon.draw.io');
-    });
-
-    editorUi.actions.addAction('googleSites...', function () {
-      if (editorUi.spinner.spin(document.body, mxResources.get('loading'))) {
-        editorUi.getPublicUrl(editorUi.getCurrentFile(), function (url) {
-          editorUi.spinner.stop();
-          var dlg = new GoogleSitesDialog(editorUi, url);
-          editorUi.showDialog(dlg.container, 420, 256, true, true);
-          dlg.init();
-        });
-      }
-    });
 
     action.setToggleAction(true);
     action.setSelectedCallback(function () {
@@ -1182,32 +1156,6 @@
 
     renameAction.visible = urlParams['embed'] != '1';
 
-    editorUi.actions.addAction('moveToFolder...', mxUtils.bind(this, function () {
-      var file = editorUi.getCurrentFile();
-
-      if (file.getMode() == App.MODE_GOOGLE || file.getMode() == App.MODE_ONEDRIVE) {
-        var isInRoot = false;
-
-        if (file.getMode() == App.MODE_GOOGLE && file.desc.parents != null) {
-          for (var i = 0; i < file.desc.parents.length; i++) {
-            if (file.desc.parents[i].isRoot) {
-              isInRoot = true;
-              break;
-            }
-          }
-        }
-
-        editorUi.pickFolder(file.getMode(), mxUtils.bind(this, function (folderId) {
-          if (editorUi.spinner.spin(document.body, mxResources.get('moving'))) {
-            file.move(folderId, mxUtils.bind(this, function (resp) {
-              editorUi.spinner.stop();
-            }), mxUtils.bind(this, function (resp) {
-              editorUi.handleError(resp);
-            }));
-          }
-        }), null, true, isInRoot);
-      }
-    }));
 
     this.put('publish', new Menu(mxUtils.bind(this, function (menu, parent) {
       this.addMenuItems(menu, ['publishLink'], parent);
@@ -1215,10 +1163,6 @@
 
     editorUi.actions.put('useOffline', new Action(mxResources.get('useOffline') + '...', function () {
       editorUi.openLink('https://app.draw.io/')
-    }));
-
-    editorUi.actions.put('downloadDesktop', new Action(mxResources.get('downloadDesktop') + '...', function () {
-      editorUi.openLink('https://get.draw.io/')
     }));
 
     this.editorUi.actions.addAction('share...', mxUtils.bind(this, function () {
@@ -1383,198 +1327,154 @@
     })));
 
     if (Editor.enableCustomLibraries) {
-      this.put('newLibrary', new Menu(function (menu, parent) {
-        if (typeof(google) != 'undefined' && typeof(google.picker) != 'undefined') {
-          if (editorUi.drive != null) {
-            menu.addItem(mxResources.get('googleDrive') + '...', null, function () {
-              editorUi.showLibraryDialog(null, null, null, null, App.MODE_GOOGLE);
-            }, parent);
-          }
-          else if (googleEnabled && typeof window.DriveClient === 'function') {
-            menu.addItem(mxResources.get('googleDrive') + ' (' + mxResources.get('loading') + '...)', null, function () {
-              // do nothing
-            }, parent, null, false);
-          }
-        }
+      // this.put('newLibrary', new Menu(function (menu, parent) {
+      //   if (typeof(google) != 'undefined' && typeof(google.picker) != 'undefined') {
+      //     if (editorUi.drive != null) {
+      //       menu.addItem(mxResources.get('googleDrive') + '...', null, function () {
+      //         editorUi.showLibraryDialog(null, null, null, null, App.MODE_GOOGLE);
+      //       }, parent);
+      //     }
+      //     else if (googleEnabled && typeof window.DriveClient === 'function') {
+      //       menu.addItem(mxResources.get('googleDrive') + ' (' + mxResources.get('loading') + '...)', null, function () {
+      //         // do nothing
+      //       }, parent, null, false);
+      //     }
+      //   }
+      //
+      //   menu.addSeparator(parent);
+      //
+      //   if (editorUi.gitHub != null) {
+      //     menu.addItem(mxResources.get('github') + '...', null, function () {
+      //       editorUi.showLibraryDialog(null, null, null, null, App.MODE_GITHUB);
+      //     }, parent);
+      //   }
+      //
+      //   if (editorUi.gitLab != null) {
+      //     menu.addItem(mxResources.get('gitlab') + '...', null, function () {
+      //       editorUi.showLibraryDialog(null, null, null, null, App.MODE_GITLAB);
+      //     }, parent);
+      //   }
+      //
+      //   if (editorUi.trello != null) {
+      //     menu.addItem(mxResources.get('trello') + '...', null, function () {
+      //       editorUi.showLibraryDialog(null, null, null, null, App.MODE_TRELLO);
+      //     }, parent);
+      //   }
+      //   else if (trelloEnabled && typeof window.TrelloClient === 'function') {
+      //     menu.addItem(mxResources.get('trello') + ' (' + mxResources.get('loading') + '...)', null, function () {
+      //       // do nothing
+      //     }, parent, null, false);
+      //   }
+      //
+      //   menu.addSeparator(parent);
+      //   if (isLocalStorage && urlParams['browser'] != '0') {
+      //     menu.addItem(mxResources.get('browser') + '...', null, function () {
+      //       editorUi.showLibraryDialog(null, null, null, null, App.MODE_BROWSER);
+      //     }, parent);
+      //   }
+      //
+      //   //if (!mxClient.IS_IOS)
+      //   {
+      //     menu.addItem(mxResources.get('device') + '...', null, function () {
+      //       editorUi.showLibraryDialog(null, null, null, null, App.MODE_DEVICE);
+      //     }, parent);
+      //   }
+      // }));
 
-        if (editorUi.oneDrive != null) {
-          menu.addItem(mxResources.get('oneDrive') + '...', null, function () {
-            editorUi.showLibraryDialog(null, null, null, null, App.MODE_ONEDRIVE);
-          }, parent);
-        }
-        else if (oneDriveEnabled && typeof window.OneDriveClient === 'function') {
-          menu.addItem(mxResources.get('oneDrive') + ' (' + mxResources.get('loading') + '...)', null, function () {
-            // do nothing
-          }, parent, null, false);
-        }
-
-        if (editorUi.dropbox != null) {
-          menu.addItem(mxResources.get('dropbox') + '...', null, function () {
-            editorUi.showLibraryDialog(null, null, null, null, App.MODE_DROPBOX);
-          }, parent);
-        }
-        else if (dropboxEnabled && typeof window.DropboxClient === 'function') {
-          menu.addItem(mxResources.get('dropbox') + ' (' + mxResources.get('loading') + '...)', null, function () {
-            // do nothing
-          }, parent, null, false);
-        }
-
-        menu.addSeparator(parent);
-
-        if (editorUi.gitHub != null) {
-          menu.addItem(mxResources.get('github') + '...', null, function () {
-            editorUi.showLibraryDialog(null, null, null, null, App.MODE_GITHUB);
-          }, parent);
-        }
-
-        if (editorUi.gitLab != null) {
-          menu.addItem(mxResources.get('gitlab') + '...', null, function () {
-            editorUi.showLibraryDialog(null, null, null, null, App.MODE_GITLAB);
-          }, parent);
-        }
-
-        if (editorUi.trello != null) {
-          menu.addItem(mxResources.get('trello') + '...', null, function () {
-            editorUi.showLibraryDialog(null, null, null, null, App.MODE_TRELLO);
-          }, parent);
-        }
-        else if (trelloEnabled && typeof window.TrelloClient === 'function') {
-          menu.addItem(mxResources.get('trello') + ' (' + mxResources.get('loading') + '...)', null, function () {
-            // do nothing
-          }, parent, null, false);
-        }
-
-        menu.addSeparator(parent);
-        if (isLocalStorage && urlParams['browser'] != '0') {
-          menu.addItem(mxResources.get('browser') + '...', null, function () {
-            editorUi.showLibraryDialog(null, null, null, null, App.MODE_BROWSER);
-          }, parent);
-        }
-
-        //if (!mxClient.IS_IOS)
-        {
-          menu.addItem(mxResources.get('device') + '...', null, function () {
-            editorUi.showLibraryDialog(null, null, null, null, App.MODE_DEVICE);
-          }, parent);
-        }
-      }));
-
-      this.put('openLibraryFrom', new Menu(function (menu, parent) {
-        if (typeof(google) != 'undefined' && typeof(google.picker) != 'undefined') {
-          if (editorUi.drive != null) {
-            menu.addItem(mxResources.get('googleDrive') + '...', null, function () {
-              editorUi.pickLibrary(App.MODE_GOOGLE);
-            }, parent);
-          }
-          else if (googleEnabled && typeof window.DriveClient === 'function') {
-            menu.addItem(mxResources.get('googleDrive') + ' (' + mxResources.get('loading') + '...)', null, function () {
-              // do nothing
-            }, parent, null, false);
-          }
-        }
-
-        if (editorUi.oneDrive != null) {
-          menu.addItem(mxResources.get('oneDrive') + '...', null, function () {
-            editorUi.pickLibrary(App.MODE_ONEDRIVE);
-          }, parent);
-        }
-        else if (oneDriveEnabled && typeof window.OneDriveClient === 'function') {
-          menu.addItem(mxResources.get('oneDrive') + ' (' + mxResources.get('loading') + '...)', null, function () {
-            // do nothing
-          }, parent, null, false);
-        }
-
-        if (editorUi.dropbox != null) {
-          menu.addItem(mxResources.get('dropbox') + '...', null, function () {
-            editorUi.pickLibrary(App.MODE_DROPBOX);
-          }, parent);
-        }
-        else if (dropboxEnabled && typeof window.DropboxClient === 'function') {
-          menu.addItem(mxResources.get('dropbox') + ' (' + mxResources.get('loading') + '...)', null, function () {
-            // do nothing
-          }, parent, null, false);
-        }
-
-        menu.addSeparator(parent);
-
-        if (editorUi.gitHub != null) {
-          menu.addItem(mxResources.get('github') + '...', null, function () {
-            editorUi.pickLibrary(App.MODE_GITHUB);
-          }, parent);
-        }
-
-        if (editorUi.gitLab != null) {
-          menu.addItem(mxResources.get('gitlab') + '...', null, function () {
-            editorUi.pickLibrary(App.MODE_GITLAB);
-          }, parent);
-        }
-
-        if (editorUi.trello != null) {
-          menu.addItem(mxResources.get('trello') + '...', null, function () {
-            editorUi.pickLibrary(App.MODE_TRELLO);
-          }, parent);
-        }
-        else if (trelloEnabled && typeof window.TrelloClient === 'function') {
-          menu.addItem(mxResources.get('trello') + ' (' + mxResources.get('loading') + '...)', null, function () {
-            // do nothing
-          }, parent, null, false);
-        }
-
-        menu.addSeparator(parent);
-
-        if (isLocalStorage && urlParams['browser'] != '0') {
-          menu.addItem(mxResources.get('browser') + '...', null, function () {
-            editorUi.pickLibrary(App.MODE_BROWSER);
-          }, parent);
-        }
-
-        //if (!mxClient.IS_IOS)
-        {
-          menu.addItem(mxResources.get('device') + '...', null, function () {
-            editorUi.pickLibrary(App.MODE_DEVICE);
-          }, parent);
-        }
-
-        if (!editorUi.isOffline()) {
-          menu.addSeparator(parent);
-
-          menu.addItem(mxResources.get('url') + '...', null, function () {
-            var dlg = new FilenameDialog(editorUi, '', mxResources.get('open'), function (fileUrl) {
-              if (fileUrl != null && fileUrl.length > 0 && editorUi.spinner.spin(document.body, mxResources.get('loading'))) {
-                var realUrl = fileUrl;
-
-                if (!editorUi.editor.isCorsEnabledForUrl(fileUrl)) {
-                  realUrl = PROXY_URL + '?url=' + encodeURIComponent(fileUrl);
-                }
-
-                // Uses proxy to avoid CORS issues
-                mxUtils.get(realUrl, function (req) {
-                  if (req.getStatus() >= 200 && req.getStatus() <= 299) {
-                    editorUi.spinner.stop();
-
-                    try {
-                      editorUi.loadLibrary(new UrlLibrary(this, req.getText(), fileUrl));
-                    }
-                    catch (e) {
-                      editorUi.handleError(e, mxResources.get('errorLoadingFile'));
-                    }
-                  }
-                  else {
-                    editorUi.spinner.stop();
-                    editorUi.handleError(null, mxResources.get('errorLoadingFile'));
-                  }
-                }, function () {
-                  editorUi.spinner.stop();
-                  editorUi.handleError(null, mxResources.get('errorLoadingFile'));
-                });
-              }
-            }, mxResources.get('url'));
-            editorUi.showDialog(dlg.container, 300, 80, true, true);
-            dlg.init();
-          }, parent);
-        }
-
-      }));
+      // this.put('openLibraryFrom', new Menu(function (menu, parent) {
+      //
+      //
+      //   if (editorUi.dropbox != null) {
+      //     menu.addItem(mxResources.get('dropbox') + '...', null, function () {
+      //       editorUi.pickLibrary(App.MODE_DROPBOX);
+      //     }, parent);
+      //   }
+      //   else if (dropboxEnabled && typeof window.DropboxClient === 'function') {
+      //     menu.addItem(mxResources.get('dropbox') + ' (' + mxResources.get('loading') + '...)', null, function () {
+      //       // do nothing
+      //     }, parent, null, false);
+      //   }
+      //
+      //   menu.addSeparator(parent);
+      //
+      //   if (editorUi.gitHub != null) {
+      //     menu.addItem(mxResources.get('github') + '...', null, function () {
+      //       editorUi.pickLibrary(App.MODE_GITHUB);
+      //     }, parent);
+      //   }
+      //
+      //   if (editorUi.gitLab != null) {
+      //     menu.addItem(mxResources.get('gitlab') + '...', null, function () {
+      //       editorUi.pickLibrary(App.MODE_GITLAB);
+      //     }, parent);
+      //   }
+      //
+      //   if (editorUi.trello != null) {
+      //     menu.addItem(mxResources.get('trello') + '...', null, function () {
+      //       editorUi.pickLibrary(App.MODE_TRELLO);
+      //     }, parent);
+      //   }
+      //   else if (trelloEnabled && typeof window.TrelloClient === 'function') {
+      //     menu.addItem(mxResources.get('trello') + ' (' + mxResources.get('loading') + '...)', null, function () {
+      //       // do nothing
+      //     }, parent, null, false);
+      //   }
+      //
+      //   menu.addSeparator(parent);
+      //
+      //   if (isLocalStorage && urlParams['browser'] != '0') {
+      //     menu.addItem(mxResources.get('browser') + '...', null, function () {
+      //       editorUi.pickLibrary(App.MODE_BROWSER);
+      //     }, parent);
+      //   }
+      //
+      //   //if (!mxClient.IS_IOS)
+      //   {
+      //     menu.addItem(mxResources.get('device') + '...', null, function () {
+      //       editorUi.pickLibrary(App.MODE_DEVICE);
+      //     }, parent);
+      //   }
+      //
+      //   if (!editorUi.isOffline()) {
+      //     menu.addSeparator(parent);
+      //
+      //     menu.addItem(mxResources.get('url') + '...', null, function () {
+      //       var dlg = new FilenameDialog(editorUi, '', mxResources.get('open'), function (fileUrl) {
+      //         if (fileUrl != null && fileUrl.length > 0 && editorUi.spinner.spin(document.body, mxResources.get('loading'))) {
+      //           var realUrl = fileUrl;
+      //
+      //           if (!editorUi.editor.isCorsEnabledForUrl(fileUrl)) {
+      //             realUrl = PROXY_URL + '?url=' + encodeURIComponent(fileUrl);
+      //           }
+      //
+      //           // Uses proxy to avoid CORS issues
+      //           mxUtils.get(realUrl, function (req) {
+      //             if (req.getStatus() >= 200 && req.getStatus() <= 299) {
+      //               editorUi.spinner.stop();
+      //
+      //               try {
+      //                 editorUi.loadLibrary(new UrlLibrary(this, req.getText(), fileUrl));
+      //               }
+      //               catch (e) {
+      //                 editorUi.handleError(e, mxResources.get('errorLoadingFile'));
+      //               }
+      //             }
+      //             else {
+      //               editorUi.spinner.stop();
+      //               editorUi.handleError(null, mxResources.get('errorLoadingFile'));
+      //             }
+      //           }, function () {
+      //             editorUi.spinner.stop();
+      //             editorUi.handleError(null, mxResources.get('errorLoadingFile'));
+      //           });
+      //         }
+      //       }, mxResources.get('url'));
+      //       editorUi.showDialog(dlg.container, 300, 80, true, true);
+      //       dlg.init();
+      //     }, parent);
+      //   }
+      //
+      // }));
     }
 
     // Overrides edit menu to add find and editGeometry

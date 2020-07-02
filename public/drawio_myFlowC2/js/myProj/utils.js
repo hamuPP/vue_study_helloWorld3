@@ -16,5 +16,5 @@ window.myUtils = {
         return child;
       }
     }
-  }
+  },
 };

@@ -352,10 +352,7 @@ Format.prototype.refresh = function()
 	var graph = ui.editor.graph;
 	
 	var div = document.createElement('div');
-	div.style.whiteSpace = 'nowrap';
-	div.style.color = 'rgb(112, 112, 112)';
-	div.style.textAlign = 'left';
-	div.style.cursor = 'default';
+	div.className = 'geFormatSection-label-group';
 	
 	var label = document.createElement('div');
 	label.className = 'geFormatSection geFormatSection-label';
@@ -471,6 +468,8 @@ Format.prototype.refresh = function()
     var label3 = label2.cloneNode(false);
 		var label4 = label2.cloneNode(false);
 		var label5 = label2.cloneNode(false);
+		var label6 = label2.cloneNode(false);
+		var label7 = label2.cloneNode(false);
 
 
 		// Style
@@ -485,7 +484,6 @@ Format.prototype.refresh = function()
 
       var myNodeAttributesPanel = div.cloneNode(false);
       myNodeAttributesPanel.style.display = 'none';
-      debugger;
       this.panels.push(new MyNodeAttributePanel(this, ui, myNodeAttributesPanel));
       this.container.appendChild(myNodeAttributesPanel);
 
@@ -516,7 +514,6 @@ Format.prototype.refresh = function()
 
     var myURLDefinePanel = div.cloneNode(false);
     myURLDefinePanel.style.display = 'none';
-    debugger;
     this.panels.push(new MyURLDefinePanel(this, ui, myURLDefinePanel));
     this.container.appendChild(myURLDefinePanel);
 
@@ -529,10 +526,20 @@ Format.prototype.refresh = function()
     this.panels.push(new MySubprocessPanel(this, ui, mySubprocessPanel));
     this.container.appendChild(mySubprocessPanel);
 
+    // 加入我的面板(非激活状态): 参数
+    mxUtils.write(label6, '参数');
+    div.appendChild(label6);
+
+    var myParamsPanel = div.cloneNode(false);
+    myParamsPanel.style.display = 'none';
+    this.panels.push(new MyParamsPanel(this, ui, myParamsPanel));
+    this.container.appendChild(myParamsPanel);
+
     addClickHandler(label2, myNodeEntryDefinePanel, idx++);
     addClickHandler(label3, myPeopleDefinePanel, idx++);
     addClickHandler(label4, myURLDefinePanel, idx++);
     addClickHandler(label5, mySubprocessPanel, idx++);
+    addClickHandler(label6, myParamsPanel, idx++);
 	}
 };
 
@@ -2764,7 +2771,30 @@ MySubprocessPanel = function(format, editorUi, container) {
 mxUtils.extend(MySubprocessPanel, BaseFormatPanel);
 
 MySubprocessPanel.prototype.init = function() {
+  // 当前操作的节点的数据们：
+  var ui = this.editorUi;
+  var ss = this.format.getSelectionState();
+  var mxCell = ss.vertices[0];
+  var dlg = new EditDataDialogInline_childProcess(ui, mxCell);
+  debugger;
+  this.container.appendChild(dlg.container);
+};
 
+// 参数
+MyParamsPanel = function(format, editorUi, container) {
+  BaseFormatPanel.call(this, format, editorUi, container);
+  this.init();
+};
+mxUtils.extend(MyParamsPanel, BaseFormatPanel);
+
+MyParamsPanel.prototype.init = function() {
+  // 当前操作的节点的数据们：
+  var ui = this.editorUi;
+  var ss = this.format.getSelectionState();
+  var mxCell = ss.vertices[0];
+  debugger;
+  var dlg = new EditDataDialogInline_params(ui, mxCell);
+  this.container.appendChild(dlg.container);
 };
 
 /**

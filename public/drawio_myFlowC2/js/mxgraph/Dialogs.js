@@ -1148,7 +1148,6 @@ var EditDataDialogInline = function (ui, cell) {
   value = obj;
 
   // Creates the dialog contents
-  debugger;
   var form = new mxFormDiv();
   var attrs = value.attributes;
   var names = [];
@@ -1255,7 +1254,6 @@ var EditDataDialogInline = function (ui, cell) {
   cancelBtn.className = 'geBtn';
 
   var applyBtn = mxUtils.button(mxResources.get('apply'), function () {
-    debugger;
 
     // 点击了侧栏里的数据配置里的'应用'按钮，触发
     try {
@@ -1320,8 +1318,6 @@ var EditDataDialogInline_URLdefine = function (ui, cell) {
   var mine = window.myProj.urlDefine;
 
   if (!mxUtils.isNode(value)) {
-    console.log('if')
-    debugger;
     var doc = mxUtils.createXmlDocument();
     obj = doc.createElement('object');
     obj.setAttribute('label', value || '');
@@ -1433,7 +1429,6 @@ var EditDataDialogInline_URLdefine = function (ui, cell) {
   cancelBtn.className = 'geBtn';
 
   var applyBtn = mxUtils.button(mxResources.get('apply'), function () {
-    debugger;
     // 点击了侧栏里的数据配置里的'应用'按钮，触发
     try {
       ui.hideDialog.apply(ui, arguments);
@@ -1462,7 +1457,6 @@ var EditDataDialogInline_URLdefine = function (ui, cell) {
         value.removeAttribute('label');
       }
       // Updates the value of the cell (undoable)
-      debugger;
       // 把这些值，放进全局对象里，
       setValueToSessionStorage('urlDefine', cell, value)
       graph.getModel().setValue(cell, value);
@@ -1483,6 +1477,197 @@ var EditDataDialogInline_URLdefine = function (ui, cell) {
   div.appendChild(buttons);
   this.container = div;
 };
+
+// 子流程
+var EditDataDialogInline_childProcess = function (ui, cell) {
+  var formName = 'childProcess';
+  var div = document.createElement('div');
+  div.className = 'node-attributes-box child-process';
+  var graph = ui.editor.graph;
+
+  var value = graph.getModel().getValue(cell);
+  var obj;
+
+  // Converts the value to an XML node
+  // 节点的属性上加上业务的属性
+  var mine = window.myProj.urlDefine;
+
+  if (!mxUtils.isNode(value)) {
+    var doc = mxUtils.createXmlDocument();
+    obj = doc.createElement('object');
+    obj.setAttribute('label', value || '');
+
+    // 数量不够的，是新建的节点。需要加上节点参数
+    if (obj.attributes.length < 2) {
+      for (var meIdx = 0, melen = mine.length; meIdx < melen; meIdx++) {
+        var child = mine[meIdx];
+        var childValue = child.value || '';
+        obj.setAttribute(child.name, childValue);
+      }
+    }
+    value = obj;
+  } else {
+    console.log('else')
+    obj = graph.getModel().getValue(cell);
+  }
+
+  obj = mergeSelectedCellAttribute('childProcess', graph, cell, mine);
+  value = obj;
+
+  // Creates the dialog contents
+  var form = new mxFormDiv(formName);
+  var attrs = value.attributes;
+  var names = [];
+  var texts = [];
+  var count = 0;
+
+  var addAttributesTextArea = function (index, name, value) {
+    var child = myUtils.findChildInArray('name', name, mine);
+    var childType = child ? child.type : 'textarea';// flowId---> 流程id,用当前时间；input --> el-input;
+    // 根据name找到节点的类型，然后来创建元素类型
+
+    names[index] = name;
+    switch (childType) {
+      case 'input':
+        texts[index] = form.addElInput(
+          {
+            graph: ui.editor.graph,
+            cell: cell,
+            obj: obj,
+            formName: formName
+          },
+          names[count] + ':',
+          value
+        );
+        break;
+      case 'textarea':
+        texts[index] = form.addElInput({
+          graph: ui.editor.graph,
+          cell: cell,
+          obj: obj,
+          formName: formName
+
+        }, names[count] + ':', value, 'textarea');
+        break;
+      case 'select':
+        texts[index] = form.addElSelect(names[count] + ':', value, child.optionList,
+          {
+            formName: formName
+          });
+        break;
+      default:
+        texts[index] = form.addText(names[count] + ':', value, {
+          formName: formName
+        });
+        break;
+    }
+
+    texts[index].style.width = '100%';
+
+    if (value.indexOf('\n') > 0) {
+      texts[index].setAttribute('rows', '2');
+    }
+  };
+
+  var temp = [];
+  var isLayer = graph.getModel().getParent(cell) == graph.getModel().getRoot();
+  for (var i = 0; i < attrs.length; i++) {
+    if ((isLayer || attrs[i].nodeName != 'label') && attrs[i].nodeName != 'placeholders') {
+      temp.push({name: attrs[i].nodeName, value: attrs[i].nodeValue});
+    }
+  }
+
+  for (var j = 0; j < temp.length; j++) {
+    addAttributesTextArea(count, temp[j].name, temp[j].value);
+    count++;
+  }
+
+  var top = document.createElement('div');
+  top.className = 'node-attributes-inner';
+  top.appendChild(form[formName]);
+
+  div.appendChild(top);
+
+  this.init = function () {
+    if (texts.length > 0) {
+      texts[0].focus();
+    }
+    else {
+      nameInput.focus();
+    }
+  };
+
+  var cancelBtn = mxUtils.button(mxResources.get('cancel'), function () {
+    ui.hideDialog.apply(ui, arguments);
+  });
+
+  cancelBtn.className = 'geBtn';
+
+  var applyBtn = mxUtils.button(mxResources.get('apply'), function () {
+    // 点击了侧栏里的数据配置里的'应用'按钮，触发
+    try {
+      ui.hideDialog.apply(ui, arguments);
+
+      // Clones and updates the value
+      value = value.cloneNode(true);
+      var removeLabel = false;
+
+      // 改一下设置值的方法。因为element组件的值不在value里，如果按照原本的处理方法，会导致值都没了
+      // -ty 2020年06月24日11:04:54
+      for (var i = 0; i < names.length; i++) {
+        // 改为仅仅处理非element输入组件
+        if (texts[i].className.indexOf('el-') < 0) {
+          if (texts[i] == null) {
+            value.removeAttribute(names[i]);
+          } else {
+            value.setAttribute(names[i], texts[i].value);
+            removeLabel = removeLabel || (names[i] == 'placeholder' &&
+              value.getAttribute('placeholders') == '1');
+          }
+        }
+      }
+
+      // Removes label if placeholder is assigned
+      if (removeLabel) {
+        value.removeAttribute('label');
+      }
+      // Updates the value of the cell (undoable)
+      // 把这些值，放进全局对象里，
+      setValueToSessionStorage('childProcess', cell, value)
+      graph.getModel().setValue(cell, value);
+    }
+    catch (e) {
+      mxUtils.alert(e);
+    }
+  });
+  applyBtn.className = 'geBtn gePrimaryBtn';
+
+  var buttons = document.createElement('div');
+  buttons.className = 'buttons-group';
+
+  buttons.appendChild(cancelBtn);
+  buttons.appendChild(applyBtn);
+
+
+  div.appendChild(buttons);
+  debugger;
+  this.container = div;
+};
+
+// 参数
+var EditDataDialogInline_params = function (ui, cell){
+  var formName = 'params';
+  var div = document.createElement('div');
+  div.className = 'node-attributes-box param-setting';
+  var graph = ui.editor.graph;
+
+  // 显示先前注册在根组件的参数tabel
+  var paramsTable = VueIns.$children[0].$childrenRefs.paramsTable;
+  debugger;
+  paramsTable.nodeParamsTableVisible = true;
+  div.appendChild(paramsTable.$el)
+  this.container = div;
+};
 /**
  * Optional help link.
  */
@@ -1494,6 +1679,8 @@ EditDataDialogInline.getDisplayIdForCell = function (ui, cell) {
 
   return id;
 };
+
+//
 
 /**
  * Optional help link.

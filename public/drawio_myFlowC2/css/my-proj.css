@@ -94,3 +94,32 @@ body{
 	width: 80%;
 	text-align: center
 }
+
+
+.geFormatSection-label-group{
+	white-space: nowrap;
+	color: rgb(112, 112, 112);
+	text-align: left;
+	cursor: default;
+	overflow: auto;
+}
+.geFormatSection-label{
+	text-align: center;
+	color: #000;
+	padding-top: 8px;
+	font-size: 13px;
+	display: inline-block;
+	height: 25px;
+	overflow: hidden;
+	width: 100%;
+	cursor: pointer;
+	background: rgb(241, 243, 244);
+}
+.geFormatSection-label.active{
+	border-bottom-width: 0;
+	background: #fff;
+	color: #409eff;
+}
+.nodes-attributes-label{
+	width: 25%;
+}

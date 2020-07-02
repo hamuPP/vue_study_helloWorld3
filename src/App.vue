@@ -48,6 +48,14 @@
 <script>
   export default {
     name: "AppPage",
+    //使用`provide` 在根组件提供数据
+    provide(){
+      return {
+        rootAppVue: this
+
+      }
+
+    },
     data() {
       return {
         allRoutes: [
@@ -78,11 +86,15 @@
           path: data.route
         })
       }
+    },
+    mounted(){
+      debugger;
     }
   }
 </script>
 
 <style lang="scss">
+  @import "assets/scss/proj";
   .vue-app {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

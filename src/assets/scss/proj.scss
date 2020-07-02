@@ -1,5 +1,7 @@
 html,body{
 	margin: 0;
 	padding: 0;
-	font-family: 微软雅黑, "Microsoft Yahei", "Hiragino Sans GB", tahoma, arial, 宋体;
+	font-family: 微软雅黑, "Microsoft Yahei", arial, 宋体,"Hiragino Sans GB", tahoma;
 }
+// 引入自定义组件
+@import "./comopents/cus-table.scss";

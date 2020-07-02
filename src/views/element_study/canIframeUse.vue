@@ -21,8 +21,8 @@
     </div>
     <div id="myMainContainer" class="myMainContainer"></div>
 
-    <!-- 人员传递的弹窗-->
-    <userSelectDialog ref="userSelectDialog"></userSelectDialog>
+    <!-- 参数配置的table-->
+    <paramsTable ref="paramsTable"></paramsTable>
   </div>
 </template>
 
@@ -51,15 +51,14 @@
   import {showDialog_ME} from '../../../public/drawio_myFlowC2/js/myProj/ME'
 
 
-  import userSelectDialog from '../drawio_myFlowChart/userSelectDialog'
+  import paramsTable from '../drawio_myFlowChart/paramsTable'
 
   export default {
     name: "can-iframe-use",
-    components: {userSelectDialog},
+    inject: ['rootAppVue'],
+    components: {paramsTable},
     created() {
-
       window.showDialog_ME = showDialog_ME;
-
       var LazyLoad = window.LazyLoad;
       // Load multiple JS files and execute a callback when they've all finished.
       LazyLoad.js([
@@ -70,10 +69,7 @@
         ],
         function () {
           LazyLoad.js([
-            // drawDevUrl + 'js/cryptojs/aes.min.js',
             drawDevUrl + 'js/spin/spin.min.js',
-            // drawDevUrl + 'js/deflate/pako.min.js',
-            // drawDevUrl + 'js/PostConfig.js',
             drawDevUrl + 'js/deflate/base64.js',
             drawDevUrl + 'js/jscolor/jscolor.js',
             drawDevUrl + 'js/sanitizer/sanitizer.min.js',
@@ -112,9 +108,6 @@
 
             drawDevUrl + 'js/diagramly/DrawioClient.js',
             drawDevUrl + 'js/diagramly/DrawioUser.js',
-            // drawDevUrl + 'js/diagramly/UrlLibrary.js',
-            // drawDevUrl + 'js/diagramly/DriveFile.js',
-            // drawDevUrl + 'js/diagramly/DriveLibrary.js',
 
             drawDevUrl + 'js/diagramly/App.js',
             drawDevUrl + 'js/diagramly/Menus.js',
@@ -129,8 +122,14 @@
             window.App.main();
           });
         });
+
     },
     mounted() {
+      // 在mounted时，把子组件注册到根组件。因为此时子组件才有。
+      if(!this.rootAppVue.$childrenRefs){
+        this.rootAppVue.$childrenRefs = {};
+      }
+      this.rootAppVue.$childrenRefs.paramsTable = this.$refs.paramsTable;
     }
   }
 </script>
