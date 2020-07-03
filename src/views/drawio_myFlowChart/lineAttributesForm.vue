@@ -31,7 +31,8 @@
       <el-button @click="handleCancleLineAttributes">取消</el-button>
     </el-form-item>
 
-    <lineParamEditDialog ref="paramEditDialog"></lineParamEditDialog>
+    <lineParamEditDialog ref="paramEditDialog"
+    @paramApply="paramApplyHandle"></lineParamEditDialog>
   </el-form>
 </template>
 
@@ -96,6 +97,9 @@
       openParamsEditDialog(){
         debugger;
         this.$refs.paramEditDialog.show();
+      },
+      paramApplyHandle(val){
+        this.form.paramExpress = val;
       }
     }
   }

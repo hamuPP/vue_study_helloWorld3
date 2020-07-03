@@ -24,7 +24,7 @@
     </el-input>
     <span slot="footer" class="dialog-footer">
     <el-button @click="dialogVisible = false">取 消</el-button>
-    <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+    <el-button type="primary" @click="sureHand">确 定</el-button>
   </span>
   </el-dialog>
 </template>
@@ -57,7 +57,12 @@
       },
       hide(){
         this.dialogVisible = false;
-
+      },
+      // 点击确定，把表达式选择在下层的输入框内
+      sureHand(){
+        debugger;
+        let value = this.textarea;
+        this.$emit('paramApply', value)
       }
     }
   }
