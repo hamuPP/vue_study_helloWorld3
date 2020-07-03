@@ -1102,15 +1102,8 @@ Menus.prototype.addPopupMenuCellItems = function(menu, cell, evt)
 			var handler = graph.selectionCellsHandler.getHandler(cell);
 			var isWaypoint = false;
 			
-			if (handler instanceof mxEdgeHandler && handler.bends != null && handler.bends.length > 2)
-			{
+			if (handler instanceof mxEdgeHandler && handler.bends != null && handler.bends.length > 2) {
 				var index = handler.getHandleForEvent(graph.updateMouseEvent(new mxMouseEvent(evt)));
-				
-				// Configures removeWaypoint action before execution
-				// Using trigger parameter is cleaner but have to find waypoint here anyway.
-				var rmWaypointAction = this.editorUi.actions.get('removeWaypoint');
-				rmWaypointAction.handler = handler;
-				rmWaypointAction.index = index;
 
 				isWaypoint = index > 0 && index < handler.bends.length - 1;
 			}

@@ -330,21 +330,19 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 
 					    						if (handle == null)
 					    						{
-							    					var box = new mxRectangle(start.point.x, start.point.y);
-							    					box.grow(mxEdgeHandler.prototype.handleImage.width / 2);
 							    					
-					    							if (mxUtils.contains(box, pts[0].x, pts[0].y))
-					    							{
-						    							// Moves source terminal handle
-					    								handle = 0;
-					    							}
-					    							else if (mxUtils.contains(box, pts[pts.length - 1].x, pts[pts.length - 1].y))
-					    							{
-					    								// Moves target terminal handle
-					    								handle = handler.bends.length - 1;
-					    							}
-					    							else
-					    							{
+					    							// if (mxUtils.contains(box, pts[0].x, pts[0].y))
+					    							// {
+						    						// 	// Moves source terminal handle
+					    							// 	handle = 0;
+					    							// }
+					    							// else if (mxUtils.contains(box, pts[pts.length - 1].x, pts[pts.length - 1].y))
+					    							// {
+					    							// 	// Moves target terminal handle
+					    							// 	handle = handler.bends.length - 1;
+					    							// }
+					    							// else
+					    							// {
 							    						// Checks if edge has no bends
 							    						var nobends = edgeStyle != null && (pts.length == 2 || (pts.length == 3 &&
 						    								((Math.round(pts[0].x - pts[1].x) == 0 && Math.round(pts[1].x - pts[2].x) == 0) ||
@@ -371,7 +369,7 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 									    						handle += 1;
 									    					}
 									    				}
-					    							}
+					    							// }
 					    						}
 					    					}
 							    			
@@ -418,19 +416,11 @@ Graph = function(container, model, renderHint, stylesheet, themes, standalone)
 			    				
 			    				if (pts != null)
 			    				{
-			    					// var box = new mxRectangle(me.getGraphX(), me.getGraphY());
-			    					// box.grow(mxEdgeHandler.prototype.handleImage.width / 2);
-			    					
 			    					if (state.text != null && state.text.boundingBox != null &&
 			    						mxUtils.contains(state.text.boundingBox, me.getGraphX(), me.getGraphY()))
 			    					{
 			    						cursor = 'move';
 			    					}
-			    					// else if (mxUtils.contains(box, pts[0].x, pts[0].y) ||
-			    					// 	mxUtils.contains(box, pts[pts.length - 1].x, pts[pts.length - 1].y))
-			    					// {
-			    					// 	cursor = 'pointer';
-			    					// }
 			    					else if (state.visibleSourceState != null || state.visibleTargetState != null)
 			    					{
 		    							// Moving is not allowed for entity relation but still indicate hover state

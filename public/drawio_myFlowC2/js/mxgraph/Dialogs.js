@@ -176,7 +176,6 @@ var ColorDialog = function (editorUi, color, apply, cancelFn) {
 
   buttons.appendChild(cancelBtn);
 
-
   var applyFunction = (apply != null) ? apply : this.createApplyFunction();
 
   var applyBtn = mxUtils.button(mxResources.get('apply'), function () {
@@ -1113,7 +1112,7 @@ var EditDataDialogInline_line = function (ui, cell) {
 
   // 显示先前注册在根组件的连线form
   var lineAttributesForm = VueIns.$children[0].$childrenRefs.lineAttributesForm;
-  lineAttributesForm.init(cell);
+  lineAttributesForm.init(graph, cell);
   lineAttributesForm.show();
   div.appendChild(lineAttributesForm.$el);
   this.container = div;

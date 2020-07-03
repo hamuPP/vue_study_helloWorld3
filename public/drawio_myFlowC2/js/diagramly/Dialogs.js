@@ -56,10 +56,6 @@ var StorageDialog = function(editorUi, fn, rowLimit) {
 	buttons.style.borderWidth = '1px 0px 1px 0px';
 	buttons.style.padding = '12px 0px 12px 0px';
 
-	// var cb = document.createElement('input');
-	// cb.setAttribute('type', 'checkbox');
-	// cb.setAttribute('checked', 'checked');
-	// cb.defaultChecked = true;
 	var count = 0;
 	
 	var container = document.createElement('div');

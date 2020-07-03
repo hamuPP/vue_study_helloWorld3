@@ -46,9 +46,6 @@ body{
 }
 
 .node-attributes-box .buttons-group {
-	/*position: absolute;*/
-	/*left: 0;*/
-	/*bottom: 30px;*/
 	margin: 10px 0;
 	width: 100%;
 	text-align: right;
@@ -76,15 +73,21 @@ body{
 .node-attributes-box .form-item{
 	margin: 0 0 5px;
 }
-.node-attributes-box .form-item__label{
+.node-attributes-box .form-item__label,
+.node-attributes-box .el-form-item__label
+{
 	width: 80px;
 	float: left;
 	text-align: right;
 	padding: 0 5px 0 0;
+	font-size: 12px;
 }
-.node-attributes-box  .form-item__content{
+.node-attributes-box  .form-item__content,
+.node-attributes-box  .el-form-item__content
+{
 	margin-left: 80px;
 	position: relative;
+	font-size: 12px;
 }
 
 .node-attributes-box .front-id-label{

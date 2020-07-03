@@ -1754,22 +1754,10 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		{
 			window.clearTimeout(this.updateThread);
 		}
-		
-		if (cells != null && currentStyleTarget != null && activeArrow == styleTarget)
-		{
-			var tmp = graph.isCellSelected(currentStyleTarget.cell) ? graph.getSelectionCells() : [currentStyleTarget.cell];
-			var updatedCells = this.updateShapes((graph.model.isEdge(currentStyleTarget.cell)) ? cells[0] : cells[firstVertex], tmp);
-			graph.setSelectionCells(updatedCells);
-		}
-		else if (cells != null && activeArrow != null && currentTargetState != null && activeArrow != styleTarget)
-		{
-			var index = (graph.model.isEdge(currentTargetState.cell) || freeSourceEdge == null) ? firstVertex : freeSourceEdge;
-			graph.setSelectionCells(this.dropAndConnect(currentTargetState.cell, cells, direction, index, evt));
-		}
-		else
-		{
+
+
 			dropHandler.apply(this, arguments);
-		}
+
 
 	}), preview, 0, 0, graph.autoscroll, true, true);
 	
@@ -1867,16 +1855,7 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		{
 			var view = graph.view;
 			
-			if (currentStyleTarget != null && activeArrow == styleTarget)
-			{
-				this.previewElement.style.display = (graph.model.isEdge(currentStyleTarget.cell)) ? 'none' : '';
-				
-				this.previewElement.style.left = currentStyleTarget.x + 'px';
-				this.previewElement.style.top = currentStyleTarget.y + 'px';
-				this.previewElement.style.width = currentStyleTarget.width + 'px';
-				this.previewElement.style.height = currentStyleTarget.height + 'px';
-			}
-			else if (currentTargetState != null && activeArrow != null)
+	   if (currentTargetState != null && activeArrow != null)
 			{
 				var index = (graph.model.isEdge(currentTargetState.cell) || freeSourceEdge == null) ? firstVertex : freeSourceEdge;
 				var geo = sidebar.getDropAndConnectGeometry(currentTargetState.cell, cells[index], direction, cells);
@@ -2010,22 +1989,23 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 			!this.isDropStyleTargetIgnored(state) && ((graph.model.isVertex(state.cell) && firstVertex != null) ||
 			(graph.model.isEdge(state.cell) && graph.model.isEdge(cells[0]))))
 		{
+		  debugger;
 			currentStyleTarget = state;
 			var tmp = (graph.model.isEdge(state.cell)) ? graph.view.getPoint(state) :
 				new mxPoint(state.getCenterX(), state.getCenterY());
-			tmp = new mxRectangle(tmp.x - this.refreshTarget.width / 2, tmp.y - this.refreshTarget.height / 2,
-				this.refreshTarget.width, this.refreshTarget.height);
+			// tmp = new mxRectangle(tmp.x - this.refreshTarget.width / 2, tmp.y - this.refreshTarget.height / 2,
+			// 	this.refreshTarget.width, this.refreshTarget.height);
 			
-			styleTarget.style.left = Math.floor(tmp.x) + 'px';
-			styleTarget.style.top = Math.floor(tmp.y) + 'px';
-			
-			if (styleTargetParent == null)
-			{
-				graph.container.appendChild(styleTarget);
-				styleTargetParent = styleTarget.parentNode;
-			}
-			
-			checkArrow(x, y, tmp, styleTarget);
+			// styleTarget.style.left = Math.floor(tmp.x) + 'px';
+			// styleTarget.style.top = Math.floor(tmp.y) + 'px';
+			//
+			// if (styleTargetParent == null)
+			// {
+			// 	graph.container.appendChild(styleTarget);
+			// 	styleTargetParent = styleTarget.parentNode;
+			// }
+			//
+			// checkArrow(x, y, tmp, styleTarget);
 		}
 		// Does not reset on ignored edges
 		else if (currentStyleTarget == null || !mxUtils.contains(currentStyleTarget, x, y) ||
@@ -2042,9 +2022,10 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		else if (currentStyleTarget != null && styleTargetParent != null)
 		{
 			// Sets active Arrow as side effect
-			var tmp = (graph.model.isEdge(currentStyleTarget.cell)) ? graph.view.getPoint(currentStyleTarget) : new mxPoint(currentStyleTarget.getCenterX(), currentStyleTarget.getCenterY());
-			tmp = new mxRectangle(tmp.x - this.refreshTarget.width / 2, tmp.y - this.refreshTarget.height / 2,
-				this.refreshTarget.width, this.refreshTarget.height);
+			var tmp = (graph.model.isEdge(currentStyleTarget.cell)) ?
+        graph.view.getPoint(currentStyleTarget) :
+        new mxPoint(currentStyleTarget.getCenterX(), currentStyleTarget.getCenterY());
+
 			checkArrow(x, y, tmp, styleTarget);
 		}
 		
@@ -2053,25 +2034,9 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		{
 			// LATER: Use hit-detection for edges
 			bbox = mxRectangle.fromRectangle(currentTargetState);
-			
-			if (graph.model.isEdge(currentTargetState.cell))
-			{
-				var pts = currentTargetState.absolutePoints;
-				
-				if (roundSource.parentNode != null)
-				{
-					var p0 = pts[0];
-					bbox.add(checkArrow(x, y, new mxRectangle(p0.x - this.roundDrop.width / 2,
-						p0.y - this.roundDrop.height / 2, this.roundDrop.width, this.roundDrop.height), roundSource));
-				}
-				
-				if (roundTarget.parentNode != null)
-				{
-					var pe = pts[pts.length - 1];
-					bbox.add(checkArrow(x, y, new mxRectangle(pe.x - this.roundDrop.width / 2,
-						pe.y - this.roundDrop.height / 2,
-						this.roundDrop.width, this.roundDrop.height), roundTarget));
-				}
+			console.log(graph.model.isEdge(currentTargetState.cell))
+			if (graph.model.isEdge(currentTargetState.cell)) {
+
 			}
 			else
 			{
@@ -2113,24 +2078,7 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		}
 		
 		direction = mxConstants.DIRECTION_NORTH;
-		
-		// if (activeArrow == arrowRight)
-		// {
-		// 	direction = mxConstants.DIRECTION_EAST;
-		// }
-		// else if (activeArrow == arrowDown || activeArrow == roundTarget)
-		// {
-		// 	direction = mxConstants.DIRECTION_SOUTH;
-		// }
-		// else if (activeArrow == arrowLeft)
-		// {
-		// 	direction = mxConstants.DIRECTION_WEST;
-		// }
-		
-		if (currentStyleTarget != null && activeArrow == styleTarget)
-		{
-			state = currentStyleTarget;
-		}
+
 
 		var validTarget = (firstVertex == null || graph.isCellConnectable(cells[firstVertex])) &&
 			((graph.model.isEdge(cell) && firstVertex != null) ||
@@ -2147,42 +2095,24 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 
 			if (currentTargetState != null && validTarget)
 			{
-				var elts = [roundSource, roundTarget, arrowUp, arrowRight, arrowDown, arrowLeft];
-				
-				for (var i = 0; i < elts.length; i++)
-				{
-					if (elts[i].parentNode != null)
-					{
-						elts[i].parentNode.removeChild(elts[i]);
-					}
-				}
+
 				
 				if (graph.model.isEdge(cell))
 				{
 					var pts = state.absolutePoints;
 					
-					if (pts != null)
-					{
+					if (pts != null) {
 						var p0 = pts[0];
 						var pe = pts[pts.length - 1];
 						var tol = graph.tolerance;
 						var box = new mxRectangle(x - tol, y - tol, 2 * tol, 2 * tol);
 						
-						roundSource.style.left = Math.floor(p0.x - this.roundDrop.width / 2) + 'px';
-						roundSource.style.top = Math.floor(p0.y - this.roundDrop.height / 2) + 'px';
-						
-						roundTarget.style.left = Math.floor(pe.x - this.roundDrop.width / 2) + 'px';
-						roundTarget.style.top = Math.floor(pe.y - this.roundDrop.height / 2) + 'px';
-						
+
 						if (graph.model.getTerminal(cell, true) == null)
 						{
 							graph.container.appendChild(roundSource);
 						}
-						
-						if (graph.model.getTerminal(cell, false) == null)
-						{
-							graph.container.appendChild(roundTarget);
-						}
+
 					}
 				}
 				else
@@ -2215,27 +2145,6 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 							bds.add(handler.rotationShape.boundingBox);
 						}
 					}
-					
-					arrowUp.style.left = Math.floor(state.getCenterX() - this.triangleUp.width / 2) + 'px';
-					arrowUp.style.top = Math.floor(bds.y - this.triangleUp.height) + 'px';
-					
-					arrowRight.style.left = Math.floor(bds.x + bds.width) + 'px';
-					arrowRight.style.top = Math.floor(state.getCenterY() - this.triangleRight.height / 2) + 'px';
-					
-					arrowDown.style.left = arrowUp.style.left
-					arrowDown.style.top = Math.floor(bds.y + bds.height) + 'px';
-					
-					arrowLeft.style.left = Math.floor(bds.x - this.triangleLeft.width) + 'px';
-					arrowLeft.style.top = arrowRight.style.top;
-					
-					if (state.style['portConstraint'] != 'eastwest')
-					{
-						graph.container.appendChild(arrowUp);
-						graph.container.appendChild(arrowDown);
-					}
-
-					graph.container.appendChild(arrowRight);
-					graph.container.appendChild(arrowLeft);
 				}
 				
 				// Hides handle for cell under mouse
@@ -2251,18 +2160,7 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 				
 				activeTarget = true;
 			}
-			else
-			{
-				var elts = [roundSource, roundTarget, arrowUp, arrowRight, arrowDown, arrowLeft];
-				
-				for (var i = 0; i < elts.length; i++)
-				{
-					if (elts[i].parentNode != null)
-					{
-						elts[i].parentNode.removeChild(elts[i]);
-					}
-				}
-			}
+
 		}
 
 		if (!activeTarget && currentStateHandle != null)
@@ -2270,48 +2168,13 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 			currentStateHandle.setHandlesVisible(true);
 		}
 		
-		// Handles drop target
-		var target = ((!mxEvent.isAltDown(evt) || mxEvent.isShiftDown(evt)) &&
-			!(currentStyleTarget != null && activeArrow == styleTarget)) ?
-			mxDragSource.prototype.getDropTarget.apply(this, arguments) : null;
-		var model = graph.getModel();
-		
-		if (target != null)
-		{
-			if (activeArrow != null || !graph.isSplitTarget(target, cells, evt))
-			{
-				// Selects parent group as drop target
-				while (target != null && !graph.isValidDropTarget(target, cells, evt) && model.isVertex(model.getParent(target)))
-				{
-					target = model.getParent(target);
-				}
-				
-				if (target != null && (graph.view.currentRoot == target ||
-					(!graph.isValidRoot(target) && 
-					graph.getModel().getChildCount(target) == 0) ||
-					graph.isCellLocked(target) || model.isEdge(target) ||
-					!graph.isValidDropTarget(target, cells, evt)))
-				{
-					target = null;
-				}
-			}
-		}
-		
-		return target;
+		// return target;
+    return null;
 	});
 	
 	dragSource.stopDrag = function() {
 		mxDragSource.prototype.stopDrag.apply(this, arguments);
-		
-		// var elts = [roundSource, roundTarget, styleTarget, arrowUp, arrowRight, arrowDown, arrowLeft];
-		//
-		// for (var i = 0; i < elts.length; i++)
-		// {
-		// 	if (elts[i].parentNode != null)
-		// 	{
-		// 		elts[i].parentNode.removeChild(elts[i]);
-		// 	}
-		// }
+
 		
 		if (currentTargetState != null && currentStateHandle != null)
 		{

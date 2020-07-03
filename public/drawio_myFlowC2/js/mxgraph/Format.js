@@ -4550,8 +4550,7 @@ StyleFormatPanel.prototype.getCustomColors = function()
 /**
  * Adds the label menu items to the given menu and parent.
  */
-StyleFormatPanel.prototype.addStroke = function(container)
-{
+StyleFormatPanel.prototype.addStroke = function(container) {
 	var ui = this.editorUi;
 	var graph = ui.editor.graph;
 	var ss = this.format.getSelectionState();
@@ -4636,23 +4635,6 @@ StyleFormatPanel.prototype.addStroke = function(container)
 	stylePanel.style.marginBottom = '2px';
 	stylePanel.style.marginTop = '2px';
 	stylePanel.className = 'geToolbarContainer';
-
-	var addItem = mxUtils.bind(this, function(menu, width, cssName, keys, values)
-	{
-		var item = this.editorUi.menus.styleChange(menu, '', keys, values, 'geIcon', null);
-	
-		var pat = document.createElement('div');
-		pat.style.width = width + 'px';
-		pat.style.height = '1px';
-		pat.style.borderBottom = '1px ' + cssName + ' ' + this.defaultStrokeColor;
-		pat.style.paddingTop = '6px';
-
-		item.firstChild.firstChild.style.padding = '0px 4px 0px 4px';
-		item.firstChild.firstChild.style.width = width + 'px';
-		item.firstChild.firstChild.appendChild(pat);
-		
-		return item;
-	});
 	var altStylePanel = stylePanel.cloneNode(false);
 	
 	var stylePanel2 = stylePanel.cloneNode(false);
@@ -4962,32 +4944,6 @@ StyleFormatPanel.prototype.addStroke = function(container)
 			
 			return markerDiv;
 		};
-		
-		// var sourceDiv = updateArrow(mxUtils.getValue(ss.style, mxConstants.STYLE_STARTARROW, null),
-		// 		mxUtils.getValue(ss.style, 'startFill', '1'), lineStart, 'start');
-		// var targetDiv = updateArrow(mxUtils.getValue(ss.style, mxConstants.STYLE_ENDARROW, null),
-		// 		mxUtils.getValue(ss.style, 'endFill', '1'), lineEnd, 'end');
-
-		// Special cases for markers
-		// if (ss.style.shape == 'arrow') {
-		// 	sourceDiv.className = 'geSprite geSprite-noarrow';
-		// 	targetDiv.className = 'geSprite geSprite-endblocktrans';
-		// }
-		// else if (ss.style.shape == 'link') {
-		// 	sourceDiv.className = 'geSprite geSprite-noarrow';
-		// 	targetDiv.className = 'geSprite geSprite-noarrow';
-		// }
-
-		// mxUtils.setOpacity(edgeStyle, (ss.style.shape == 'arrow') ? 30 : 100);
-		
-		// if (ss.style.shape != 'connector' && ss.style.shape != 'flexArrow' && ss.style.shape != 'filledEdge') {
-		// 	mxUtils.setOpacity(lineStart, 30);
-		// 	mxUtils.setOpacity(lineEnd, 30);
-		// }
-		// else {
-		// 	mxUtils.setOpacity(lineStart, 100);
-		// 	mxUtils.setOpacity(lineEnd, 100);
-		// }
 
 		if (force || document.activeElement != startSize)
 		{
