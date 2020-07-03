@@ -1731,7 +1731,6 @@ ArrangePanel.prototype.addGroupOps = function(div)
 		count++;
 	}
 
-	debugger;
 	if (ss.vertices.length > 0) {
 		if (count > 0)
 		{
@@ -2805,7 +2804,6 @@ MySubprocessPanel.prototype.init = function() {
   var ss = this.format.getSelectionState();
   var mxCell = ss.vertices[0];
   var dlg = new EditDataDialogInline_childProcess(ui, mxCell);
-  debugger;
   this.container.appendChild(dlg.container);
 };
 
@@ -2821,7 +2819,6 @@ MyParamsPanel.prototype.init = function() {
   var ui = this.editorUi;
   var ss = this.format.getSelectionState();
   var mxCell = ss.vertices[0];
-  debugger;
   var dlg = new EditDataDialogInline_params(ui, mxCell);
   this.container.appendChild(dlg.container);
 };
@@ -5249,15 +5246,6 @@ StyleFormatPanel.prototype.addStyleOps = function(div)
 {
 	div.style.paddingTop = '10px';
 	div.style.paddingBottom = '10px';
-	
-	var btn = mxUtils.button(mxResources.get('setAsDefaultStyle'), mxUtils.bind(this, function(evt)
-	{
-		this.editorUi.actions.get('setAsDefaultStyle').funct();
-	}));
-	
-	btn.setAttribute('title', mxResources.get('setAsDefaultStyle') + ' (' + this.editorUi.actions.get('setAsDefaultStyle').shortcut + ')');
-	btn.style.width = '202px';
-	div.appendChild(btn);
 
 	return div;
 };
@@ -5724,15 +5712,6 @@ DiagramFormatPanel.prototype.addStyleOps = function(div)
 	div.appendChild(btn);
 
 	mxUtils.br(div);
-	
-	btn = mxUtils.button(mxResources.get('clearDefaultStyle'), mxUtils.bind(this, function(evt)
-	{
-		this.editorUi.actions.get('clearDefaultStyle').funct();
-	}));
-	
-	btn.setAttribute('title', mxResources.get('clearDefaultStyle') + ' (' + this.editorUi.actions.get('clearDefaultStyle').shortcut + ')');
-	btn.style.width = '202px';
-	div.appendChild(btn);
 
 	return div;
 };

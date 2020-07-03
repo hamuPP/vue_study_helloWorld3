@@ -1555,6 +1555,7 @@
 	 */
 	EditorUi.prototype.getHtml2 = function(xml, graph, title, editLink, redirect)
 	{
+	  debugger;
 		var bg = null;
 		var js = window.DRAWIO_VIEWER_URL || EditorUi.drawHost + '/js/viewer.min.js';
 		var s = '';
@@ -7478,13 +7479,6 @@
 			return done;
 		};
 
-		// Extends clear default style to clear persisted settings
-		var clearDefaultStyle = this.clearDefaultStyle;
-		
-		this.clearDefaultStyle = function()
-		{
-			clearDefaultStyle.apply(this, arguments);
-		};
 		
 		// Sets help link for placeholders
 		if (!this.isOffline() && typeof window.EditDataDialog !== 'undefined')
@@ -8606,16 +8600,11 @@
 							
 							graph.setSelectionCells(this.insertTextAt(xml, pt.x + dx, pt.y + dx, true));
 						}
-						
+
 						if (!graph.isSelectionEmpty())
 						{
 							graph.scrollCellToVisible(graph.getSelectionCell());
 
-							debugger;
-							if (this.hoverIcons != null)
-							{
-								this.hoverIcons.update(graph.view.getState(graph.getSelectionCell()));
-							}
 						}
 							
 						try
@@ -9174,6 +9163,7 @@
 	 */
 	EditorUi.prototype.initializeEmbedMode = function()
 	{
+	  debugger;
 		this.setGraphEnabled(false);
 		var parent = window.opener || window.parent;
 

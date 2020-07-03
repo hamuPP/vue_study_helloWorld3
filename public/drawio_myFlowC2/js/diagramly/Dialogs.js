@@ -13,13 +13,6 @@ var StorageDialog = function(editorUi, fn, rowLimit) {
 	div.style.paddingBottom = '20px';
   debugger;
 
-  var elt = editorUi.addLanguageMenu(div, true);
-	var bottom = '28px';
-
-	if (elt != null) {
-		elt.style.bottom = parseInt(bottom) - 3 + 'px';
-	}
-	debugger;
 
 	var demo = document.createElement('div');
 	demo.style.position = 'absolute';
@@ -480,8 +473,6 @@ var EmbedDialog = function(editorUi, result, timeout, ignoreSize, previewFn, tit
 {
 	var div = document.createElement('div');
 	var maxSize = 500000;
-	var maxFbSize = 51200;
-	var maxTwitterSize = 7168;
 
 	// Checks if result is a link
 	var validUrl = /^https?:\/\//.test(result) || /^mailto:\/\//.test(result);
@@ -630,75 +621,6 @@ var EmbedDialog = function(editorUi, result, timeout, ignoreSize, previewFn, tit
 		buttons.appendChild(downloadBtn);
 	}
 
-	// Twitter-intent does not allow more characters, must be pasted manually
-	if (validUrl && (!editorUi.isOffline() || mxClient.IS_CHROMEAPP))
-	{
-		if (result.length < maxFbSize)
-		{
-			var fbBtn = mxUtils.button('', function()
-			{
-				try
-				{
-					var url = 'https://www.facebook.com/sharer.php?p[url]=' +
-						encodeURIComponent(text.value);
-					editorUi.openLink(url);
-				}
-				catch (e)
-				{
-					editorUi.handleError({message: e.message || mxResources.get('drawingTooLarge')});
-				}
-			});
-			
-			var img = document.createElement('img');
-			img.setAttribute('src', Editor.facebookImage);
-			img.setAttribute('width', '18');
-			img.setAttribute('height', '18');
-			img.setAttribute('border', '0');
-				
-			fbBtn.appendChild(img);
-			fbBtn.setAttribute('title', mxResources.get('facebook') + ' (' +
-					editorUi.formatFileSize(maxFbSize) + ' max)');
-			fbBtn.style.verticalAlign = 'bottom';
-			fbBtn.style.paddingTop = '4px';
-			fbBtn.style.minWidth = '46px'
-			fbBtn.className = 'geBtn';
-			buttons.appendChild(fbBtn);
-		}
-		
-		if (result.length < maxTwitterSize)
-		{
-			var tweetBtn = mxUtils.button('', function()
-			{
-				try
-				{
-					var url = 'https://twitter.com/intent/tweet?text=' + 
-						encodeURIComponent('Check out the diagram I made using @drawio') +
-						'&url=' + encodeURIComponent(text.value);
-					editorUi.openLink(url);
-				}
-				catch (e)
-				{
-					editorUi.handleError({message: e.message || mxResources.get('drawingTooLarge')});
-				}
-			});
-			
-			var img = document.createElement('img');
-			img.setAttribute('src', Editor.tweetImage);
-			img.setAttribute('width', '18');
-			img.setAttribute('height', '18');
-			img.setAttribute('border', '0');
-			img.style.marginBottom = '5px'
-	
-			tweetBtn.appendChild(img);
-			tweetBtn.setAttribute('title', mxResources.get('twitter') + ' (' +
-					editorUi.formatFileSize(maxTwitterSize) + ' max)');
-			tweetBtn.style.verticalAlign = 'bottom';
-			tweetBtn.style.paddingTop = '4px';
-			tweetBtn.style.minWidth = '46px'
-			tweetBtn.className = 'geBtn';
-			buttons.appendChild(tweetBtn);
-		}
-	}
 	
 	var closeBtn = mxUtils.button(mxResources.get('close'), function()
 	{
@@ -2786,11 +2708,7 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 	div.style.whiteSpace = 'nowrap';
 	
 	var showButtons = true;
-	
-	if (cancelFn == null)
-	{
-    editorUi.addLanguageMenu(div);
-	}
+
 
 	var h3 = document.createElement('h2');
 	mxUtils.write(h3, dlgTitle || mxResources.get('create'));
@@ -7834,79 +7752,6 @@ TemplatesDialog.prototype.init = function(editorUi, callback, cancelCallback,
 	});
 };
 
-
-/**
- * Constructs a new popup opener button dialog.
- */
-var BtnDialog = function(editorUi, peer, btnLbl, fn)
-{
-	var div = document.createElement('div');
-	div.style.textAlign = 'center';
-	
-	var hd = document.createElement('p');
-	hd.style.fontSize = '16pt';
-	hd.style.padding = '0px';
-	hd.style.margin = '0px';
-	hd.style.color = 'gray';
-	
-	mxUtils.write(hd, mxResources.get('done'));
-	
-	var service = 'Unknown';
-	
-	var img = document.createElement('img');
-	img.setAttribute('border', '0');
-	img.setAttribute('align', 'absmiddle');
-	img.style.marginRight = '10px';
-
-	if (peer == editorUi.drive)
-	{
-		service = mxResources.get('googleDrive');
-		img.src = IMAGE_PATH + '/google-drive-logo-white.svg';
-	}
-	else if (peer == editorUi.dropbox)
-	{
-		service = mxResources.get('dropbox');
-		img.src = IMAGE_PATH + '/dropbox-logo-white.svg';
-	}
-	else if (peer == editorUi.oneDrive)
-	{
-		service = mxResources.get('oneDrive');
-		img.src = IMAGE_PATH + '/onedrive-logo-white.svg';
-	}
-	else if (peer == editorUi.gitHub)
-	{
-		service = mxResources.get('github');
-		img.src = IMAGE_PATH + '/github-logo-white.svg';
-	}
-	else if (peer == editorUi.gitLab)
-	{
-		service = mxResources.get('gitlab');
-		img.src = IMAGE_PATH + '/gitlab-logo.svg';
-	}
-	else if (peer == editorUi.trello)
-	{
-		service = mxResources.get('trello');
-		img.src = IMAGE_PATH + '/trello-logo-white.svg';
-	}
-	
-	var p = document.createElement('p');
-	mxUtils.write(p, mxResources.get('authorizedIn', [service], 'You are now authorized in {1}'));
-
-	var button = mxUtils.button(btnLbl, fn);
-
-	button.insertBefore(img, button.firstChild);
-	button.style.marginTop = '6px';
-	button.className = 'geBigButton';
-	button.style.fontSize = '18px';
-	button.style.padding = '14px';
-
-	div.appendChild(hd);
-	div.appendChild(p);
-	div.appendChild(button);
-	
-	this.container = div;
-};
-
 /**
  * Constructs a new font dialog.
  */
@@ -8254,219 +8099,6 @@ var FontDialog = function(editorUi, curFontname, curUrl, curType, fn)
 	this.container = table;
 };
 
-/* Aspect Dialog
- * @module drawio/aspect-dialog
- */
-function AspectDialog(editorUi, pageId, layerIds, okFn, cancelFn)
-{
-	this.aspect = {pageId : pageId || editorUi.pages[0].getId(), layerIds : layerIds || []};
-	var div = document.createElement('div');
-	
-	var title = document.createElement('h5');
-	title.style.margin = '0 0 10px';
-	mxUtils.write(title, mxResources.get('pages'));
-	div.appendChild(title);
-
-	var pagesContainer = document.createElement('div');
-	pagesContainer.className = 'geAspectDlgList';
-	div.appendChild(pagesContainer);
-
-	title = document.createElement('h5');
-	title.style.margin = '0 0 10px';
-	mxUtils.write(title, mxResources.get('layers'));
-	div.appendChild(title);
-
-	var layersContainer = document.createElement('div');
-	layersContainer.className = 'geAspectDlgList';
-	div.appendChild(layersContainer);
-	
-	this.pagesContainer = pagesContainer;
-	this.layersContainer = layersContainer;
-	this.ui = editorUi;
-	
-	var btns = document.createElement('div');
-	btns.style.marginTop = '16px';
-	btns.style.textAlign = 'center';
-	
-	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
-	{
-		editorUi.hideDialog();
-		
-		if (cancelFn != null)
-		{
-			cancelFn();
-		}
-	});
-	
-	cancelBtn.className = 'geBtn';
-	
-	if (editorUi.editor.cancelFirst)
-	{
-		btns.appendChild(cancelBtn);
-	}
-
-	var okBtn = mxUtils.button(mxResources.get('ok'), mxUtils.bind(this, function()
-	{
-		editorUi.hideDialog();
-		okFn({pageId: this.selectedPage, layerIds: Object.keys(this.selectedLayers)});
-	}));
-
-	btns.appendChild(okBtn);
-	okBtn.className = 'geBtn gePrimaryBtn';
-	
-	if (!editorUi.editor.cancelFirst)
-	{
-		btns.appendChild(cancelBtn);
-	}
-
-	okBtn.setAttribute('disabled', 'disabled');
-	this.okBtn = okBtn;
-	div.appendChild(btns);
-	this.container = div;
-};
-
-//Drawing the graph with dialog not visible doesn't get dimensions right. It has to be visible!
-AspectDialog.prototype.init = function()
-{
-	this.ui.getFileData(true); //Force pages to update their nodes
-	
-	for (var i = 0; i < this.ui.pages.length; i++)
-	{
-		var page = this.ui.updatePageRoot(this.ui.pages[i]);
-
-		this.createPageItem(page.getId(), page.getName(), page.node, page.root);
-	}
-};
-
-AspectDialog.prototype.createViewer = function(container, pageNode, layerId)
-{
-	mxEvent.disableContextMenu(container);
-	container.style.userSelect = 'none';
-
-	var graph = new Graph(container);
-	graph.setTooltips(false);
-	graph.setEnabled(false);
-	graph.setPanning(false);
-	graph.minFitScale = null;
-	graph.maxFitScale = null;
-	graph.centerZoom = true;
-	
-	var node = Editor.parseDiagramNode(pageNode); //Handles compressed and non-compressed page node
-	
-	if (node != null)
-	{
-		var bg = node.getAttribute('background');
-		
-		if (bg == null || bg == '' || bg == mxConstants.NONE)
-		{
-			bg = '#ffffff';
-		}
-		
-		container.style.backgroundColor = bg;
-		
-		var codec = new mxCodec(node.ownerDocument);
-		var model = graph.getModel();
-		codec.decode(node, model);
-		
-		var childCount = model.getChildCount(model.root);
-		
-		var showAll = layerId == null;
-		
-		// handle layers visibility
-		for (var i = 0; i < childCount; i++)
-		{
-			var child = model.getChildAt(model.root, i);
-			model.setVisible(child, showAll || layerId == child.id);
-		}
-
-		graph.maxFitScale = 1;
-		graph.fit(0);
-		graph.center();
-	}
-	
-	return graph;
-};
-
-AspectDialog.prototype.createPageItem = function(pageId, pageName, pageNode, pageRoot)
-{
-	var $listItem = document.createElement('div');
-	$listItem.className = 'geAspectDlgListItem';
-	$listItem.setAttribute('data-page-id', pageId)
-	$listItem.innerHTML = '<div style="max-width: 100%; max-height: 100%;"></div><div class="geAspectDlgListItemText">' + pageName + '</div>';
-	
-	this.pagesContainer.appendChild($listItem);
-	
-	var graph = this.createViewer($listItem.childNodes[0], pageNode);
-	
-	var onClick = mxUtils.bind(this, function()
-	{
-		if (this.selectedItem != null)
-		{
-			this.selectedItem.className = 'geAspectDlgListItem';
-		}
-		
-		this.selectedItem = $listItem;
-		this.selectedPage = pageId;
-		$listItem.className += ' geAspectDlgListItemSelected';
-		this.layersContainer.innerHTML = '';
-		this.selectedLayers = {};
-		this.okBtn.setAttribute('disabled', 'disabled');
-		
-		var graphModel = graph.model;
-		var layers = graphModel.getChildCells(graphModel.getRoot());
-		
-		for (var i = 0; i < layers.length; i++) 
-		{
-			this.createLayerItem(layers[i], pageId, graph, pageNode);
-		}
-	});
-	
-	mxEvent.addListener($listItem, 'click', onClick);
-	
-	if(this.aspect.pageId == pageId) 
-	{
-		onClick();
-	}
-};
-
-AspectDialog.prototype.createLayerItem = function(layer, pageId, graph, pageNode)
-{
-	var layerName = graph.convertValueToString(layer) || (mxResources.get('background') || 'Background');
-	var $listItem = document.createElement('div');
-	$listItem.setAttribute('data-layer-id', layer.id);
-	$listItem.className = 'geAspectDlgListItem';
-	$listItem.innerHTML = '<div style="max-width: 100%; max-height: 100%;"></div><div class="geAspectDlgListItemText">' + layerName + '</div>';
-	this.layersContainer.appendChild($listItem);
-	
-	this.createViewer($listItem.childNodes[0], pageNode, layer.id);
-
-	var onClick = mxUtils.bind(this, function()
-	{
-		if ($listItem.className.indexOf('geAspectDlgListItemSelected') >= 0) //Selected
-		{
-			$listItem.className = 'geAspectDlgListItem';
-			delete this.selectedLayers[layer.id];
-			
-			if (Object.keys(this.selectedLayers).length == 0)
-			{
-				this.okBtn.setAttribute('disabled', 'disabled');
-			}
-		}
-		else
-		{
-			$listItem.className += ' geAspectDlgListItemSelected';
-			this.selectedLayers[layer.id] = true;
-			this.okBtn.removeAttribute('disabled');
-		}
-	});
-	
-	mxEvent.addListener($listItem, 'click', onClick);
-	
-	if(this.aspect.layerIds.indexOf(layer.id) != -1) 
-	{
-		onClick();
-	}
-};
 
 /**
  * Constructs a new page setup dialog.

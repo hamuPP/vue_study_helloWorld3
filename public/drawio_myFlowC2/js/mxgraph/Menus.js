@@ -44,7 +44,6 @@ Menus.prototype.defaultFonts = ['Helvetica', 'Verdana', 'Times New Roman', 'Gara
 Menus.prototype.init = function()
 {
 	var graph = this.editorUi.editor.graph;
-	var isGraphEnabled = mxUtils.bind(graph, graph.isEnabled);
 
 	this.customFonts = [];
 	this.customFontSizes = [];
@@ -428,19 +427,7 @@ Menus.prototype.init = function()
 	{
 		this.addMenuItems(menu, ['home', '-', 'exitGroup', 'enterGroup', '-', 'expand', 'collapse', '-', 'collapsible'], parent);
 	})));
-	// this.put('arrange', new Menu(mxUtils.bind(this, function(menu, parent)
-	// {
-	// 	this.addMenuItems(menu, ['toFront', 'toBack', '-'], parent);
-	// 	this.addSubmenu('direction', menu, parent);
-	// 	this.addMenuItems(menu, ['turn', '-'], parent);
-	// 	this.addSubmenu('align', menu, parent);
-	// 	this.addSubmenu('distribute', menu, parent);
-	// 	menu.addSeparator(parent);
-	// 	this.addSubmenu('navigation', menu, parent);
-	// 	this.addSubmenu('insert', menu, parent);
-	// 	this.addSubmenu('layout', menu, parent);
-	// 	this.addMenuItems(menu, ['-', 'group', 'ungroup', 'removeFromGroup', '-', 'clearWaypoints', 'autosize'], parent);
-	// }))).isEnabled = isGraphEnabled;
+
 	this.put('insert', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
 		this.addMenuItems(menu, ['insertLink', 'insertImage'], parent);
@@ -448,7 +435,6 @@ Menus.prototype.init = function()
 	// Two special dropdowns that are only used in the toolbar
 	this.put('viewPanels', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
-	  debugger;
 		if (this.editorUi.format != null)
 		{
 			this.addMenuItems(menu, ['formatPanel'], parent);
@@ -1040,7 +1026,6 @@ Menus.prototype.createPopupMenu = function(menu, cell, evt)
 	
 	this.addPopupMenuHistoryItems(menu, cell, evt);
 	this.addPopupMenuEditItems(menu, cell, evt);
-	this.addPopupMenuStyleItems(menu, cell, evt);
 	this.addPopupMenuArrangeItems(menu, cell, evt);
 	this.addPopupMenuCellItems(menu, cell, evt);
 	this.addPopupMenuSelectionItems(menu, cell, evt);
@@ -1072,20 +1057,7 @@ Menus.prototype.addPopupMenuEditItems = function(menu, cell, evt)
 	}
 };
 
-/**
- * Creates the keyboard event handler for the current graph and history.
- */
-Menus.prototype.addPopupMenuStyleItems = function(menu, cell, evt)
-{
-	if (this.editorUi.editor.graph.getSelectionCount() == 1)
-	{
-		this.addMenuItems(menu, ['-', 'setAsDefaultStyle'], null, evt);
-	}
-	else if (this.editorUi.editor.graph.isSelectionEmpty())
-	{
-		this.addMenuItems(menu, ['-', 'clearDefaultStyle'], null, evt);
-	}
-};
+
 
 /**
  * Creates the keyboard event handler for the current graph and history.

@@ -1239,12 +1239,6 @@
         graph.startEditing(cell);
       }
 
-      // Async call is workaroun for touch events resetting hover icons
-      window.setTimeout(function () {
-        if (editorUi.hoverIcons != null) {
-          editorUi.hoverIcons.update(graph.view.getState(cell));
-        }
-      }, 0);
 
       return cell;
     };
@@ -1394,11 +1388,6 @@
         this.addSubmenu('exportAs', menu, parent);
         this.addSubmenu('embed', menu, parent);
 
-        if (urlParams['libraries'] == '1') {
-          this.addMenuItems(menu, ['-'], parent);
-          this.addSubmenu('newLibrary', menu, parent);
-          this.addSubmenu('openLibraryFrom', menu, parent);
-        }
         if (editorUi.isRevisionHistorySupported()) {
           this.addMenuItems(menu, ['-', 'revisionHistory'], parent);
         }

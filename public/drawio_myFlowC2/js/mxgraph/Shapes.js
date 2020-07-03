@@ -3289,11 +3289,7 @@
 				state.style['width'] = Math.round(w * 2) / state.view.scale - spacing;
 			});
 		};
-		
-		function ptLineDistance(x1, y1, x2, y2, x0, y0)
-		{
-			return Math.abs((y2 - y1) * x0 - (x2 - x1) * y0 + x2 * y1 - y2 * x1) / Math.sqrt((y2 - y1) * (y2 - y1) + (x2 - x1) * (x2 - x1));
-		}
+
 
 		var handleFactory = {
 			'link': function(state)
@@ -3703,7 +3699,7 @@
 				})];
 			},
 			'singleArrow': createArrowHandleFunction(1),
-			'doubleArrow': createArrowHandleFunction(0.5),			
+			'doubleArrow': createArrowHandleFunction(0.5),
 			'folder': function(state)
 			{
 				return [createHandle(state, ['tabWidth', 'tabHeight'], function(bounds)

@@ -2500,19 +2500,7 @@ Graph.prototype.selectCellsForConnectVertex = function(cells, evt, hoverIcons)
 	{
 		this.setSelectionCell(cells[1]);
 		this.scrollCellToVisible(cells[1]);
-		
-		// if (hoverIcons != null)
-		// {
-		// 	// Adds hover icons for cloned vertex or hides icons
-		// 	if (mxEvent.isTouchEvent(evt))
-		// 	{
-		// 		hoverIcons.update(hoverIcons.getState(this.view.getState(cells[1])));
-		// 	}
-		// 	else
-		// 	{
-		// 		hoverIcons.reset();
-		// 	}
-		// }
+
 	}
 	else
 	{
@@ -8566,33 +8554,6 @@ if (typeof mxVertexHandler != 'undefined')
 		
 		mxVertexHandler.TABLE_HANDLE_COLOR = '#fca000';
 		
-		// if (window.Sidebar != null)
-		// {
-		// 	Sidebar.prototype.triangleUp = HoverIcons.prototype.triangleUp;
-		// 	Sidebar.prototype.triangleRight = HoverIcons.prototype.triangleRight;
-		// 	Sidebar.prototype.triangleDown = HoverIcons.prototype.triangleDown;
-		// 	Sidebar.prototype.triangleLeft = HoverIcons.prototype.triangleLeft;
-		// 	Sidebar.prototype.refreshTarget = HoverIcons.prototype.refreshTarget;
-		// 	Sidebar.prototype.roundDrop = HoverIcons.prototype.roundDrop;
-		// }
-
-		// // Pre-fetches images (only needed for non data-uris)
-		// if (!mxClient.IS_SVG)
-		// {
-		// 	new Image().src = HoverIcons.prototype.mainHandle.src;
-		// 	new Image().src = HoverIcons.prototype.fixedHandle.src;
-		// 	new Image().src = HoverIcons.prototype.terminalHandle.src;
-		// 	new Image().src = HoverIcons.prototype.secondaryHandle.src;
-		// 	new Image().src = HoverIcons.prototype.rotationHandle.src;
-		//
-		// 	new Image().src = HoverIcons.prototype.triangleUp.src;
-		// 	new Image().src = HoverIcons.prototype.triangleRight.src;
-		// 	new Image().src = HoverIcons.prototype.triangleDown.src;
-		// 	new Image().src = HoverIcons.prototype.triangleLeft.src;
-		// 	new Image().src = HoverIcons.prototype.refreshTarget.src;
-		// 	new Image().src = HoverIcons.prototype.roundDrop.src;
-		// }
-		
 		// Adds rotation handle and live preview
 		mxVertexHandler.prototype.rotationEnabled = true;
 		mxVertexHandler.prototype.manageSizers = true;
@@ -8987,14 +8948,7 @@ if (typeof mxVertexHandler != 'undefined')
 				return new mxRectangleShape(new mxRectangle(0, 0, s, s), mxConstants.HANDLE_FILLCOLOR, mxConstants.HANDLE_STROKECOLOR);
 			}
 		};
-	
-		// var vertexHandlerCreateSizerShape = mxVertexHandler.prototype.createSizerShape;
-		// mxVertexHandler.prototype.createSizerShape = function(bounds, index, fillColor)
-		// {
-		// 	this.handleImage = (index == mxEvent.ROTATION_HANDLE) ? HoverIcons.prototype.rotationHandle : (index == mxEvent.LABEL_HANDLE) ? this.secondaryHandleImage : this.handleImage;
-		//
-		// 	return vertexHandlerCreateSizerShape.apply(this, arguments);
-		// };
+
 		
 		// Special case for single edge label handle moving in which case the text bounding box is used
 		var mxGraphHandlerGetBoundingBox = mxGraphHandler.prototype.getBoundingBox;

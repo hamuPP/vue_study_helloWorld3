@@ -142,9 +142,7 @@ EditorUi = function(editor, container, lightbox)
 	            root.style.position = 'absolute';
 	        }
 	    }
-	   //
-		// // Creates hover icons
-		// this.hoverIcons = this.createHoverIcons();
+
 		
 		// Adds tooltip when mouse is over scrollbars to show space-drag panning option
 		mxEvent.addListener(this.diagramContainer, 'mousemove', mxUtils.bind(this, function(evt)
@@ -165,20 +163,11 @@ EditorUi = function(editor, container, lightbox)
 	   	// Escape key hides dialogs, adds space+drag panning
 		var spaceKeyPressed = false;
 		
-		// Overrides hovericons to disable while space key is pressed
-		// var hoverIconsIsResetEvent = this.hoverIcons.isResetEvent;
-		//
-		// this.hoverIcons.isResetEvent = function(evt, allowShift)
-		// {
-		// 	return spaceKeyPressed || hoverIconsIsResetEvent.apply(this, arguments);
-		// };
-		
 		this.keydownHandler = mxUtils.bind(this, function(evt)
 		{
 			if (evt.which == 32 /* Space */ && !graph.isEditing())
 			{
 				spaceKeyPressed = true;
-				// this.hoverIcons.reset();
 				graph.container.style.cursor = 'move';
 				
 				// Disables scroll after space keystroke with scrollbars
@@ -495,15 +484,7 @@ EditorUi = function(editor, container, lightbox)
 				this.handleError(e);
 			}
 		};
-		
-		this.clearDefaultStyle = function()
-		{
-			graph.currentEdgeStyle = mxUtils.clone(graph.defaultEdgeStyle);
-			graph.currentVertexStyle = mxUtils.clone(graph.defaultVertexStyle);
-			
-			// Updates UI
-			this.fireEvent(new mxEventObject('styleChanged', 'keys', [], 'values', [], 'cells', []));
-		};
+
 	
 		// Keys that should be ignored if the cell has a value (known: new default for all cells is html=1 so
 	    // for the html key this effecticely only works for edges inserted via the connection handler)
@@ -2294,11 +2275,6 @@ EditorUi.prototype.initCanvas = function()
 
 			graph.view.getDecoratorPane().style.opacity = '0';
 			graph.view.getOverlayPane().style.opacity = '0';
-			
-			if (ui.hoverIcons != null)
-			{
-				ui.hoverIcons.reset();
-			}
 		}
 		
 		scheduleZoom(delay);
@@ -2613,14 +2589,6 @@ EditorUi.prototype.updateDocumentTitle = function()
 	
 	document.title = title;
 };
-
-// /**
-//  * Updates the document title.
-//  */
-// EditorUi.prototype.createHoverIcons = function()
-// {
-// 	return new HoverIcons(this.editor.graph);// todo 一会移除这个createHovericons方法
-// };
 
 /**
  * Returns the URL for a copy of this editor with no state.
@@ -3130,8 +3098,6 @@ EditorUi.prototype.updateActionStates = function()
 		this.actions.get(actions[i]).setEnabled(selected);
 	}
 	
-	this.actions.get('setAsDefaultStyle').setEnabled(graph.getSelectionCount() == 1);
-	this.actions.get('clearWaypoints').setEnabled(!graph.isSelectionEmpty());
 	this.actions.get('curved').setEnabled(edgeSelected);
 	this.actions.get('rotation').setEnabled(vertexSelected);
 	this.actions.get('wordWrap').setEnabled(vertexSelected);
@@ -3376,7 +3342,8 @@ EditorUi.prototype.createSidebarFooterContainer = function()
 EditorUi.prototype.createUi = function() {
   // 2020年06月22日16:54:35 不要工具栏
 	// Creates menubar
-	this.menubar = (this.editor.chromeless) ? null : this.menus.createMenubar(this.createDiv('geMenubar'));
+  console.log('chromeless', this.editor.chromeless)
+	this.menubar = this.menus.createMenubar(this.createDiv('geMenubar'));
 
 	if (this.menubar != null)
 	{
@@ -3402,7 +3369,7 @@ EditorUi.prototype.createUi = function() {
 	}
 
 	// Creates the sidebar
-	this.sidebar = (this.editor.chromeless) ? null : this.createSidebar(this.sidebarContainer);
+	this.sidebar = this.createSidebar(this.sidebarContainer);
 	
 	if (this.sidebar != null)
 	{
@@ -3410,7 +3377,7 @@ EditorUi.prototype.createUi = function() {
 	}
 	
 	// Creates the format sidebar
-	this.format = (this.editor.chromeless || !this.formatEnabled) ? null : this.createFormat(this.formatContainer);
+	this.format = !this.formatEnabled ? null : this.createFormat(this.formatContainer);
 	
 	if (this.format != null)
 	{
@@ -3418,7 +3385,7 @@ EditorUi.prototype.createUi = function() {
 	}
 	
 	// Creates the footer
-	var footer = (this.editor.chromeless) ? null : this.createFooter();
+	var footer = this.createFooter();
 	
 	if (footer != null)
 	{
@@ -4391,11 +4358,7 @@ EditorUi.prototype.createKeyHandler = function(editor)
 								}
 
 								graph.scrollCellToVisible(graph.getSelectionCell());
-								
-								// if (editorUi.hoverIcons != null)
-								// {
-								// 	editorUi.hoverIcons.update(graph.view.getState(graph.getSelectionCell()));
-								// }
+
 							}
 						};
 					}
@@ -4512,8 +4475,6 @@ EditorUi.prototype.createKeyHandler = function(editor)
 		keyHandler.bindAction(74, true, 'fitPage'); // Ctrl+J
 		keyHandler.bindAction(74, true, 'fitTwoPages', true); // Ctrl+Shift+J
 		keyHandler.bindAction(48, true, 'customZoom'); // Ctrl+0
-		// keyHandler.bindAction(82, true, 'turn'); // Ctrl+R// 取消旋转，因为与我的刷新网页快捷键冲突了
-		keyHandler.bindAction(82, true, 'clearDefaultStyle', true); // Ctrl+Shift+R
 		keyHandler.bindAction(83, true, 'save'); // Ctrl+S
 		keyHandler.bindAction(83, true, 'saveAs', true); // Ctrl+Shift+S
 		keyHandler.bindAction(65, true, 'selectAll'); // Ctrl+A
@@ -4525,7 +4486,6 @@ EditorUi.prototype.createKeyHandler = function(editor)
 		keyHandler.bindAction(66, true, 'toBack', true); // Ctrl+Shift+B
 		keyHandler.bindAction(70, true, 'toFront', true); // Ctrl+Shift+F
 		keyHandler.bindAction(68, true, 'duplicate'); // Ctrl+D
-		keyHandler.bindAction(68, true, 'setAsDefaultStyle', true); // Ctrl+Shift+D   
 		keyHandler.bindAction(90, true, 'undo'); // Ctrl+Z
 		keyHandler.bindAction(89, true, 'autosize', true); // Ctrl+Shift+Y
 		keyHandler.bindAction(88, true, 'cut'); // Ctrl+X

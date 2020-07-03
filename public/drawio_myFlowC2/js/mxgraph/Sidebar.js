@@ -1770,11 +1770,7 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		{
 			dropHandler.apply(this, arguments);
 		}
-		
-		if (this.editorUi.hoverIcons != null)
-		{
-			this.editorUi.hoverIcons.update(graph.view.getState(graph.getSelectionCell()));
-		}
+
 	}), preview, 0, 0, graph.autoscroll, true, true);
 	
 	// Stops dragging if cancel is pressed
@@ -1802,16 +1798,8 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 	var currentStateHandle = null;
 	var currentStyleTarget = null;
 	var activeTarget = false;
-	
-	// var arrowUp = createArrow(this.triangleUp, mxResources.get('connect'));
-	// var arrowRight = createArrow(this.triangleRight, mxResources.get('connect'));
-	// var arrowDown = createArrow(this.triangleDown, mxResources.get('connect'));
-	// var arrowLeft = createArrow(this.triangleLeft, mxResources.get('connect'));
-	// var styleTarget = createArrow(this.refreshTarget, mxResources.get('replace'));
-	// var styleTargetParent = null;
-	// var roundSource = createArrow(this.roundDrop);
-	// var roundTarget = createArrow(this.roundDrop);
-	var direction = mxConstants.DIRECTION_NORTH;
+  var styleTargetParent = null;
+  var direction = mxConstants.DIRECTION_NORTH;
 	var activeArrow = null;
 	
 	function checkArrow(x, y, bounds, arrow)
@@ -1854,12 +1842,7 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 	
 	// Shows/hides hover icons
 	var dragEnter = dragSource.dragEnter;
-	dragSource.dragEnter = function(graph, evt)
-	{
-		if (ui.hoverIcons != null)
-		{
-			ui.hoverIcons.setDisplay('none');
-		}
+	dragSource.dragEnter = function(graph, evt) {
 		
 		dragEnter.apply(this, arguments);
 	};
@@ -1867,10 +1850,6 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 	var dragExit = dragSource.dragExit;
 	dragSource.dragExit = function(graph, evt)
 	{
-		if (ui.hoverIcons != null)
-		{
-			ui.hoverIcons.setDisplay('');
-		}
 		
 		dragExit.apply(this, arguments);
 	};
@@ -2105,8 +2084,7 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 				}
 
 				bds.grow(this.graph.tolerance);
-				bds.grow(HoverIcons.prototype.arrowSpacing);
-				
+
 				var handler = this.graph.selectionCellsHandler.getHandler(currentTargetState.cell);
 				
 				if (handler != null)
@@ -2125,17 +2103,6 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 						bds.add(handler.rotationShape.boundingBox);
 					}
 				}
-				//
-				// bbox.add(checkArrow(x, y, new mxRectangle(currentTargetState.getCenterX() - this.triangleUp.width / 2,
-				// 	bds.y - this.triangleUp.height, this.triangleUp.width, this.triangleUp.height), arrowUp));
-				// bbox.add(checkArrow(x, y, new mxRectangle(bds.x + bds.width,
-				// 	currentTargetState.getCenterY() - this.triangleRight.height / 2,
-				// 	this.triangleRight.width, this.triangleRight.height), arrowRight));
-				// bbox.add(checkArrow(x, y, new mxRectangle(currentTargetState.getCenterX() - this.triangleDown.width / 2,
-				// 		bds.y + bds.height, this.triangleDown.width, this.triangleDown.height), arrowDown));
-				// bbox.add(checkArrow(x, y, new mxRectangle(bds.x - this.triangleLeft.width,
-				// 		currentTargetState.getCenterY() - this.triangleLeft.height / 2,
-				// 		this.triangleLeft.width, this.triangleLeft.height), arrowLeft));
 			}
 			
 			// Adds tolerance
@@ -2147,18 +2114,18 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		
 		direction = mxConstants.DIRECTION_NORTH;
 		
-		if (activeArrow == arrowRight)
-		{
-			direction = mxConstants.DIRECTION_EAST;
-		}
-		else if (activeArrow == arrowDown || activeArrow == roundTarget)
-		{
-			direction = mxConstants.DIRECTION_SOUTH;
-		}
-		else if (activeArrow == arrowLeft)
-		{
-			direction = mxConstants.DIRECTION_WEST;
-		}
+		// if (activeArrow == arrowRight)
+		// {
+		// 	direction = mxConstants.DIRECTION_EAST;
+		// }
+		// else if (activeArrow == arrowDown || activeArrow == roundTarget)
+		// {
+		// 	direction = mxConstants.DIRECTION_SOUTH;
+		// }
+		// else if (activeArrow == arrowLeft)
+		// {
+		// 	direction = mxConstants.DIRECTION_WEST;
+		// }
 		
 		if (currentStyleTarget != null && activeArrow == styleTarget)
 		{
@@ -2229,7 +2196,6 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 					}
 
 					bds.grow(this.graph.tolerance);
-					bds.grow(HoverIcons.prototype.arrowSpacing);
 					
 					var handler = this.graph.selectionCellsHandler.getHandler(state.cell);
 					
