@@ -338,10 +338,10 @@
 			return graphRemoveCells.apply(this, arguments);
 		};
 	
-		ui.hoverIcons.getStateAt = function(state, x, y)
-		{
-			return (isTreeVertex(state.cell)) ? null : this.graph.view.getState(this.graph.getCellAt(x, y));
-		};
+		// ui.hoverIcons.getStateAt = function(state, x, y)
+		// {
+		// 	return (isTreeVertex(state.cell)) ? null : this.graph.view.getState(this.graph.getCellAt(x, y));
+		// };
 		
 		var graphDuplicateCells = graph.duplicateCells;
 		
@@ -1033,10 +1033,10 @@
 							graph.setSelectionCell(cells[cells.length - 1]);
 						}
 						
-						if (ui.hoverIcons != null)
-						{
-							ui.hoverIcons.update(graph.view.getState(graph.getSelectionCell()));
-						}
+						// if (ui.hoverIcons != null)
+						// {
+						// 	ui.hoverIcons.update(graph.view.getState(graph.getSelectionCell()));
+						// }
 						
 						graph.startEditingAtCell(graph.getSelectionCell());
 						mxEvent.consume(evt);
@@ -1177,7 +1177,7 @@
 					this.graph.graphHandler.cellWasClicked = true;
 					this.graph.isMouseTrigger = mxEvent.isMouseEvent(evt);
 					this.graph.isMouseDown = true;
-					ui.hoverIcons.reset();
+					// ui.hoverIcons.reset();
 					mxEvent.consume(evt);
 				}));
 			}

@@ -174,7 +174,7 @@ var ColorDialog = function (editorUi, color, apply, cancelFn) {
   });
   cancelBtn.className = 'geBtn';
 
-    buttons.appendChild(cancelBtn);
+  buttons.appendChild(cancelBtn);
 
 
   var applyFunction = (apply != null) ? apply : this.createApplyFunction();
@@ -415,7 +415,7 @@ var TextareaDialog = function (editorUi, title, url, fn, cancelFn, cancelTitle, 
   });
   cancelBtn.className = 'geBtn';
 
-    td.appendChild(cancelBtn);
+  td.appendChild(cancelBtn);
 
 
   if (addButtons != null) {
@@ -503,7 +503,7 @@ var EditDiagramDialog = function (editorUi) {
   });
   cancelBtn.className = 'geBtn';
 
-    div.appendChild(cancelBtn);
+  div.appendChild(cancelBtn);
 
 
   var select = document.createElement('select');
@@ -1007,8 +1007,8 @@ var ExportDialog = function (editorUi) {
   });
   cancelBtn.className = 'geBtn';
 
-    td.appendChild(cancelBtn);
-    td.appendChild(saveBtn);
+  td.appendChild(cancelBtn);
+  td.appendChild(saveBtn);
 
 
   row.appendChild(td);
@@ -1106,163 +1106,16 @@ ExportDialog.saveLocalFile = function (editorUi, data, filename, format) {
 
 // 我改的连线属性配置表单
 var EditDataDialogInline_line = function (ui, cell) {
+  var formName = 'params';
   var div = document.createElement('div');
-  div.className = 'node-attributes-box';
+  div.className = 'node-attributes-box param-setting';
   var graph = ui.editor.graph;
 
-  var value = graph.getModel().getValue(cell);
-  var obj;
-
-  // Converts the value to an XML node
-  // 节点的属性上加上业务的属性
-  var mine = window.myProj.nodeBasicAttributes;
-  obj = mergeSelectedCellAttribute('nodeBasicAttributes', graph, cell, mine);
-  value = obj;
-
-  // Creates the dialog contents
-  var form = new mxFormDiv();
-  var attrs = value.attributes;
-  var names = [];
-  var texts = [];
-  var count = 0;
-
-  var addAttributesTextArea = function (index, name, value) {
-    var child = myUtils.findChildInArray('name', name, mine);
-    var childType = child ? child.type : 'textarea';// flowId---> 流程id,用当前时间；input --> el-input;
-    // 根据name找到节点的类型，然后来创建元素类型
-
-    names[index] = name;
-    switch (childType) {
-      case 'flowId':
-        texts[index] = form.addText(names[count] + ':', value, 'text',
-          {
-            disabled: 'disabled',
-          }
-          );
-        break;
-      case 'input':
-        texts[index] = form.addElInput(
-          {graph: ui.editor.graph,
-            cell: cell,
-            obj: obj
-          },
-          names[count] + ':',
-          value
-        );
-        break;
-      case 'textarea':
-        texts[index] = form.addElInput({
-          graph: ui.editor.graph,
-          cell: cell,
-          obj: obj
-        }, names[count] + ':', value, 'textarea');
-        break;
-      case 'select':
-        texts[index] = form.addElSelect(names[count] + ':', value, child.optionList);
-        break;
-      case 'userSelectDialog':// 人员传递的弹窗
-        texts[index] = form.addElInput(
-          {
-            graph: ui.editor.graph,
-            cell: cell, obj: obj,
-            readonly: true,
-            onClick: showUserSelectDialog
-          },
-          names[count] + ':',
-          value);
-        break;
-      default:
-        texts[index] = form.addText(names[count] + ':', value);
-        break;
-    }
-
-    texts[index].style.width = '100%';
-
-    if (value.indexOf('\n') > 0) {
-      texts[index].setAttribute('rows', '2');
-    }
-  };
-
-  var temp = [];
-  var isLayer = graph.getModel().getParent(cell) == graph.getModel().getRoot();
-  for (var i = 0; i < attrs.length; i++) {
-    if ((isLayer || attrs[i].nodeName != 'label') && attrs[i].nodeName != 'placeholders') {
-      temp.push({name: attrs[i].nodeName, value: attrs[i].nodeValue});
-    }
-  }
-  for (var i = 0; i < temp.length; i++) {
-    addAttributesTextArea(count, temp[i].name, temp[i].value);
-    count++;
-  }
-
-  var top = document.createElement('div');
-  top.className = 'node-attributes-inner';
-  top.appendChild(form.nodeAttributesForm);
-
-  div.appendChild(top);
-
-  this.init = function () {
-    if (texts.length > 0) {
-      texts[0].focus();
-    }
-    else {
-      nameInput.focus();
-    }
-  };
-
-  var cancelBtn = mxUtils.button(mxResources.get('cancel'), function () {
-    ui.hideDialog.apply(ui, arguments);
-  });
-
-  cancelBtn.className = 'geBtn';
-
-  var applyBtn = mxUtils.button(mxResources.get('apply'), function () {
-
-    // 点击了侧栏里的数据配置里的'应用'按钮，触发
-    try {
-      ui.hideDialog.apply(ui, arguments);
-
-      // Clones and updates the value
-      value = value.cloneNode(true);
-      var removeLabel = false;
-
-      // 改一下设置值的方法。因为element组件的值不在value里，如果按照原本的处理方法，会导致值都没了
-      // -ty 2020年06月24日11:04:54
-      for (var i = 0; i < names.length; i++) {
-        // 改为仅仅处理非element输入组件
-        if (texts[i].className.indexOf('el-') < 0) {
-          if (texts[i] == null) {
-            value.removeAttribute(names[i]);
-          } else {
-            value.setAttribute(names[i], texts[i].value);
-            removeLabel = removeLabel || (names[i] == 'placeholder' && value.getAttribute('placeholders') == '1');
-          }
-        }
-      }
-
-      // Removes label if placeholder is assigned
-      if (removeLabel) {
-        value.removeAttribute('label');
-      }
-      // Updates the value of the cell (undoable)
-      // 把这些值，放进全局对象里，
-      setValueToSessionStorage('nodeBasicAttributes', cell, value)
-      graph.getModel().setValue(cell, value);
-    }
-    catch (e) {
-      mxUtils.alert(e);
-    }
-  });
-  applyBtn.className = 'geBtn gePrimaryBtn';
-
-  var buttons = document.createElement('div');
-  buttons.className = 'buttons-group';
-
-    buttons.appendChild(cancelBtn);
-    buttons.appendChild(applyBtn);
-
-
-  div.appendChild(buttons);
+  // 显示先前注册在根组件的连线form
+  var lineAttributesForm = VueIns.$children[0].$childrenRefs.lineAttributesForm;
+  lineAttributesForm.init(cell);
+  lineAttributesForm.show();
+  div.appendChild(lineAttributesForm.$el);
   this.container = div;
 };
 
@@ -1330,11 +1183,12 @@ var EditDataDialogInline = function (ui, cell) {
           {
             disabled: 'disabled',
           }
-          );
+        );
         break;
       case 'input':
         texts[index] = form.addElInput(
-          {graph: ui.editor.graph,
+          {
+            graph: ui.editor.graph,
             cell: cell,
             obj: obj
           },
@@ -1419,7 +1273,7 @@ var EditDataDialogInline = function (ui, cell) {
 
     // 点击了侧栏里的数据配置里的'应用'按钮，触发
     try {
-      ui.hideDialog.apply(ui, arguments);
+      ui.hideDialog.apply(ui, arguments);// todo 应该不需要这个
 
       // Clones and updates the value
       value = value.cloneNode(true);
@@ -1456,11 +1310,8 @@ var EditDataDialogInline = function (ui, cell) {
 
   var buttons = document.createElement('div');
   buttons.className = 'buttons-group';
-
-    buttons.appendChild(cancelBtn);
-    buttons.appendChild(applyBtn);
-
-
+  buttons.appendChild(cancelBtn);
+  buttons.appendChild(applyBtn);
   div.appendChild(buttons);
   this.container = div;
 };
@@ -1632,8 +1483,8 @@ var EditDataDialogInline_URLdefine = function (ui, cell) {
   var buttons = document.createElement('div');
   buttons.className = 'buttons-group';
 
-    buttons.appendChild(cancelBtn);
-    buttons.appendChild(applyBtn);
+  buttons.appendChild(cancelBtn);
+  buttons.appendChild(applyBtn);
 
 
   div.appendChild(buttons);
@@ -1810,14 +1661,12 @@ var EditDataDialogInline_childProcess = function (ui, cell) {
   buttons.appendChild(cancelBtn);
   buttons.appendChild(applyBtn);
 
-
   div.appendChild(buttons);
-  debugger;
   this.container = div;
 };
 
 // 参数
-var EditDataDialogInline_params = function (ui, cell){
+var EditDataDialogInline_params = function (ui, cell) {
   var formName = 'params';
   var div = document.createElement('div');
   div.className = 'node-attributes-box param-setting';
@@ -1825,7 +1674,6 @@ var EditDataDialogInline_params = function (ui, cell){
 
   // 显示先前注册在根组件的参数tabel
   var paramsTable = VueIns.$children[0].$childrenRefs.paramsTable;
-  debugger;
   paramsTable.nodeParamsTableVisible = true;
   div.appendChild(paramsTable.$el)
   this.container = div;

@@ -479,10 +479,6 @@ var mergeSelectedCellAttribute = function(type, graph, cell, mine){
     if(ifSavedValue){
       childValue = ifSavedValue[name];
     }
-    // var isCurrentAttribute = graph.getModel().getValue(cell).getAttribute(name);
-    // if(isCurrentAttribute !== null){
-    //   childValue = isCurrentAttribute
-    // }
 
     if (child.type == 'flowId' && !childValue) {
       childValue = new Date().getTime();

@@ -23,6 +23,11 @@
 
     <!-- 参数配置的table-->
     <paramsTable ref="paramsTable"></paramsTable>
+
+      <!-- 连线属性配置的form-->
+    <lineAttributesForm ref="lineAttributesForm"></lineAttributesForm>
+
+
   </div>
 </template>
 
@@ -52,11 +57,12 @@
 
 
   import paramsTable from '../drawio_myFlowChart/paramsTable'
+  import lineAttributesForm from '../drawio_myFlowChart/lineAttributesForm'
 
   export default {
     name: "can-iframe-use",
     inject: ['rootAppVue'],
-    components: {paramsTable},
+    components: {paramsTable, lineAttributesForm},
     created() {
       window.showDialog_ME = showDialog_ME;
       var LazyLoad = window.LazyLoad;
@@ -93,7 +99,6 @@
 
             drawDevUrl + 'js/diagramly/DrawioFile.js',
             drawDevUrl + 'js/diagramly/LocalFile.js',
-            drawDevUrl + 'js/diagramly/LocalLibrary.js',
             drawDevUrl + 'js/diagramly/StorageFile.js',
             drawDevUrl + 'js/diagramly/StorageLibrary.js',
             drawDevUrl + 'js/diagramly/Dialogs.js',
@@ -130,6 +135,7 @@
         this.rootAppVue.$childrenRefs = {};
       }
       this.rootAppVue.$childrenRefs.paramsTable = this.$refs.paramsTable;
+      this.rootAppVue.$childrenRefs.lineAttributesForm = this.$refs.lineAttributesForm;
     }
   }
 </script>

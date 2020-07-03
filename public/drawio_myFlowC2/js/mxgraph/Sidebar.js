@@ -955,7 +955,6 @@ Sidebar.prototype.insertSearchHint = function(div, searchTerm, count, page, resu
  * Adds the general palette to the sidebar.
  */
 Sidebar.prototype.addGeneralPalette = function(expand) {
-  debugger;
   // 我的业务里需要的几个图片型节点
   var imgArr = [
     {name: '开始', src: 'images/ic_lc1.png'},
@@ -1799,65 +1798,19 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		}
 	};
 
-	// Workaround for event redirection via image tag in quirks and IE8
-	function createArrow(img, tooltip)
-	{
-		var arrow = null;
-		
-		if (mxClient.IS_IE && !mxClient.IS_SVG)
-		{
-			// Workaround for PNG images in IE6
-			if (mxClient.IS_IE6 && document.compatMode != 'CSS1Compat')
-			{
-				arrow = document.createElement(mxClient.VML_PREFIX + ':image');
-				arrow.setAttribute('src', img.src);
-				arrow.style.borderStyle = 'none';
-			}
-			else
-			{
-				arrow = document.createElement('div');
-				arrow.style.backgroundImage = 'url(' + img.src + ')';
-				arrow.style.backgroundPosition = 'center';
-				arrow.style.backgroundRepeat = 'no-repeat';
-			}
-			
-			arrow.style.width = (img.width + 4) + 'px';
-			arrow.style.height = (img.height + 4) + 'px';
-			arrow.style.display = (mxClient.IS_QUIRKS) ? 'inline' : 'inline-block';
-		}
-		else
-		{
-			arrow = mxUtils.createImage(img.src);
-			arrow.style.width = img.width + 'px';
-			arrow.style.height = img.height + 'px';
-		}
-		
-		if (tooltip != null)
-		{
-			arrow.setAttribute('title', tooltip);
-		}
-		
-		mxUtils.setOpacity(arrow, (img == this.refreshTarget) ? 30 : 20);
-		arrow.style.position = 'absolute';
-		arrow.style.cursor = 'crosshair';
-		
-		return arrow;
-	};
-
 	var currentTargetState = null;
 	var currentStateHandle = null;
 	var currentStyleTarget = null;
 	var activeTarget = false;
 	
-	var arrowUp = createArrow(this.triangleUp, mxResources.get('connect'));
-	var arrowRight = createArrow(this.triangleRight, mxResources.get('connect'));
-	var arrowDown = createArrow(this.triangleDown, mxResources.get('connect'));
-	var arrowLeft = createArrow(this.triangleLeft, mxResources.get('connect'));
-	var styleTarget = createArrow(this.refreshTarget, mxResources.get('replace'));
-	// Workaround for actual parentNode not being updated in old IE
-	var styleTargetParent = null;
-	var roundSource = createArrow(this.roundDrop);
-	var roundTarget = createArrow(this.roundDrop);
+	// var arrowUp = createArrow(this.triangleUp, mxResources.get('connect'));
+	// var arrowRight = createArrow(this.triangleRight, mxResources.get('connect'));
+	// var arrowDown = createArrow(this.triangleDown, mxResources.get('connect'));
+	// var arrowLeft = createArrow(this.triangleLeft, mxResources.get('connect'));
+	// var styleTarget = createArrow(this.refreshTarget, mxResources.get('replace'));
+	// var styleTargetParent = null;
+	// var roundSource = createArrow(this.roundDrop);
+	// var roundTarget = createArrow(this.roundDrop);
 	var direction = mxConstants.DIRECTION_NORTH;
 	var activeArrow = null;
 	
@@ -2172,17 +2125,17 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 						bds.add(handler.rotationShape.boundingBox);
 					}
 				}
-				
-				bbox.add(checkArrow(x, y, new mxRectangle(currentTargetState.getCenterX() - this.triangleUp.width / 2,
-					bds.y - this.triangleUp.height, this.triangleUp.width, this.triangleUp.height), arrowUp));
-				bbox.add(checkArrow(x, y, new mxRectangle(bds.x + bds.width,
-					currentTargetState.getCenterY() - this.triangleRight.height / 2,
-					this.triangleRight.width, this.triangleRight.height), arrowRight));
-				bbox.add(checkArrow(x, y, new mxRectangle(currentTargetState.getCenterX() - this.triangleDown.width / 2,
-						bds.y + bds.height, this.triangleDown.width, this.triangleDown.height), arrowDown));
-				bbox.add(checkArrow(x, y, new mxRectangle(bds.x - this.triangleLeft.width,
-						currentTargetState.getCenterY() - this.triangleLeft.height / 2,
-						this.triangleLeft.width, this.triangleLeft.height), arrowLeft));
+				//
+				// bbox.add(checkArrow(x, y, new mxRectangle(currentTargetState.getCenterX() - this.triangleUp.width / 2,
+				// 	bds.y - this.triangleUp.height, this.triangleUp.width, this.triangleUp.height), arrowUp));
+				// bbox.add(checkArrow(x, y, new mxRectangle(bds.x + bds.width,
+				// 	currentTargetState.getCenterY() - this.triangleRight.height / 2,
+				// 	this.triangleRight.width, this.triangleRight.height), arrowRight));
+				// bbox.add(checkArrow(x, y, new mxRectangle(currentTargetState.getCenterX() - this.triangleDown.width / 2,
+				// 		bds.y + bds.height, this.triangleDown.width, this.triangleDown.height), arrowDown));
+				// bbox.add(checkArrow(x, y, new mxRectangle(bds.x - this.triangleLeft.width,
+				// 		currentTargetState.getCenterY() - this.triangleLeft.height / 2,
+				// 		this.triangleLeft.width, this.triangleLeft.height), arrowLeft));
 			}
 			
 			// Adds tolerance
@@ -2381,19 +2334,18 @@ Sidebar.prototype.createDragSource = function(elt, dropHandler, preview, cells, 
 		return target;
 	});
 	
-	dragSource.stopDrag = function()
-	{
+	dragSource.stopDrag = function() {
 		mxDragSource.prototype.stopDrag.apply(this, arguments);
 		
-		var elts = [roundSource, roundTarget, styleTarget, arrowUp, arrowRight, arrowDown, arrowLeft];
-		
-		for (var i = 0; i < elts.length; i++)
-		{
-			if (elts[i].parentNode != null)
-			{
-				elts[i].parentNode.removeChild(elts[i]);
-			}
-		}
+		// var elts = [roundSource, roundTarget, styleTarget, arrowUp, arrowRight, arrowDown, arrowLeft];
+		//
+		// for (var i = 0; i < elts.length; i++)
+		// {
+		// 	if (elts[i].parentNode != null)
+		// 	{
+		// 		elts[i].parentNode.removeChild(elts[i]);
+		// 	}
+		// }
 		
 		if (currentTargetState != null && currentStateHandle != null)
 		{

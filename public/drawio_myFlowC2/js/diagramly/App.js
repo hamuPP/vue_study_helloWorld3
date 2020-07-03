@@ -2931,17 +2931,6 @@ App.prototype.loadLibraries = function(libs, done)
 		{
 			if (waiting == 0)
 			{
-				if (libs != null)
-				{
-					for (var i = libs.length - 1; i >= 0; i--)
-					{
-						if (files[i] != null)
-						{
-							this.loadLibrary(files[i]);
-						}
-					}
-				}
-				
 				if (done != null)
 				{
 					done();

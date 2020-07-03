@@ -482,7 +482,7 @@ Format.prototype.refresh = function()
 			label.style.borderLeftWidth = '0px';
 
 			if(isLine){
-			  // 加入我的面板并且激活该面板：连线属性（）
+			  // 加入我的面板并且激活该面板：连线属性
         mxUtils.write(label, '连线属性');
         div.appendChild(label);
 
@@ -491,7 +491,7 @@ Format.prototype.refresh = function()
         this.panels.push(new MyLineAttributesPanel(this, ui, myLineAttributesPanel));
         this.container.appendChild(myLineAttributesPanel);
 
-        addClickHandler(label, myNodeAttributesPanel, idx++);
+        addClickHandler(label, myLineAttributesPanel, idx++);
       }else{
         // 加入我的面板并且激活该面板：节点属性
         mxUtils.write(label, '节点属性');
@@ -2689,7 +2689,7 @@ MyLineAttributesPanel.prototype.init = function() {
   // 当前操作的节点的数据们：
   var ui = this.editorUi;
   var ss = this.format.getSelectionState();
-  var mxCell = ss.vertices[0];
+  var mxCell = ss.edges[0];
   var dlg = new EditDataDialogInline_line(ui, mxCell);
   this.container.appendChild(dlg.container);
 };

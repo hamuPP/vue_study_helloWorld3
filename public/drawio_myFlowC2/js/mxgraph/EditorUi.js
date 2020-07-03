@@ -142,9 +142,9 @@ EditorUi = function(editor, container, lightbox)
 	            root.style.position = 'absolute';
 	        }
 	    }
-	    
-		// Creates hover icons
-		this.hoverIcons = this.createHoverIcons();
+	   //
+		// // Creates hover icons
+		// this.hoverIcons = this.createHoverIcons();
 		
 		// Adds tooltip when mouse is over scrollbars to show space-drag panning option
 		mxEvent.addListener(this.diagramContainer, 'mousemove', mxUtils.bind(this, function(evt)
@@ -166,19 +166,19 @@ EditorUi = function(editor, container, lightbox)
 		var spaceKeyPressed = false;
 		
 		// Overrides hovericons to disable while space key is pressed
-		var hoverIconsIsResetEvent = this.hoverIcons.isResetEvent;
-		
-		this.hoverIcons.isResetEvent = function(evt, allowShift)
-		{
-			return spaceKeyPressed || hoverIconsIsResetEvent.apply(this, arguments);
-		};
+		// var hoverIconsIsResetEvent = this.hoverIcons.isResetEvent;
+		//
+		// this.hoverIcons.isResetEvent = function(evt, allowShift)
+		// {
+		// 	return spaceKeyPressed || hoverIconsIsResetEvent.apply(this, arguments);
+		// };
 		
 		this.keydownHandler = mxUtils.bind(this, function(evt)
 		{
 			if (evt.which == 32 /* Space */ && !graph.isEditing())
 			{
 				spaceKeyPressed = true;
-				this.hoverIcons.reset();
+				// this.hoverIcons.reset();
 				graph.container.style.cursor = 'move';
 				
 				// Disables scroll after space keystroke with scrollbars
@@ -187,7 +187,8 @@ EditorUi = function(editor, container, lightbox)
 					mxEvent.consume(evt);
 				}
 			}
-			else if (!mxEvent.isConsumed(evt) && evt.keyCode == 27 /* Escape */)
+			else
+			  if (!mxEvent.isConsumed(evt) && evt.keyCode == 27 /* Escape */)
 			{
 				this.hideDialog(null, true);
 			}
@@ -2613,13 +2614,13 @@ EditorUi.prototype.updateDocumentTitle = function()
 	document.title = title;
 };
 
-/**
- * Updates the document title.
- */
-EditorUi.prototype.createHoverIcons = function()
-{
-	return new HoverIcons(this.editor.graph);
-};
+// /**
+//  * Updates the document title.
+//  */
+// EditorUi.prototype.createHoverIcons = function()
+// {
+// 	return new HoverIcons(this.editor.graph);// todo 一会移除这个createHovericons方法
+// };
 
 /**
  * Returns the URL for a copy of this editor with no state.
@@ -4391,10 +4392,10 @@ EditorUi.prototype.createKeyHandler = function(editor)
 
 								graph.scrollCellToVisible(graph.getSelectionCell());
 								
-								if (editorUi.hoverIcons != null)
-								{
-									editorUi.hoverIcons.update(graph.view.getState(graph.getSelectionCell()));
-								}
+								// if (editorUi.hoverIcons != null)
+								// {
+								// 	editorUi.hoverIcons.update(graph.view.getState(graph.getSelectionCell()));
+								// }
 							}
 						};
 					}
