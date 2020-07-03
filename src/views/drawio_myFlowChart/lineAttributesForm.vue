@@ -20,7 +20,8 @@
       <el-checkbox v-model="form.dtype"></el-checkbox>
     </el-form-item>
     <!-- 点击打开参数编辑弹窗 -->
-    <el-form-item label="参数表达式" class="form-item">
+    <el-form-item label="参数表达式" class="form-item" prop="paramExpress">
+      <el-input v-model="form.paramExpress" readonly v-on:click.native="openParamsEditDialog"></el-input>
     </el-form-item>
     <!-- 点击打开参数编辑弹窗 -->
     <el-form-item label="必走表达式" class="form-item">
@@ -29,12 +30,16 @@
       <el-button type="primary" @click="handleApplyLineAttributes">应用</el-button>
       <el-button @click="handleCancleLineAttributes">取消</el-button>
     </el-form-item>
+
+    <lineParamEditDialog ref="paramEditDialog"></lineParamEditDialog>
   </el-form>
 </template>
 
 <script>
+  import lineParamEditDialog from './lineParamEditDialog'
   export default {
     name: "line-attributes-form",
+    components: {lineParamEditDialog},
     data() {
       return {
         graph: null,
@@ -87,6 +92,10 @@
       // 点击'取消'按钮
       handleCancleLineAttributes(){
         debugger;
+      },
+      openParamsEditDialog(){
+        debugger;
+        this.$refs.paramEditDialog.show();
       }
     }
   }
