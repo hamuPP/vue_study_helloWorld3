@@ -758,6 +758,7 @@ OpenFile.prototype.cancel = function(cancel)
  */
 function Dialog(editorUi, elt, w, h, modal, closable, onClose, noScroll, transparent, onResize, ignoreBgClick)
 {
+  debugger;
 	var dx = 0;
 	
 	if (mxClient.IS_VML && (document.documentMode == null || document.documentMode < 8))

@@ -308,8 +308,8 @@ Actions.prototype.init = function()
 			graph.startEditingAtCell();
 		}
 	}, null, null, 'F2/Enter');
-	this.addAction('editData...', function()
-	{
+	this.addAction('editData...', function() {
+	  debugger;
 		var cell = graph.getSelectionCell() || graph.getModel().getRoot();
 		ui.showDataDialog(cell);
 	}, null, null, Editor.ctrlKey + '+M');

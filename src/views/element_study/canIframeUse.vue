@@ -27,13 +27,19 @@
       <!-- 连线属性配置的form-->
     <lineAttributesForm ref="lineAttributesForm"></lineAttributesForm>
 
+    <!-- 工作流编辑的form-->
+    <wfEditForm
+            ref="wfForm"
+            @paramApply="paramApplyHandle">
+    </wfEditForm>
+    <wfParamTable
+            ref="wfParams"
+            @paramApply="paramApplyHandle">
+    </wfParamTable>
 
+    <myTest ref="myTest"></myTest>
   </div>
 </template>
-
-<!--<script>-->
-
-<!--</script>-->
 
 <script>
 
@@ -55,14 +61,15 @@
   import '../../../public/drawio_myFlowC2/js/myProj/nodeAttributes4vue'
   import {showDialog_ME} from '../../../public/drawio_myFlowC2/js/myProj/ME'
 
-
   import paramsTable from '../drawio_myFlowChart/paramsTable'
   import lineAttributesForm from '../drawio_myFlowChart/lineAttributesForm'
-
+  import wfEditForm from '../drawio_myFlowChart/wfForm/wfForm'
+  import wfParamTable from '../drawio_myFlowChart/wfForm/wfParamEditTable.vue'
+  import myTest from '../drawio_myFlowChart/test.vue'
   export default {
     name: "can-iframe-use",
     inject: ['rootAppVue'],
-    components: {paramsTable, lineAttributesForm},
+    components: {paramsTable, lineAttributesForm, wfEditForm, wfParamTable, myTest},
     created() {
       window.showDialog_ME = showDialog_ME;
       var LazyLoad = window.LazyLoad;
@@ -136,6 +143,15 @@
       }
       this.rootAppVue.$childrenRefs.paramsTable = this.$refs.paramsTable;
       this.rootAppVue.$childrenRefs.lineAttributesForm = this.$refs.lineAttributesForm;
+      this.rootAppVue.$childrenRefs.wfForm = this.$refs.wfForm;
+      this.rootAppVue.$childrenRefs.wfParams = this.$refs.wfParams;
+      this.rootAppVue.$childrenRefs.myTest = this.$refs.myTest;
+    },
+    methods: {
+      paramApplyHandle(val){
+        debugger;
+        // this.form.paramExpress = val;
+      }
     }
   }
 </script>

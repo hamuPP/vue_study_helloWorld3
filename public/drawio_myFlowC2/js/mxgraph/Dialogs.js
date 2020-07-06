@@ -1664,7 +1664,7 @@ var EditDataDialogInline_childProcess = function (ui, cell) {
   this.container = div;
 };
 
-// 参数
+// 节点的参数
 var EditDataDialogInline_params = function (ui, cell) {
   var formName = 'params';
   var div = document.createElement('div');
@@ -1672,8 +1672,52 @@ var EditDataDialogInline_params = function (ui, cell) {
   var graph = ui.editor.graph;
 
   // 显示先前注册在根组件的参数tabel
+  debugger;
+
   var paramsTable = VueIns.$children[0].$childrenRefs.paramsTable;
-  paramsTable.nodeParamsTableVisible = true;
+  // var myTest = VueIns.$children[0].$childrenRefs.myTest;
+  // todo 暂时注释掉，引发报错了
+  paramsTable.nodeParamVisible = true;
+
+  paramsTable.init({
+    graph: graph,
+    mxCell: cell
+  })
+  div.appendChild(paramsTable.$el)
+  this.container = div;
+};
+
+// 工作流
+var EditDataDialogInline_workflow = function (ui, cell) {
+  var formName = 'params';
+  var div = document.createElement('div');
+  div.className = 'node-attributes-box wf-setting';
+  var graph = ui.editor.graph;
+
+  // 显示先前注册在根组件的参数tabel
+  var wfForm = VueIns.$children[0].$childrenRefs.wfForm;
+  wfForm.visible = true;
+  wfForm.init({
+    graph: graph,
+    mxCell: cell
+  })
+  div.appendChild(wfForm.$el)
+  this.container = div;
+};
+// 工作流的参数
+var EditDataDialogInline_wfParams = function (ui, cell) {
+  var formName = 'params';
+  var div = document.createElement('div');
+  div.className = 'node-attributes-box wf-param-setting';
+  var graph = ui.editor.graph;
+
+  // 显示先前注册在根组件的参数tabel
+  var paramsTable = VueIns.$children[0].$childrenRefs.wfParams;
+  paramsTable.visible = true;
+  paramsTable.init({
+    graph: graph,
+    mxCell: cell
+  })
   div.appendChild(paramsTable.$el)
   this.container = div;
 };

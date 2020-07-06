@@ -31,8 +31,11 @@
       <el-button @click="handleCancleLineAttributes">取消</el-button>
     </el-form-item>
 
-    <lineParamEditDialog ref="paramEditDialog"
-    @paramApply="paramApplyHandle"></lineParamEditDialog>
+    <lineParamEditDialog
+            ref="paramEditDialog"
+            @paramApply="paramApplyHandle">
+    </lineParamEditDialog>
+
   </el-form>
 </template>
 

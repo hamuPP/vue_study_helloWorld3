@@ -58,4 +58,19 @@
 			}
 		}
 	}
+
+	// 表格中的input组件
+	.el-input__inner{
+		height: 23px;
+		line-height: 23px;
+		padding: 0 20px 0 5px;
+	}
+	.el-input__suffix{
+		right: 0;
+		.el-input__icon{
+			//height: 23px;
+			line-height: 23px;
+		}
+
+	}
 }

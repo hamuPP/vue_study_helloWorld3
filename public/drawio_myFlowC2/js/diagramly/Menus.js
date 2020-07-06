@@ -51,17 +51,6 @@
     var editorUi = this.editorUi;
     var graph = editorUi.editor.graph;
     var isGraphEnabled = mxUtils.bind(graph, graph.isEnabled);
-    var googleEnabled = ((urlParams['embed'] != '1' && urlParams['gapi'] != '0') ||
-      (urlParams['embed'] == '1' && urlParams['gapi'] == '1')) && mxClient.IS_SVG &&
-      isLocalStorage && (document.documentMode == null || document.documentMode >= 10);
-    var dropboxEnabled = ((urlParams['embed'] != '1' && urlParams['db'] != '0') || (urlParams['embed'] == '1' && urlParams['db'] == '1')) &&
-      mxClient.IS_SVG && (document.documentMode == null || document.documentMode > 9);
-    var oneDriveEnabled = (window.location.hostname == 'www.draw.io' || window.location.hostname == 'test.draw.io' ||
-      window.location.hostname == 'drive.draw.io' || window.location.hostname == 'app.diagrams.net') &&
-      (((urlParams['embed'] != '1' && urlParams['od'] != '0') || (urlParams['embed'] == '1' && urlParams['od'] == '1')) &&
-        !mxClient.IS_IOS && (navigator.userAgent.indexOf('MSIE') < 0 || document.documentMode >= 10));
-    var trelloEnabled = ((urlParams['embed'] != '1' && urlParams['tr'] != '0') || (urlParams['embed'] == '1' && urlParams['tr'] == '1')) &&
-      mxClient.IS_SVG && (document.documentMode == null || document.documentMode > 9);
 
     if (!mxClient.IS_SVG && !editorUi.isOffline()) {
       var img = new Image();

@@ -3623,6 +3623,7 @@ EditorUi.prototype.showError = function(title, msg, btn, fn, retry, btn2, fn2, b
  */
 EditorUi.prototype.showDialog = function(elt, w, h, modal, closable, onClose, noScroll, transparent, onResize, ignoreBgClick)
 {
+  debugger;
 	this.editor.graph.tooltipHandler.hideTooltip();
 	
 	if (this.dialogs == null)

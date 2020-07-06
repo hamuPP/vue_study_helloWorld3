@@ -114,7 +114,7 @@ body{
 	display: inline-block;
 	height: 25px;
 	overflow: hidden;
-	width: 100%;
+	width: 33.33%;
 	cursor: pointer;
 	background: rgb(241, 243, 244);
 }

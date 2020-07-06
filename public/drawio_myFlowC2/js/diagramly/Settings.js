@@ -12,7 +12,7 @@ var mxSettings =
 	 */
 	currentVersion: 18,
 	
-	defaultFormatWidth: (screen.width < 600) ? '0' : '240',
+	defaultFormatWidth: (screen.width < 600) ? '0' : (screen.width > 1339? '440' :'340'),
 	
 	// NOTE: Hardcoded in index.html due to timing of JS loading
 	key: '.drawio-config',

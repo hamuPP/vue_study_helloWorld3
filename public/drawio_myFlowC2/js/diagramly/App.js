@@ -121,7 +121,6 @@ App = function(editor, container, lightbox)
 	}
 	
 	// Process the queue for waiting plugins
-  debugger;
 	if (App.DrawPlugins != null)
 	{
 		
@@ -130,7 +129,6 @@ App = function(editor, container, lightbox)
 		{
 			try
 			{
-			  debugger;
 				callback(this);
 			}
 			finally
@@ -625,11 +623,6 @@ App.main = function(callback, createUi)
 
 //Extends EditorUi
 mxUtils.extend(App, EditorUi);
-
-/**
- * Executes the first step for connecting to Google Drive.
- */
-App.prototype.defaultUserPicture = 'https://lh3.googleusercontent.com/-HIzvXUy6QUY/AAAAAAAAAAI/AAAAAAAAAAA/giuR7PQyjEk/photo.jpg?sz=64';
 
 /**
  * 
@@ -2748,123 +2741,10 @@ App.prototype.pickFolder = function(mode, fn, enabled, direct, force)
 /**
  * 
  */
-App.prototype.exportFile = function(data, filename, mimeType, base64Encoded, mode, folderId)
-{
-	if (mode == App.MODE_DROPBOX)
-	{
-		if (this.dropbox != null && this.spinner.spin(document.body, mxResources.get('saving')))
-		{
-			// LATER: Add folder picker
-			this.dropbox.insertFile(filename, (base64Encoded) ? this.base64ToBlob(data, mimeType) :
-				data, mxUtils.bind(this, function()
-			{
-				this.spinner.stop();
-			}), mxUtils.bind(this, function(resp)
-			{
-				this.spinner.stop();
-				this.handleError(resp);
-			}));
-		}
-	}
-	else if (mode == App.MODE_GOOGLE)
-	{
-		if (this.drive != null && this.spinner.spin(document.body, mxResources.get('saving')))
-		{
-			this.drive.insertFile(filename, data, folderId, mxUtils.bind(this, function(resp)
-			{
-				// TODO: Add callback with url param for clickable status message
-				// "File exported. Click here to open folder."
-//				this.editor.setStatus('<div class="geStatusMessage" style="cursor:pointer;">' +
-//					mxResources.get('saved') + '</div>');
-//				
-//				// Installs click handler for opening
-//				if (this.statusContainer != null)
-//				{
-//					var links = this.statusContainer.getElementsByTagName('div');
-//					
-//					if (links.length > 0)
-//					{
-//						mxEvent.addListener(links[0], 'click', mxUtils.bind(this, function()
-//						{
-//							if (resp != null && resp.id != null)
-//							{
-//								window.open('https://drive.google.com/open?id=' + resp.id);
-//							}
-//						}));
-//					}
-//				}
-				
-				this.spinner.stop();
-			}), mxUtils.bind(this, function(resp)
-			{
-				this.spinner.stop();
-				this.handleError(resp);
-			}), mimeType, base64Encoded);
-		}
-	}
-	else if (mode == App.MODE_ONEDRIVE)
-	{
-		if (this.oneDrive != null && this.spinner.spin(document.body, mxResources.get('saving')))
-		{
-			// KNOWN: OneDrive does not show .svg extension
-			this.oneDrive.insertFile(filename, (base64Encoded) ? this.base64ToBlob(data, mimeType) :
-				data, mxUtils.bind(this, function()
-			{
-				this.spinner.stop();
-			}), mxUtils.bind(this, function(resp)
-			{
-				this.spinner.stop();
-				this.handleError(resp);
-			}), false, folderId);
-		}
-	}
-	else if (mode == App.MODE_GITHUB)
-	{
-		if (this.gitHub != null && this.spinner.spin(document.body, mxResources.get('saving')))
-		{
-			// Must insert file as library to force the file to be written
-			this.gitHub.insertFile(filename, data, mxUtils.bind(this, function()
-			{
-				this.spinner.stop();
-			}), mxUtils.bind(this, function(resp)
-			{
-				this.spinner.stop();
-				this.handleError(resp);
-			}), true, folderId, base64Encoded);
-		}
-	}
-	else if (mode == App.MODE_TRELLO)
-	{
-		if (this.trello != null && this.spinner.spin(document.body, mxResources.get('saving')))
-		{
-			this.trello.insertFile(filename, (base64Encoded) ? this.base64ToBlob(data, mimeType) :
-				data, mxUtils.bind(this, function()
-			{
-				this.spinner.stop();
-			}), mxUtils.bind(this, function(resp)
-			{
-				this.spinner.stop();
-				this.handleError(resp);
-			}), false, folderId);
-		}
-	}
-	else if (mode == App.MODE_BROWSER)
-	{
-		var fn = mxUtils.bind(this, function()
-		{
-			localStorage.setItem(filename, data);
-		});
-		
-		if (localStorage.getItem(filename) == null)
-		{
-			fn();
-		}
-		else
-		{
-			this.confirm(mxResources.get('replaceIt', [filename]), fn);
-		}
-	}
-};
+// App.prototype.exportFile = function(data, filename, mimeType, base64Encoded, mode, folderId)
+// {
+// 	debugger;
+// };
 
 /**
  * Translates this point by the given vector.

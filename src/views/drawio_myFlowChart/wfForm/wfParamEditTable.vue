@@ -1,18 +1,16 @@
 /**
-* 节点的参数配置
+* 工作流的参数配置
 * Created by tangyue on 20/7/2
 */
 <template>
-  <div class="node-params-table" v-show="nodeParamVisible">
+  <div class="node-params-table" v-show="visible">
     <div class="table-blue2-toolbar">
       <el-button class="header-btn" @click="handleDel" size="small">删除</el-button>
-      <el-button class="header-btn" type="primary" @click="handleAdd" size="small">新增</el-button>
+      <el-button class="header-btn" type="primary" @click="handleAdd" size="small">新增A</el-button>
       <el-button class="header-btn" type="primary" @click="handApply" size="small">应用</el-button>
     </div>
-
-    <!--  注意：每一列必须加width,否则会卡住  -->
     <el-table
-            ref="nodeParamsTable"
+            ref="paramTable"
             class="table-blue2"
             :data="tableData"
             style="width: 100%"
@@ -25,7 +23,7 @@
       </el-table-column>
       <el-table-column
               prop="name"
-              label="参数名"
+              label="名称"
               width="100">
         <template slot-scope="scope">
           <el-input v-if="scope.row.nameEditable"
@@ -36,8 +34,28 @@
         </template>
       </el-table-column>
       <el-table-column
+              prop="type"
+              label="类型"
+              width="100">
+        <template slot-scope="scope">
+          <el-select
+                  v-if="scope.row.typeEditable"
+                  v-model="scope.row.type"
+                  placeholder="请选择"
+                  @change="typeSelectChange">
+            <el-option
+                    v-for="item in typeOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value">
+            </el-option>
+          </el-select>
+          <span v-else>{{scope.row.type}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column
               prop="value"
-              label="参数值"
+              label="值"
               width="100">
         <template slot-scope="scope">
           <el-input v-if="scope.row.valueEditable"
@@ -48,16 +66,9 @@
         </template>
       </el-table-column>
       <el-table-column
-              prop="des"
-              label="备注"
-              width="100">
-        <template slot-scope="scope">
-          <el-input v-if="scope.row.desEditable"
-                    v-model="scope.row.des"
-                    clearable>
-          </el-input>
-          <span v-else>{{scope.row.des}}</span>
-        </template>
+              prop="cateID"
+              label="类型ID"
+              width="55">
       </el-table-column>
     </el-table>
   </div>
@@ -66,20 +77,30 @@
 
 <script>
   export default {
-    name: "params-table",
+    name: "workflow-params-table",
     data() {
       return {
         graph: null,
         mxCell: null,
-        nodeParamVisible: false,
+        visible: false,
         tableData: [
+
+        ],
+        typeOptions: [
           {
-            name: '2016-05-02',
-            value: '王小虎',
-            des: '上海市普陀区金沙江路 1518 弄'
+            value: '0',
+            label: 'string'
           },
-        ]
+          {
+            value: '1',
+            label: 'int'
+          },
+        ],
+        currentRow: null,// 执行双击操作时记录的行
       }
+    },
+    watch: {
+
     },
     methods: {
       init(opt){
@@ -89,7 +110,7 @@
       // 删除
       handleDel() {
         // 当前勾选的行
-        let selectedRows = this.$refs.nodeParamsTable.selection;
+        let selectedRows = this.$refs.paramTable.selection;
         if (selectedRows.length == 0) {
           this.$message({
             duration: 1000,
@@ -125,29 +146,48 @@
       },
       // 点击了应用按钮，将这些属性数据保存进节点里
       handApply() {
+        // todo 表单的参数是否需要处理成其他节点那种的Object?
+        // var doc = mxUtils.createXmlDocument();
+        // var obj = doc.createElement('object');
+        // for(var i in this.form){
+        //   var child = this.form[i];
+        //   if(child){
+        //     obj.setAttribute(i, child);
+        //   }
+        // }
+        // 把这些值，放进全局对象里，
+        setValueToSessionStorage('wfParamsData', this.mxCell, this.tableData)
+        // this.graph.getModel().setValue(this.mxCell, this.tableData);// todo 是否需要这一步？
 
       },
       // 单元格双击,变成编辑模式
       tableCellDblClick(row, column, cell, event) {
+        console.log(column.label);
+        this.currentRow = row;// 记录当前的行
         switch (column.label) {
-          case '参数名':
+          case '名称':
             row.nameEditable = true;
             this.tableData = [].concat(this.tableData);
             debugger;
             break;
-          case '参数值':
-            row.valueEditable = true;
+            case '类型':
+            row.typeEditable = true;
             this.tableData = [].concat(this.tableData);
             debugger;
             break;
-          case '备注':
-            row.desEditable = true;
+          case '值':
+            row.valueEditable = true;
             this.tableData = [].concat(this.tableData);
             debugger;
             break;
           default:
             break;
+
         }
+      },
+      typeSelectChange(val){
+        debugger;
+        this.currentRow.cateId = val;
       }
     }
   }

@@ -3120,109 +3120,6 @@
 					}
 					
 					var id = (fileHash != null) ? fileHash : window.location.hash;
-					
-					// #U handles case where we tried to fallback to Google File and
-					// hash property still shows the public URL we tried to load
-					if (id != null && (id.substring(0, 2) == '#G' ||
-						id.substring(0, 45) == '#Uhttps%3A%2F%2Fdrive.google.com%2Fuc%3Fid%3D') &&
-						((resp != null && resp.error != null && ((resp.error.errors != null &&
-						resp.error.errors.length > 0 && resp.error.errors[0].reason == 'fileAccess') ||
-						(resp.error.data != null && resp.error.data.length > 0 &&
-						resp.error.data[0].reason == 'fileAccess'))) ||
-						e.code == 404 || e.status == 404))
-					{
-						id = (id.substring(0, 2) == '#U') ? id.substring(45, id.lastIndexOf('%26ex')) : id.substring(2);
-						
-						// Special case where the button must have a different label and function
-						this.showError(title, msg, mxResources.get('openInNewWindow'), mxUtils.bind(this, function()
-						{
-							this.editor.graph.openLink('https://drive.google.com/open?id=' + id);
-							this.handleError(resp, title, fn, invokeFnOnClose, notFoundMessage)
-						}), retry, mxResources.get('changeUser'), mxUtils.bind(this, function()
-						{
-							var driveUsers = this.drive.getUsersList();
-							
-							var div = document.createElement('div');
-							
-							var title = document.createElement('span');
-							title.style.marginTop = '6px';
-							mxUtils.write(title, mxResources.get('changeUser') + ': ');
-							
-							div.appendChild(title);
-							
-							var usersSelect = document.createElement('select');
-							usersSelect.style.width = '200px';
-							
-							//TODO This code is similar to Dialogs.js change user part in SplashDialog
-							function fillUsersSelect()
-							{
-								usersSelect.innerHTML = '';
-								
-								for (var i = 0; i < driveUsers.length; i++)
-								{
-									var option = document.createElement('option');
-									mxUtils.write(option, driveUsers[i].displayName);
-									option.value = i;
-									usersSelect.appendChild(option);
-									//More info (email) about the user in a disabled option
-									option = document.createElement('option');
-									option.innerHTML = '&nbsp;&nbsp;&nbsp;';
-									mxUtils.write(option, '<' + driveUsers[i].email + '>');
-									option.setAttribute('disabled', 'disabled');
-									usersSelect.appendChild(option);
-								}
-								
-								//Add account option
-								var option = document.createElement('option');
-								mxUtils.write(option, mxResources.get('addAccount'));
-								option.value = driveUsers.length;
-								usersSelect.appendChild(option);
-							}
-							
-							fillUsersSelect();
-							
-							mxEvent.addListener(usersSelect, 'change', mxUtils.bind(this, function()
-							{
-								var userIndex = usersSelect.value;
-								var existingAccount = driveUsers.length != userIndex;
-								
-								if (existingAccount)
-								{
-									this.drive.setUser(driveUsers[userIndex]);
-								}
-								
-								this.drive.authorize(existingAccount, mxUtils.bind(this, function()
-								{
-									if (!existingAccount) 
-									{
-										driveUsers = this.drive.getUsersList();
-										fillUsersSelect();
-									}
-								}), mxUtils.bind(this, function(resp)
-								{
-									this.handleError(resp);
-								}), true);
-							}));
-							
-							div.appendChild(usersSelect);
-							
-							var dlg = new CustomDialog(this, div, mxUtils.bind(this, function()
-							{
-								this.loadFile(window.location.hash.substr(1), true);
-							}));
-							this.showDialog(dlg.container, 300, 75, true, true);
-						}), mxResources.get('cancel'), mxUtils.bind(this, function()
-						{
-							this.hideDialog();
-							
-							if (fn != null)
-							{
-								fn();
-							}
-						}), 480, 150);
-								
-						return;
-					}
 				}
 				
 				if (e.message != null)
@@ -4059,10 +3956,11 @@
 	/**
 	 * Hook for subclassers.
 	 */
-	EditorUi.prototype.exportFile = function(data, filename, mimeType, base64Encoded, mode, folderId)
-	{
-		// do nothing
-	};
+	// EditorUi.prototype.exportFile = function(data, filename, mimeType, base64Encoded, mode, folderId)
+	// {
+	//   debugger;
+	// 	// do nothing
+	// };
 	
 	/**
 	 * Hook for subclassers.
@@ -11102,7 +11000,9 @@
 		
 		ExportDialog.exportFile = function(editorUi, name, format, bg, s, b, dpi)
 		{
-			var graph = editorUi.editor.graph;
+      debugger;
+
+      var graph = editorUi.editor.graph;
 			
 			if (format == 'xml')
 			{
