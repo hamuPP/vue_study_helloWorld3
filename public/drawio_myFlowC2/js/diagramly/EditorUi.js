@@ -10997,7 +10997,7 @@
 			}
 		}
 
-		this.updateUserElement();
+		// this.updateUserElement();
 	};
 	
 	/**
@@ -11011,10 +11011,10 @@
 	/**
 	 * Hook for subclassers
 	 */
-	EditorUi.prototype.updateUserElement = function()
-	{
-		// do nothing
-	};
+	// EditorUi.prototype.updateUserElement = function()
+	// {
+	// 	// do nothing
+	// };
 	
 	/**
 	 * Hook for subclassers
