@@ -61,7 +61,7 @@
   import {showDialog_ME} from '../../../public/drawio_myFlowC2/js/myProj/ME'
 
   import paramsTable from '../drawio_myFlowChart/paramsTable'
-  import lineAttributesForm from '../drawio_myFlowChart/lineAttributesForm'
+  import lineAttributesForm from '../drawio_myFlowChart/line/lineAttributesForm'
   import wfEditForm from '../drawio_myFlowChart/wfForm/wfForm'
   import wfParamTable from '../drawio_myFlowChart/wfForm/wfParamEditTable.vue'
   export default {
