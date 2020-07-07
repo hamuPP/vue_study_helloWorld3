@@ -42,6 +42,7 @@
     data() {
       return {
         graph: null,
+        expressType: '',// 表达式的类型: 参数表达式、必走表达式。
         dialogVisible: false,
         transferData: [],
         transferValue: [],
@@ -57,8 +58,9 @@
 
     },
     methods: {
-      show(graph) {
+      show(graph, expressType) {
         this.graph = graph;
+        this.expressType = expressType || 'paramExpress';
         this.dialogVisible = true;
         // 根据工作流的参数，生成这里的参数
         this.transferData = this.getTransferData();
@@ -109,7 +111,10 @@
         }
 
         if (valideCount == 2) {
-          this.$emit('paramApply', textValue)
+          this.$emit('paramApply', {
+            type: this.expressType,
+            value: textValue
+          });
           this.dialogVisible = false;
         }
 

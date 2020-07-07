@@ -1,34 +1,3 @@
-html,
-body{
-	height: 100%;
-	width: 100%;
-}
-body{
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
-	font-size: 12px;
-	font-family: Microsoft YaHei,Avenir, Helvetica, Arial, sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-}
-
-.myMainContainer{
-	position: relative;
-	width: 100%;
-	height: 100%;
-}
-
-
-/*重写elementui的样式*/
-.el-input--mini .el-input__inner{
-	height: 22px;
-	line-height: 22px;
-}
-.el-input--mini .el-input__icon{
-	line-height: 22px;
-
-}
 .node-attributes-box {
 	position: relative;
 	border: 1px solid red;
@@ -52,18 +21,36 @@ body{
 	height: 40px;
 }
 
-.node-attributes-box .my-node-attributes-form{
-	width: 100%;
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
-	padding: 0 5px 5px;
-}
+.node-attributes-box{
+	.my-node-attributes-form{
+		width: 100%;
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+		padding: 0 5px 5px;
+		*{
+			-webkit-box-sizing: border-box;
+			-moz-box-sizing: border-box;
+			box-sizing: border-box;
+		}
+	}
+	// input后面放按钮的情况
+	.suffix-button{
+		.el-textarea{
+			width: calc(100% - 30px);
+			height: 60px;
+			.el-textarea__inner{
+				resize: none;
+				height: 100%;
+				padding: 2px 15px;
+			}
+		}
 
-.my-node-attributes-form *{
-	-webkit-box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	box-sizing: border-box;
+		.el-button{
+			margin-bottom: 18px;
+			margin-left: 5px;
+		}
+	}
 }
 
 .node-attributes-box .display-id{
@@ -71,7 +58,7 @@ body{
 	display: none; /* 这是画图软件自带的显示ID的地方，这里隐藏掉，不给用户看*/
 }
 .node-attributes-box .form-item{
-	margin: 0 0 5px;
+	margin: 0 0 5px !important;
 }
 .node-attributes-box .form-item__label,
 .node-attributes-box .el-form-item__label

@@ -20,11 +20,34 @@
       <el-checkbox v-model="form.dtype"></el-checkbox>
     </el-form-item>
     <!-- 点击打开参数编辑弹窗 -->
-    <el-form-item label="参数表达式" class="form-item" prop="paramExpress">
-      <el-input v-model="form.paramExpress" readonly v-on:click.native="openParamsEditDialog"></el-input>
+    <el-form-item label="参数表达式" class="form-item suffix-button" prop="paramExpress">
+      <el-input
+              v-model="form.paramExpress"
+                readonly
+              type="textarea"
+                v-on:click.native="openParamsEditDialog('paramExpress')">
+      </el-input>
+      <el-button
+              size="mini"
+              type="danger"
+              circle
+                 icon="el-icon-delete"
+              @click="clearExpress('paramExpress')"></el-button>
     </el-form-item>
     <!-- 点击打开参数编辑弹窗 -->
-    <el-form-item label="必走表达式" class="form-item">
+    <el-form-item label="必走表达式" class="form-item suffix-button" prop="mustExpress">
+      <el-input
+              v-model="form.mustExpress"
+              readonly
+              type="textarea"
+              v-on:click.native="openParamsEditDialog('mustExpress')">
+      </el-input>
+      <el-button
+              size="mini"
+              type="danger"
+              circle
+              icon="el-icon-delete" @click="clearExpress('mustExpress')"></el-button>
+
     </el-form-item>
     <el-form-item class="form-item">
       <el-button type="primary" @click="handleApplyLineAttributes">应用</el-button>
@@ -97,14 +120,29 @@
       handleCancleLineAttributes(){
         debugger;
       },
-      openParamsEditDialog(){
-        debugger;
-        this.$refs.paramEditDialog.show(this.graph);
+      /**
+       * 参数表达式和必走表达式
+       * @param type 默认：参数表达式。 mustExpress： 必走
+       */
+      openParamsEditDialog(type){
+        this.$refs.paramEditDialog.show(this.graph, type);
       },
-      paramApplyHandle(val){
-        this.form = Object.assign({}, this.form, {
-          paramExpress: val
-        })
+      paramApplyHandle(opt){
+        const {type, value: val} = opt;
+        let obj = {};
+        if(type == 'paramExpress'){
+          obj = {paramExpress: val};
+        }
+        if(type == 'mustExpress'){
+          obj = {mustExpress: val};
+        }
+        this.form = Object.assign({}, this.form, obj)
+      },
+      // 清除表达式
+      clearExpress(type){
+        let obj = {};
+        obj[type] = '';
+        this.form = Object.assign({}, this.form, obj)
       }
     }
   }

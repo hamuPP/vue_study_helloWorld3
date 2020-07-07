@@ -1075,10 +1075,7 @@ EditorUi.prototype.init = function()
 			graphSetDefaultParent.apply(this, arguments);
 			ui.updateActionStates();
 		};
-		
-		// Hack to make editLink available in vertex handler
-		graph.editLink = ui.actions.get('editLink').funct;
-		
+
 		this.updateActionStates();
 		this.initClipboard();
 		this.initCanvas();
@@ -3088,7 +3085,7 @@ EditorUi.prototype.updateActionStates = function()
 	
 	// Updates action states
 	var actions = ['cut', 'copy', 'bold', 'italic', 'underline', 'delete', 'duplicate',
-	               'editStyle', 'editTooltip', 'editLink', 'backgroundColor', 'borderColor',
+	               'editStyle', 'editTooltip', 'backgroundColor', 'borderColor',
 	               'edit', 'toFront', 'toBack', 'lockUnlock', 'solid', 'dashed', 'pasteSize',
 	               'dotted', 'fillColor', 'gradientColor', 'shadow', 'fontColor',
 	               'formattedText', 'rounded', 'toggleRounded', 'sharp', 'strokeColor'];
@@ -3122,7 +3119,6 @@ EditorUi.prototype.updateActionStates = function()
     var foldable = graph.getSelectionCount() == 1 && graph.isCellFoldable(graph.getSelectionCell());
     this.actions.get('expand').setEnabled(foldable);
     this.actions.get('collapse').setEnabled(foldable);
-    this.actions.get('editLink').setEnabled(graph.getSelectionCount() == 1);
     this.actions.get('openLink').setEnabled(graph.getSelectionCount() == 1 &&
     	graph.getLinkForCell(graph.getSelectionCell()) != null);
     this.actions.get('guides').setEnabled(graph.isEnabled());
@@ -3971,16 +3967,6 @@ EditorUi.prototype.showImageDialog = function(title, value, fn, ignoreExisting)
 	}
 };
 
-/**
- * Hides the current menu.
- */
-EditorUi.prototype.showLinkDialog = function(value, btnLabel, fn)
-{
-	var dlg = new LinkDialog(this, value, btnLabel, fn);
-	this.showDialog(dlg.container, 420, 90, true, true);
-	dlg.init();
-};
-
 
 EditorUi.prototype.showDataDialog = function(mxCell) {
 	if (mxCell != null) {
@@ -4080,7 +4066,6 @@ EditorUi.prototype.createOutline = function(wnd)
 // Alt+Shift+Keycode mapping to action
 EditorUi.prototype.altShiftActions = {67: 'clearWaypoints', // Alt+Shift+C
   65: 'connectionArrows', // Alt+Shift+A
-  76: 'editLink', // Alt+Shift+L
   80: 'connectionPoints', // Alt+Shift+P
   84: 'editTooltip', // Alt+Shift+T
   86: 'pasteSize', // Alt+Shift+V

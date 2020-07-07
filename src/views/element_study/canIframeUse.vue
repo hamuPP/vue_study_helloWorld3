@@ -153,7 +153,3 @@
   }
 </script>
 
-<style>
-  @import "../../../public/drawio_myFlowC2/css/proj.css";
-  @import "../../../public/drawio_myFlowC2/css/my-proj.css";
-</style>

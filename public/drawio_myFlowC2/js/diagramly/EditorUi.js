@@ -10683,15 +10683,6 @@
 		return href;
 	};
 
-	/**
-	 * Overrides link dialog.
-	 */
-	EditorUi.prototype.showLinkDialog = function(value, btnLabel, fn)
-	{
-		var dlg = new LinkDialog(this, value, btnLabel, fn, true);
-		this.showDialog(dlg.container, 560, 130, true, true);
-		dlg.init();
-	};
 
 	/**
 	 * Overrides createOutline

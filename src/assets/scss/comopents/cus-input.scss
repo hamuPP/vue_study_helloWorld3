@@ -1,0 +1,10 @@
+/*重写elementui的样式*/
+.el-input--mini{
+	.el-input__inner{
+		height: 22px !important;// 使用importan覆盖掉elementUi原本的样式
+		line-height: 22px !important;
+	}
+	.el-input__icon{
+		line-height: 22px !important;
+	}
+}
