@@ -147,7 +147,8 @@
         this.tableData.push({
           name: '',
           value: '',
-          des: ''
+          des: '',
+          id: new Date().getTime()// todo 暂时生成一个时间戳作为id
         })
       },
       // 点击了应用按钮，将这些属性数据保存进节点里

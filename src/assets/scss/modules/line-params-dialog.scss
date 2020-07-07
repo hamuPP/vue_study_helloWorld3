@@ -1,0 +1,38 @@
+/**
+* 连线的参数表达式的弹窗
+ */
+.line-params-dialog {
+	.line-params-transfer {
+		height: 200px;
+		//.el-transfer-panel .el-transfer-panel__header .el-checkbox .el-checkbox__label
+		.el-checkbox__label {
+			font-size: 12px;
+		}
+
+		.el-transfer-panel{
+			height: 100%;
+		}
+
+		.el-transfer-panel__header {
+			.el-checkbox__label {
+				font-size: 14px;
+			}
+		}
+
+		.el-transfer-panel__item {
+			height: 28px;
+			line-height: 28px;
+		}
+	}
+
+	.line-params-text {
+		margin: 10px 0 0;
+		height: 100px;
+		.el-textarea__inner {
+			height: 100%;
+		}
+	}
+	.err-msg{
+		color: red;
+	}
+}

@@ -75,7 +75,7 @@
       },
       // 点击'应用'按钮，保存这些属性
       handleApplyLineAttributes() {
-        debugger;// 表单数据，保存在mxcell里面
+        // 表单数据，保存在mxcell里面
         var doc = mxUtils.createXmlDocument();
         var obj = doc.createElement('object');
         for(var i in this.form){
@@ -99,10 +99,12 @@
       },
       openParamsEditDialog(){
         debugger;
-        this.$refs.paramEditDialog.show();
+        this.$refs.paramEditDialog.show(this.graph);
       },
       paramApplyHandle(val){
-        this.form.paramExpress = val;
+        this.form = Object.assign({}, this.form, {
+          paramExpress: val
+        })
       }
     }
   }

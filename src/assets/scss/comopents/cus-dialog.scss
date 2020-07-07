@@ -2,4 +2,25 @@
 	.el-dialog{
 
 	}
+	.el-dialog__header{
+		padding: 0 10px;
+		background: #52bee5;
+		//line-height: 24px;
+		.el-dialog__title{
+			font-size: 14px;
+			line-height: 30px;
+			color: #fff;
+		}
+		.el-dialog__headerbtn{
+			top: 4px;
+			right: 10px;
+		}
+		.el-dialog__close{
+			color: #fff;
+			//position: relative;
+			//top: -6px;
+			//font-size: 18px;
+			//font-weight: bold;
+		}
+	}
 }
