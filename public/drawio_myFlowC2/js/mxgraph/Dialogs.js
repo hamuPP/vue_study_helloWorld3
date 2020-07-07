@@ -1673,12 +1673,9 @@ var EditDataDialogInline_params = function (ui, cell) {
 
   // 显示先前注册在根组件的参数tabel
   debugger;
-
   var paramsTable = VueIns.$children[0].$childrenRefs.paramsTable;
-  // var myTest = VueIns.$children[0].$childrenRefs.myTest;
   // todo 暂时注释掉，引发报错了
   paramsTable.nodeParamVisible = true;
-
   paramsTable.init({
     graph: graph,
     mxCell: cell

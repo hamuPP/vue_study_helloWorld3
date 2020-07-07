@@ -149,6 +149,12 @@
             break;
         }
       }
-    }
+    },
+    created(){
+      debugger;
+    },
+    mounted(){
+      debugger;
+    },
   }
 </script>

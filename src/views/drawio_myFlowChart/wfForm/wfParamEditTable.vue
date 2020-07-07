@@ -42,7 +42,7 @@
                   v-if="scope.row.typeEditable"
                   v-model="scope.row.type"
                   placeholder="请选择"
-                  @change="typeSelectChange">
+                  @change="typeSelectChange(scope.row)">
             <el-option
                     v-for="item in typeOptions"
                     :key="item.value"
@@ -50,7 +50,7 @@
                     :value="item.value">
             </el-option>
           </el-select>
-          <span v-else>{{scope.row.type}}</span>
+          <span v-else>{{scope.row.typeName}}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -66,7 +66,7 @@
         </template>
       </el-table-column>
       <el-table-column
-              prop="cateID"
+              prop="type"
               label="类型ID"
               width="55">
       </el-table-column>
@@ -96,11 +96,17 @@
             label: 'int'
           },
         ],
-        currentRow: null,// 执行双击操作时记录的行
       }
     },
     watch: {
+        tableData(n,o){
+          debugger;
+          // 检查类型的值，修改cateID,
+          n.forEach(it=>{
+            let typeId = it.type;
 
+          })
+        }
     },
     methods: {
       init(opt){
@@ -156,14 +162,13 @@
         //   }
         // }
         // 把这些值，放进全局对象里，
-        setValueToSessionStorage('wfParamsData', this.mxCell, this.tableData)
+        setValueToSessionStorage('wfParamsData', this.mxCell, this.tableData, true)
         // this.graph.getModel().setValue(this.mxCell, this.tableData);// todo 是否需要这一步？
 
       },
       // 单元格双击,变成编辑模式
       tableCellDblClick(row, column, cell, event) {
         console.log(column.label);
-        this.currentRow = row;// 记录当前的行
         switch (column.label) {
           case '名称':
             row.nameEditable = true;
@@ -185,9 +190,9 @@
 
         }
       },
-      typeSelectChange(val){
+      typeSelectChange(row){
         debugger;
-        this.currentRow.cateId = val;
+        row.typeName = row.type == 0? 'string': row.type == 1? 'string': '';
       }
     }
   }

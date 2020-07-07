@@ -1,0 +1,39 @@
+.cus-form{
+	&.cus-form_long{
+		.el-form-item__label{
+			width: 100px;
+		}
+		.el-form-item__content{
+			margin-left: 100px;
+		}
+
+	}
+	// 标题很长的表单项
+	.form-item-long{
+		.el-form-item__label{
+			width: 200px;
+		}
+		.el-form-item__content{
+			margin-left: 200px;
+		}
+	}
+	// 时间选择框
+	.time-group{
+		.time-group_input{
+			width: 80%;
+		}
+		.time-group_select{
+			width: 20%;
+			.el-input__inner{
+				padding-left: 4px;
+				padding-right: 20px;
+				text-align: center;
+			}
+			.el-input__suffix{
+				right: 0px;
+			}
+
+		}
+	}
+
+}

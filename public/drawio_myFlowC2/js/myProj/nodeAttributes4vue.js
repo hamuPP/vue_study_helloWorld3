@@ -489,19 +489,31 @@ var mergeSelectedCellAttribute = function(type, graph, cell, mine){
   return obj;
 };
 
-var setValueToSessionStorage = function (type, cell, value) {
+/**
+ * 将节点的数据放进session里
+ * @param type
+ * @param cell
+ * @param value
+ * @param dataType 是否将传入数据原本原样的存入本地，这个一般是针对于vue页面
+ */
+var setValueToSessionStorage = function (type, cell, value, dataType) {
   var cellId = cell.id;
   var oldData = {};// 指定节点在保存前的全部数据
   if(sessionStorage.getItem(cellId) && sessionStorage.getItem(cellId).length){
     oldData = JSON.parse(sessionStorage.getItem(cellId))
   }
-  debugger;
-  var attrs = value.attributes;
-  var attrsObj = {};
-  for(var i = 0,len = attrs.length; i < len;i++){
-    attrsObj[attrs[i].name] = attrs[i].value;
+  // 将数据直接保存进本地即可，这个一般是针对于vue页面
+  if(dataType){
+    oldData[type] = value;
+  }else{
+    var attrs = value.attributes;
+    var attrsObj = {};
+    for(var i = 0,len = attrs.length; i < len;i++){
+      attrsObj[attrs[i].name] = attrs[i].value;
+    }
+    oldData[type] = attrsObj;
   }
-  oldData[type] = attrsObj;
+
   sessionStorage.setItem(cellId, JSON.stringify(oldData))
 };
 
