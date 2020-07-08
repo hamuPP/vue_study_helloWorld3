@@ -323,7 +323,7 @@
           table4Data: this.table4Data,
           table6Data: this.table6Data,
         };
-        setValueToSessionStorage('peopleDefine', this.mxCell, obj)
+        setValueToSessionStorage('peopleDefine', this.mxCell, obj, true)
       },
       // 取消
       handleCancle(){},

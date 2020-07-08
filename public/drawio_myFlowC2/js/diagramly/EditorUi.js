@@ -48,11 +48,6 @@
 	EditorUi.ignoredAnonymizedChars = '\n\t`~!@#$%^&*()_+{}|:"<>?-=[]\;\'.\/,\n\t';
 
 	/**
-	 * Specifies the URL for the templates index file.
-	 */
-	EditorUi.templateFile = TEMPLATE_PATH + '/index.xml';
-
-	/**
 	 * Specifies the URL for the diffsync cache.
 	 */
 	EditorUi.cacheUrl = (urlParams['dev'] == '1') ? '/cache' : window.REALTIME_URL;
