@@ -1718,6 +1718,23 @@ var EditDataDialogInline_wfParams = function (ui, cell) {
   div.appendChild(paramsTable.$el)
   this.container = div;
 };
+
+// 节点的人员定义
+var EditDataDialogInline_peopleDefine = function (ui, cell) {
+  var div = document.createElement('div');
+  div.className = 'node-attributes-box';
+  var graph = ui.editor.graph;
+
+  // 显示先前注册在根组件的参数tabel
+  var paramsTable = VueIns.$children[0].$childrenRefs.nodePeopleDefine;
+  paramsTable.peopleDefineVisible = true;
+  paramsTable.init({
+    graph: graph,
+    mxCell: cell
+  })
+  div.appendChild(paramsTable.$el)
+  this.container = div;
+};
 /**
  * Optional help link.
  */

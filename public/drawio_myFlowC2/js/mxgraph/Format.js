@@ -2472,7 +2472,15 @@ MyPeopleDefinePanel = function (format, editorUi, container) {
 mxUtils.extend(MyPeopleDefinePanel, BaseFormatPanel);
 
 MyPeopleDefinePanel.prototype.init = function () {
-
+  // 当前操作的节点的数据们：
+  var ui = this.editorUi;
+  var ss = this.format.getSelectionState();
+  // var mxCell = ui.editor.graph.getModel().getRoot();
+  var mxCell = ss.vertices[0];
+  debugger;
+  // kokoda，节点的cell
+  var dlg = new EditDataDialogInline_peopleDefine(ui, mxCell);
+  this.container.appendChild(dlg.container);
 };
 
 // URL定义弹窗

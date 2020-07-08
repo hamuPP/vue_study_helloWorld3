@@ -37,6 +37,10 @@
             @paramApply="paramApplyHandle">
     </wfParamTable>
 
+    <!-- 节点的人员定义   -->
+    <nodePeopleDefine
+            ref="nodePeopleDefine">
+    </nodePeopleDefine>
   </div>
 </template>
 
@@ -64,10 +68,11 @@
   import lineAttributesForm from '../drawio_myFlowChart/line/lineAttributesForm'
   import wfEditForm from '../drawio_myFlowChart/wfForm/wfForm'
   import wfParamTable from '../drawio_myFlowChart/wfForm/wfParamEditTable.vue'
+  import nodePeopleDefine from '../drawio_myFlowChart/node/peopleDefine.vue'
   export default {
     name: "can-iframe-use",
     inject: ['rootAppVue'],
-    components: {paramsTable, lineAttributesForm, wfEditForm, wfParamTable},
+    components: {paramsTable, lineAttributesForm, wfEditForm, wfParamTable, nodePeopleDefine},
     created() {
       window.showDialog_ME = showDialog_ME;
       var LazyLoad = window.LazyLoad;
@@ -143,6 +148,7 @@
       this.rootAppVue.$childrenRefs.lineAttributesForm = this.$refs.lineAttributesForm;
       this.rootAppVue.$childrenRefs.wfForm = this.$refs.wfForm;
       this.rootAppVue.$childrenRefs.wfParams = this.$refs.wfParams;
+      this.rootAppVue.$childrenRefs.nodePeopleDefine = this.$refs.nodePeopleDefine;
     },
     methods: {
       paramApplyHandle(val){

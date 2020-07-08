@@ -1,0 +1,42 @@
+// 节点的人员定义
+.node-people-define {
+	.people-define-group {
+		height: 200px;
+
+		& > .el-col {
+			height: 100%;
+		}
+
+		.org-tree-wrap {
+			height: 100%;
+			overflow: auto;
+			background: #fff;
+		}
+
+		.people-table-wrap {
+			height: 100%;
+
+			.el-table {
+				width: 100%;
+			}
+		}
+
+		.people-transfer-btn {
+			padding: 0;
+			//display: block;
+			display: block;
+			margin: 30px auto;
+		}
+
+	}
+	.people-define-group-title{
+		font-size: 13px;
+		color: #333;
+		padding: 5px;
+	}
+	.people-type-radio-group{
+		height: auto;
+		text-align: center;
+		margin: 5px 0;
+	}
+}
