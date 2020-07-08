@@ -581,7 +581,7 @@
 	 */
 	EditorUi.prototype.isOfflineApp = function()
 	{
-		return urlParams['offline'] == '1';
+		return false;
 	};
 
 	/**
@@ -589,7 +589,7 @@
 	 */
 	EditorUi.prototype.isOffline = function(ignoreStealth)
 	{
-		return this.isOfflineApp() || !navigator.onLine || (!ignoreStealth && urlParams['stealth'] == '1');
+		return !navigator.onLine;
 	};
 
 	/**
@@ -3209,117 +3209,6 @@
 		
 		this.showDialog(dlg.container, 340, 46 + height, true, closable);
 		dlg.init();
-	};
-	
-	/**
-	 * Creates a popup banner.
-	 */
-	EditorUi.prototype.showBanner = function(id, label, onclick)
-	{
-		var result = false;
-		
-		if (!this.bannerShowing && !this['hideBanner' + id] &&
-			(!isLocalStorage || mxSettings.settings == null ||
-			mxSettings.settings['close' + id] == null))
-		{
-			var banner = document.createElement('div');
-			banner.style.cssText = 'position:absolute;bottom:10px;left:50%;max-width:90%;padding:18px 34px 12px 20px;' +
-				'font-size:16px;font-weight:bold;white-space:nowrap;cursor:pointer;z-index:' + mxPopupMenu.prototype.zIndex + ';';
-			mxUtils.setPrefixedStyle(banner.style, 'box-shadow', '1px 1px 2px 0px #ddd');
-			mxUtils.setPrefixedStyle(banner.style, 'transform', 'translate(-50%,120%)');
-			mxUtils.setPrefixedStyle(banner.style, 'transition', 'all 1s ease');
-			banner.className = 'geBtn gePrimaryBtn';
-			
-			var logo = document.createElement('img');
-			logo.setAttribute('src', IMAGE_PATH + '/logo.png');
-			logo.setAttribute('border', '0');
-			logo.setAttribute('align', 'absmiddle');
-			logo.style.cssText = 'margin-top:-4px;margin-left:8px;margin-right:12px;width:26px;height:26px;';
-			banner.appendChild(logo);
-	
-			var img = document.createElement('img');
-			img.setAttribute('src', Dialog.prototype.closeImage);
-			img.setAttribute('title', mxResources.get('close'));
-			img.setAttribute('border', '0');
-			img.style.cssText = 'position:absolute;right:10px;top:12px;filter:invert(1);padding:6px;margin:-6px;cursor:default;';
-			banner.appendChild(img);
-			
-			mxUtils.write(banner, label);
-			document.body.appendChild(banner);
-			this.bannerShowing = true;
-			
-			var div = document.createElement('div');
-			div.style.cssText = 'font-size:11px;text-align:center;font-weight:normal;';
-			var chk = document.createElement('input');
-			chk.setAttribute('type', 'checkbox');
-			chk.setAttribute('id', 'geDoNotShowAgainCheckbox');
-			chk.style.marginRight = '6px';
-			div.appendChild(chk);
-			
-			var label = document.createElement('label');
-			label.setAttribute('for', 'geDoNotShowAgainCheckbox');
-			mxUtils.write(label, mxResources.get('doNotShowAgain'));
-			div.appendChild(label);
-			banner.style.paddingBottom = '30px';
-			banner.appendChild(div);
-			
-			var onclose = mxUtils.bind(this, function(showAgain)
-			{
-				if (banner.parentNode != null)
-				{
-					banner.parentNode.removeChild(banner);
-					this.bannerShowing = false;
-					
-					if (chk.checked)
-					{
-						this['hideBanner' + id] = true;
-	
-						if (isLocalStorage && mxSettings.settings != null)
-						{
-							mxSettings.settings['close' + id] = Date.now();
-							mxSettings.save();
-						}
-					}
-				}
-			});
-			
-			mxEvent.addListener(img, 'click', mxUtils.bind(this, function(e)
-			{
-				mxEvent.consume(e);
-				onclose();
-			}));
-			
-			mxEvent.addListener(banner, 'click', mxUtils.bind(this, function(e)
-			{
-				var source = mxEvent.getSource(e);
-				
-				if (source != chk && source != label)
-				{
-					mxEvent.consume(e);
-					onclick();
-					onclose();
-				}
-			}));
-			
-			window.setTimeout(mxUtils.bind(this, function()
-			{
-				mxUtils.setPrefixedStyle(banner.style, 'transform', 'translate(-50%,0%)');
-			}), 500);
-			
-			window.setTimeout(mxUtils.bind(this, function()
-			{
-				mxUtils.setPrefixedStyle(banner.style, 'transform', 'translate(-50%,120%)');
-				
-				window.setTimeout(mxUtils.bind(this, function()
-				{
-					onclose(true);
-				}), 1000);
-			}), 30000);
-			
-			result = true;
-		}
-		
-		return result;
 	};
 
 	/**

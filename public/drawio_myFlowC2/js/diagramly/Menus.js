@@ -76,10 +76,9 @@
     });
 
     editorUi.actions.addAction('new...', function () {
-      var compact = editorUi.isOffline();
-      var dlg = new NewDialog(editorUi, compact);
+      var dlg = new NewDialog(editorUi, false);
 
-      editorUi.showDialog(dlg.container, (compact) ? 350 : 620, (compact) ? 70 : 440, true, true, function (cancel) {
+      editorUi.showDialog(dlg.container,  620, 440, true, true, function (cancel) {
         if (cancel && editorUi.getCurrentFile() == null) {
           editorUi.showSplash();
         }

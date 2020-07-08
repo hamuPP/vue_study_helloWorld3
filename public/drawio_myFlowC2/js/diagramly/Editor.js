@@ -867,11 +867,6 @@
 			Graph.prototype.defaultEdgeLength = config.defaultEdgeLength || Graph.prototype.defaultEdgeLength;
 			DrawioFile.prototype.autosaveDelay = config.autosaveDelay || DrawioFile.prototype.autosaveDelay;
 			
-			if (config.templateFile != null)
-			{
-				EditorUi.templateFile = config.templateFile;
-			}
-			
 			if (config.globalVars != null)
 			{
 				Editor.globalVars = config.globalVars;

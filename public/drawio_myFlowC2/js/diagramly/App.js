@@ -16,7 +16,7 @@ App = function(editor, container, lightbox)
 	EditorUi.call(this, editor, container, false);
 	
 	// Logs unloading of window with modifications for Google Drive file
-	if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp)
+	if (!mxClient.IS_CHROMEAPP )
 	{
 		window.onunload = mxUtils.bind(this, function()
 		{
@@ -756,7 +756,7 @@ App.prototype.init = function() {
     this.mode = 'device';
 
 
-		if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp && !this.isOffline() &&
+		if (!mxClient.IS_CHROMEAPP  && !this.isOffline() &&
 			!mxClient.IS_ANDROID && !mxClient.IS_IOS &&
 			urlParams['open'] == null && (!this.editor.chromeless || this.editor.editable))
 		{
@@ -767,7 +767,7 @@ App.prototype.init = function() {
 			}));
 		}
 		
-		if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp && urlParams['embed'] != '1' && DrawioFile.SYNC == 'auto' &&
+		if (!mxClient.IS_CHROMEAPP  && urlParams['embed'] != '1' && DrawioFile.SYNC == 'auto' &&
 			urlParams['local'] != '1' && urlParams['stealth'] != '1' && this.isOffline() &&
 			(!this.editor.chromeless || this.editor.editable))
 		{
@@ -861,7 +861,7 @@ App.prototype.init = function() {
  */
 App.prototype.scheduleSanityCheck = function()
 {
-	if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp &&
+	if (!mxClient.IS_CHROMEAPP  &&
 		this.sanityCheckThread == null)
 	{
 		this.sanityCheckThread = window.setTimeout(mxUtils.bind(this, function()
@@ -965,19 +965,6 @@ App.prototype.getPusher = function()
 	
 	return this.pusher;
 };
-
-/**
- * Shows a footer to download the desktop version once per session.
- */
-App.prototype.showNameChangeBanner = function()
-{
-	this.showBanner('DiagramsFooter', 'draw.io is now diagrams.net', mxUtils.bind(this, function()
-	{
-		this.openLink('https://www.diagrams.net/blog/move-diagrams-net');
-	}));
-};
-
-
 
 /**
  * 
@@ -1744,12 +1731,6 @@ App.prototype.start = function()
 					}));
 				}
 
-				if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp && !this.isOfflineApp() &&
-					/.*\.draw\.io$/.test(window.location.hostname) &&
-					(!this.editor.chromeless || this.editor.editable))
-				{
-					this.showNameChangeBanner();
-				}
 			}
 			catch (e)
 			{
