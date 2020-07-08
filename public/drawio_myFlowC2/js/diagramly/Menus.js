@@ -236,7 +236,7 @@
     }));
 
     editorUi.actions.put('exportPdf', new Action(mxResources.get('formatPdf') + '...', function () {
-      if (!EditorUi.isElectronApp && (editorUi.isOffline() || editorUi.printPdfExport)) {
+      if (editorUi.isOffline() || editorUi.printPdfExport) {
         // Export PDF action for chrome OS (same as print with different dialog title)
         editorUi.showDialog(new PrintDialog(editorUi, mxResources.get('formatPdf')).container, 360,
           (editorUi.pages != null && editorUi.pages.length > 1) ?
@@ -290,8 +290,7 @@
           }
         }
 
-        var includeOption = !mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp &&
-          editorUi.getServiceName() == 'draw.io';
+        var includeOption = !mxClient.IS_CHROMEAPP && editorUi.getServiceName() == 'draw.io';
         var include = (includeOption) ? editorUi.addCheckbox(div,
           mxResources.get('includeCopyOfMyDiagram'), true) : null;
 
@@ -621,7 +620,7 @@
             }
           }, null, null, null, null, null, true, null, null,
           'https://desk.draw.io/support/solutions/articles/16000058316',
-          (EditorUi.isElectronApp) ? null : [[mxResources.get('reset'), function (evt, input) {
+          [[mxResources.get('reset'), function (evt, input) {
             editorUi.confirm(mxResources.get('areYouSure'), function () {
               try {
                 localStorage.removeItem('.configuration');
@@ -847,25 +846,6 @@
       }
     }));
 
-    editorUi.actions.put('liveImage', new Action('Live image...', function () {
-      var current = editorUi.getCurrentFile();
-
-      if (current != null && editorUi.spinner.spin(document.body, mxResources.get('loading'))) {
-        editorUi.getPublicUrl(editorUi.getCurrentFile(), function (url) {
-          editorUi.spinner.stop();
-
-          if (url != null) {
-            var dlg = new EmbedDialog(editorUi, '<img src="' + ((current.constructor != DriveFile) ?
-              url : 'https://drive.google.com/uc?id=' + current.getId()) + '"/>');
-            editorUi.showDialog(dlg.container, 440, 240, true, true);
-            dlg.init();
-          }
-          else {
-            editorUi.handleError({message: mxResources.get('invalidPublicUrl')});
-          }
-        });
-      }
-    }));
 
     editorUi.actions.put('embedImage', new Action(mxResources.get('image') + '...', function () {
       editorUi.showEmbedImageDialog(function (fit, shadow, retina, lightbox, editLink, layers) {
@@ -1309,12 +1289,7 @@
     this.put('edit', new Menu(mxUtils.bind(this, function (menu, parent) {
       this.addMenuItems(menu, ['undo', 'redo', '-', 'cut', 'copy']);
 
-      if (EditorUi.isElectronApp) {
-        this.addMenuItems(menu, ['copyAsImage']);
-      }
-
-      this.addMenuItems(menu, ['paste', 'delete', '-', '-', '-', 'editData', 'editTooltip', '-', 'editStyle', '-',
-        'edit', '-', 'editLink', 'openLink', '-']);
+      this.addMenuItems(menu, ['paste', 'delete', '-', 'editStyle', '-']);
     })));
 
     var action = editorUi.actions.addAction('comments', mxUtils.bind(this, function () {
@@ -1388,12 +1363,12 @@
         var file = this.editorUi.getCurrentFile();
         this.addMenuItems(menu, ['new'], parent);
 
-        if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp &&
+        if (!mxClient.IS_CHROMEAPP  &&
           file != null && file.constructor != LocalFile) {
           menu.addSeparator(parent);
           var item = this.addMenuItem(menu, 'synchronize', parent);
 
-          if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP || EditorUi.isElectronApp) {
+          if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP ) {
             this.addLinkToItem(item, 'https://desk.draw.io/support/solutions/articles/16000087947');
           }
         }

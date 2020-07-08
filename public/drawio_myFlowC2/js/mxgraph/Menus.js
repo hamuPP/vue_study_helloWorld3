@@ -466,8 +466,8 @@ Menus.prototype.init = function()
 	})));
 	this.put('edit', new Menu(mxUtils.bind(this, function(menu, parent)
 	{
-		this.addMenuItems(menu, ['undo', 'redo', '-', 'cut', 'copy', 'paste', 'delete', '-', 'duplicate', '-',
-		                         'editData', 'editTooltip', 'editStyle', '-', 'edit', '-', 'editLink', 'openLink', '-',
+		this.addMenuItems(menu, ['undo', 'redo', '-', 'cut', 'copy', 'paste', 'delete', '-',
+		                          '-',
 		                         'selectVertices', 'selectEdges', 'selectAll', 'selectNone', '-', 'lockUnlock']);
 	})));
 };
@@ -1053,7 +1053,7 @@ Menus.prototype.addPopupMenuEditItems = function(menu, cell, evt)
 	}
 	else
 	{
-		this.addMenuItems(menu, ['delete', '-', 'cut', 'copy', '-', 'duplicate'], null, evt);
+		this.addMenuItems(menu, ['delete', '-', 'cut', 'copy'], null, evt);
 	}
 };
 
@@ -1125,14 +1125,7 @@ Menus.prototype.addPopupMenuCellItems = function(menu, cell, evt)
 	
 		if (graph.getSelectionCount() == 1)
 		{
-			this.addMenuItems(menu, ['-', 'editStyle', 'editData', 'editLink'], null, evt);
-	
-			// Shows edit image action if there is an image in the style
-			if (graph.getModel().isVertex(cell) && mxUtils.getValue(state.style, mxConstants.STYLE_IMAGE, null) != null)
-			{
-				menu.addSeparator();
-				this.addMenuItem(menu, 'image', null, evt).firstChild.nextSibling.innerHTML = mxResources.get('editImage') + '...';
-			}
+			this.addMenuItems(menu, ['-', 'editStyle'], null, evt);
 		}
 	}
 };

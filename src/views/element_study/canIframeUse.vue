@@ -41,6 +41,11 @@
     <nodePeopleDefine
             ref="nodePeopleDefine">
     </nodePeopleDefine>
+
+    <!-- 节点的子流程  -->
+    <nodeChildProcess
+            ref="nodeChildProcess">
+    </nodeChildProcess>
   </div>
 </template>
 
@@ -69,10 +74,11 @@
   import wfEditForm from '../drawio_myFlowChart/wfForm/wfForm'
   import wfParamTable from '../drawio_myFlowChart/wfForm/wfParamEditTable.vue'
   import nodePeopleDefine from '../drawio_myFlowChart/node/peopleDefine.vue'
+  import nodeChildProcess from '../drawio_myFlowChart/node/childProcess.vue'
   export default {
     name: "can-iframe-use",
     inject: ['rootAppVue'],
-    components: {paramsTable, lineAttributesForm, wfEditForm, wfParamTable, nodePeopleDefine},
+    components: {paramsTable, lineAttributesForm, wfEditForm, wfParamTable, nodePeopleDefine, nodeChildProcess},
     created() {
       window.showDialog_ME = showDialog_ME;
       var LazyLoad = window.LazyLoad;
@@ -149,6 +155,7 @@
       this.rootAppVue.$childrenRefs.wfForm = this.$refs.wfForm;
       this.rootAppVue.$childrenRefs.wfParams = this.$refs.wfParams;
       this.rootAppVue.$childrenRefs.nodePeopleDefine = this.$refs.nodePeopleDefine;
+      this.rootAppVue.$childrenRefs.nodeChildProcess = this.$refs.nodeChildProcess;
     },
     methods: {
       paramApplyHandle(val){

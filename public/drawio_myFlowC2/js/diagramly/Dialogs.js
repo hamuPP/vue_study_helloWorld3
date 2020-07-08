@@ -1142,24 +1142,6 @@ var BackgroundImageDialog = function(editorUi, applyFn)
 
 	mxEvent.addListener(urlInput, 'change', urlChanged);
 
-	ImageDialog.filePicked = function(data)
-	{
-        if (data.action == google.picker.Action.PICKED)
-        {
-        	if (data.docs[0].thumbnails != null)
-        	{
-	        	var thumb = data.docs[0].thumbnails[data.docs[0].thumbnails.length - 1];
-	        	
-	        	if (thumb != null)
-	        	{
-	        		urlInput.value = thumb.url;
-	        		urlChanged();
-	        	}
-        	}
-        }
-        
-        urlInput.focus();
-	};
 
 	var btns = document.createElement('div');
 	btns.style.marginTop = '40px';
@@ -3381,23 +3363,6 @@ var ImageDialog = function(editorUi, title, initialValue, fn, ignoreExisting, co
 		btns.appendChild(cancelBtn);
 	}
 
-	ImageDialog.filePicked = function(data)
-	{
-        if (data.action == google.picker.Action.PICKED)
-        {
-        	if (data.docs[0].thumbnails != null)
-        	{
-	        	var thumb = data.docs[0].thumbnails[data.docs[0].thumbnails.length - 1];
-	        	
-	        	if (thumb != null)
-	        	{
-	        		linkInput.value = thumb.url;
-	        	}
-        	}
-        }
-        
-        linkInput.focus();
-	};
 
 	if (Graph.fileSupport)
 	{

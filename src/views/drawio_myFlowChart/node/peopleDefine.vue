@@ -183,6 +183,8 @@
         </el-table>
       </el-col>
     </div>
+    <el-button type="primary" @click="handleApply">应用</el-button>
+    <el-button @click="handleCancle">取消</el-button>
   </div>
 </template>
 
@@ -191,6 +193,8 @@
     name: "peopleDefine",
     data() {
       return {
+        graph: null,
+        mxCell: null,
         peopleDefineVisible: false,
         props: {
           label: 'name',
@@ -202,6 +206,8 @@
         peopleType: '',
         table3Data: [],
         table4Data: [],
+        table5Data: [],
+        table6Data: [],
       }
     },
     methods: {
@@ -299,7 +305,6 @@
           3: 'table6Data',
         }[tableNo];
         let selection = table.selection;
-        debugger;
         let newRightData = [];
         this[leftTableData] = this[leftTableData].concat(selection);// 把选中的行，添加到左边的table里
         this[rightTableData].forEach(it => {
@@ -309,6 +314,19 @@
         })
         this[rightTableData] = newRightData;
       },
+      // 应用。将数据保存在Mxcell里面
+      handleApply(){
+        // 把这些值，放进全局对象里，
+        let obj = {
+          peopleType: this.peopleType,
+          selectedPeople: this.selectedPeople,
+          table4Data: this.table4Data,
+          table6Data: this.table6Data,
+        };
+        setValueToSessionStorage('peopleDefine', this.mxCell, obj)
+      },
+      // 取消
+      handleCancle(){},
     }
   }
 </script>
