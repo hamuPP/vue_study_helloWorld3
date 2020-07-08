@@ -275,16 +275,6 @@ var StorageDialog = function(editorUi, fn, rowLimit) {
 			{
 				var modeKey = entry.mode;
 				
-				// Google and oneDrive use different keys
-				if (modeKey == App.MODE_GOOGLE)
-				{
-					modeKey = 'googleDrive';
-				}
-				else if (modeKey == App.MODE_ONEDRIVE)
-				{
-					modeKey = 'oneDrive';
-				}
-				
 				var entryOption = document.createElement('option');
 				entryOption.setAttribute('value', entry.id);
 				mxUtils.write(entryOption, entry.title + ' (' + mxResources.get(modeKey) + ')');
@@ -2147,9 +2137,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 						editorUi.hideDialog();
 					}, null, folderId, null, (templateClibs != null &&
 						templateClibs.length > 0) ? templateClibs : null);
-				}, editorUi.mode != App.MODE_GOOGLE ||
-					editorUi.stateArg == null ||
-					editorUi.stateArg.folderId == null);
+				}, true);
 			}
 		}
 	};

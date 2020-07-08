@@ -1170,11 +1170,6 @@
     this.put('embed', new Menu(mxUtils.bind(this, function (menu, parent) {
       var file = editorUi.getCurrentFile();
 
-      if (file != null && (file.getMode() == App.MODE_GOOGLE ||
-          file.getMode() == App.MODE_GITHUB) && /(\.png)$/i.test(file.getTitle())) {
-        this.addMenuItems(menu, ['liveImage', '-'], parent);
-      }
-
       this.addMenuItems(menu, ['embedImage', 'embedSvg', '-', 'embedHtml'], parent);
 
       if (!navigator.standalone && !editorUi.isOffline()) {
