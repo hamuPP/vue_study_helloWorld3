@@ -66,7 +66,6 @@
   window.mxBasePath = 'drawio_myFlowC2/mxgraph';
 
   import '../../../public/drawio_myFlowC2/js/myProj/nodeAttributes4vue'
-  import {showDialog_ME} from '../../../public/drawio_myFlowC2/js/myProj/ME'
 
   import paramsTable from '../drawio_myFlowChart/paramsTable'
   import lineAttributesForm from '../drawio_myFlowChart/line/lineAttributesForm'
@@ -80,7 +79,6 @@
     inject: ['rootAppVue'],
     components: {paramsTable, lineAttributesForm, wfEditForm, wfParamTable, nodePeopleDefine, nodeChildProcess, saveWorkFlow},
     created() {
-      window.showDialog_ME = showDialog_ME;
       var LazyLoad = window.LazyLoad;
       // Load multiple JS files and execute a callback when they've all finished.
       LazyLoad.js([

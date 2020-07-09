@@ -32,33 +32,14 @@
         debugger;
         var resultNodes = [];
         for (var i in nodes) {
-          var node = nodes[i];
-          var nodeValue = node.value;
-          var attributes = nodeValue ? nodeValue.attributes : null;
-          // 找到名称字段:name
-          var _name = '';
-          var formatedObj = {
-            name: _name,
-            hashId: i,
-            id: i,
-            // xmlDescription: todo 是xml，现在没有
-          };
-          // 找到其余字段：todo 待定，其余字段还没整
-          if (attributes) {
-            for (var j = 0, len = attributes.length; j < len; j++) {
-              if (attributes[j].name !== 'label' && attributes[j].name !== 'xmlns') {// 是默认的那个节点，不要
-                var value = JSON.parse(attributes[j].value);
-                var children = value.children;
-                if (children && children.length) {
-                  for (var c = 0, clen = children.length; c < clen; c++) {
-                    var _child = children[c];
-                    formatedObj[_child.name] = _child.defaultValue;
-                  }
-                }
-              }
-            }
+          // 从本地存储中拿到节点的数据
+          let nodeData = sessionStorage.getItem(i);
+          if(nodeData){
+            // 节点的数据转为json格式
+            let nodeDataObj = JSON.parse(nodeData);
+            // 2020年07月09日18:05:56 kokoda todo
+            for(let i in nodeDataObj){}
           }
-          resultNodes.push(formatedObj)
         }
         return resultNodes;
       },

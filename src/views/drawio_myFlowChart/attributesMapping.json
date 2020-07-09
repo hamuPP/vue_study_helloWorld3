@@ -1,0 +1,19 @@
+{
+	"readme": "这些是字段对应，用于在提交后端时，把字段全部转为后端的字段",
+	"流程实例Id": "wfId",
+	"名称": "wfName",
+	"节点编号": "seqnum",
+	"汇合关系": "relation",
+	"任务超时": "questTimeout",
+	"人员传递": "P1",
+	"并发起点": "bingfaStart",
+	"——人员定义——": "以下是人员定义的字段",
+	"peopleType": "peopleType",
+	"selectedPeople": "selectedPeople",
+	"table4Data": "daiyuejuese",
+	"table6Data": "daibanjuese",
+	"——URL定义——": "以下是URL定义的字段",
+	"基础URL": "basicURL",
+	"-子流程-": "子流程与参数还没有整理字段对应todo"
+
+}
