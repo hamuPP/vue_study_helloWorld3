@@ -2520,7 +2520,6 @@
 	 */
 	if (window.ColorDialog)
 	{
-	  debugger;
 		FilenameDialog.filenameHelpLink = 'https://desk.draw.io/support/solutions/articles/16000091426_todo_ccc';
 		
 		var colorDialogAddRecentColor = ColorDialog.addRecentColor;

@@ -1456,6 +1456,7 @@ DrawioFile.prototype.removeDraft = function()
  */
 DrawioFile.prototype.addUnsavedStatus = function(err)
 {
+  debugger;
 	if (!this.inConflictState && this.ui.statusContainer != null && this.ui.getCurrentFile() == this)
 	{
 		if (err instanceof Error && err.message != null && err.message != '')
@@ -1613,7 +1614,9 @@ DrawioFile.prototype.showCopyDialog = function(success, error, overwrite)
 {
 	this.inConflictState = false;
 	this.invalidChecksum = false;
-	this.addUnsavedStatus();
+  debugger;
+
+  this.addUnsavedStatus();
 	
 	this.ui.showError(mxResources.get('externalChanges'),
 		mxResources.get('fileChangedOverwriteDialog'),
@@ -1778,7 +1781,9 @@ DrawioFile.prototype.handleFileError = function(err, manual)
 		{
 			if (this.isModified())
 			{
-				this.addUnsavedStatus(err);
+        debugger;
+
+        this.addUnsavedStatus(err);
 			}
 			
 			if (manual)
@@ -1845,7 +1850,8 @@ DrawioFile.prototype.handleConflictError = function(err, manual)
 			}), error);
 		}
 	})
-	
+
+  debugger;
 	if (DrawioFile.SYNC == 'none')
 	{
 		this.showCopyDialog(success, error, overwrite);
@@ -1892,47 +1898,50 @@ DrawioFile.prototype.fileChanged = function()
 {
 	this.lastChanged = new Date();
 	this.setModified(true);
-	
-	if (this.isAutosave())
-	{
-		this.addAllSavedStatus(mxUtils.htmlEntities(mxResources.get('saving')) + '...');
-		this.ui.scheduleSanityCheck();
-		
-		if (this.ageStart == null)
-		{
-			this.ageStart = new Date();
-		}
-		
-		this.autosave(this.autosaveDelay, this.maxAutosaveDelay, mxUtils.bind(this, function(resp)
-		{
-			this.ui.stopSanityCheck();
-
-			// Does not update status if another autosave was scheduled
-			if (this.autosaveThread == null)
-			{
-				this.handleFileSuccess(true);
-				this.ageStart = null;
-			}
-			else if (this.isModified())
-			{
-				this.ui.scheduleSanityCheck();
-				this.ageStart = this.lastChanged;
-			}
-		}), mxUtils.bind(this, function(err)
-		{
-			this.handleFileError(err);
-		}));
-	}
-	else
-	{
-		this.ageStart = null;
-		
-		if ((!this.isAutosaveOptional() || !this.ui.editor.autosave) &&
-			!this.inConflictState)
-		{
-			this.addUnsavedStatus();
-		}
-	}
+	// 取消自动保存，以及不自动保存时的提示 先不删代码，保留注释的样子 2020年07月09日15:48:47
+	//
+	// if (this.isAutosave())
+	// {
+	// 	this.addAllSavedStatus(mxUtils.htmlEntities(mxResources.get('saving')) + '...');
+	// 	this.ui.scheduleSanityCheck();
+	//
+	// 	if (this.ageStart == null)
+	// 	{
+	// 		this.ageStart = new Date();
+	// 	}
+	//
+	// 	this.autosave(this.autosaveDelay, this.maxAutosaveDelay, mxUtils.bind(this, function(resp)
+	// 	{
+	// 		this.ui.stopSanityCheck();
+  //
+	// 		// Does not update status if another autosave was scheduled
+	// 		if (this.autosaveThread == null)
+	// 		{
+	// 			this.handleFileSuccess(true);
+	// 			this.ageStart = null;
+	// 		}
+	// 		else if (this.isModified())
+	// 		{
+	// 			this.ui.scheduleSanityCheck();
+	// 			this.ageStart = this.lastChanged;
+	// 		}
+	// 	}), mxUtils.bind(this, function(err)
+	// 	{
+	// 		this.handleFileError(err);
+	// 	}));
+	// }
+	// else
+	// {
+	// 	this.ageStart = null;
+	//
+	// 	if ((!this.isAutosaveOptional() || !this.ui.editor.autosave) &&
+	// 		!this.inConflictState)
+	// 	{
+  //     debugger;
+  //
+  //     this.addUnsavedStatus();
+	// 	}
+	// }
 };
 
 /**

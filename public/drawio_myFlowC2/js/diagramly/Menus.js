@@ -636,65 +636,17 @@
       });
     }
 
-    // Adds language menu to options only if localStorage is available for
-    // storing the choice. We do not want to use cookies for older browsers.
-    // Note that the URL param lang=XX is available for setting the language
-    // in older browsers. URL param has precedence over the saved setting.
-    if (mxClient.IS_CHROMEAPP || isLocalStorage) {
-      // Extends the menubar with the language menu
-      var menusCreateMenuBar = Menus.prototype.createMenubar;
-      Menus.prototype.createMenubar = function (container) {
-        var menubar = menusCreateMenuBar.apply(this, arguments);
-
-        if (menubar != null) {
-          // var langMenu = this.get('language');
-          //
-          // if (langMenu != null) {
-          //   var elt = menubar.addMenu('', langMenu.funct);
-          //   elt.setAttribute('title', mxResources.get('language'));
-          //   elt.style.width = '16px';
-          //   elt.style.paddingTop = '2px';
-          //   elt.style.paddingLeft = '4px';
-          //   elt.style.zIndex = '1';
-          //   elt.style.position = 'absolute';
-          //   elt.style.display = 'block';
-          //   elt.style.cursor = 'pointer';
-          //   elt.style.right = '17px';
-          //
-          //     elt.style.top = '6px';
-          //     elt.style.right = '15px';
-          //
-          //
-          //
-          //   if (!mxClient.IS_VML) {
-          //     var icon = document.createElement('div');
-          //     icon.style.backgroundImage = 'url(' + Editor.globeImage + ')';
-          //     icon.style.backgroundPosition = 'center center';
-          //     icon.style.backgroundRepeat = 'no-repeat';
-          //     icon.style.backgroundSize = '19px 19px';
-          //     icon.style.position = 'absolute';
-          //     icon.style.height = '19px';
-          //     icon.style.width = '19px';
-          //     icon.style.marginTop = '2px';
-          //     icon.style.zIndex = '1';
-          //     elt.appendChild(icon);
-          //     mxUtils.setOpacity(elt, 40);
-          //
-          //       elt.style.opacity = '0.85';
-          //       elt.style.filter = 'invert(100%)';
-          //
-          //   }
-          //   else {
-          //     elt.innerHTML = '<div class="geIcon geSprite geSprite-globe aa-bb`"/>';
-          //   }
-          //
-          //   document.body.appendChild(elt);
-          // }
-        }
-
-        return menubar;
-      };
-    }
+    // 注释掉，应该不会进到这里  2020年07月09日16:02:03
+    // if (mxClient.IS_CHROMEAPP || isLocalStorage) {
+    //   // Extends the menubar with the language menu
+    //   var menusCreateMenuBar = Menus.prototype.createMenubar;
+    //   Menus.prototype.createMenubar = function (container) {
+    //     debugger;
+    //     var menubar = menusCreateMenuBar.apply(this, arguments);
+    //
+    //     return menubar;
+    //   };
+    // }
 
     editorUi.customLayoutConfig = [{
       'layout': 'mxHierarchicalLayout',
@@ -1017,23 +969,8 @@
         graph.startEditing(cell);
       }
 
-
       return cell;
     };
-
-    editorUi.actions.put('exportSvg', new Action(mxResources.get('formatSvg') + '...', function () {
-      editorUi.showExportDialog(mxResources.get('formatSvg'), true, mxResources.get('export'),
-        'https://support.draw.io/display/DO/Exporting+Files',
-        mxUtils.bind(this, function (scale, transparentBackground, ignoreSelection, addShadow,
-                                     editable, embedImages, border, cropImage, currentPage, linkTarget) {
-          var val = parseInt(scale);
-
-          if (!isNaN(val) && val > 0) {
-            editorUi.exportSvg(val / 100, transparentBackground, ignoreSelection, addShadow,
-              editable, embedImages, border, !cropImage, currentPage, linkTarget);
-          }
-        }), true, null, 'svg');
-    }));
 
     editorUi.actions.put('insertText', new Action(mxResources.get('text'), function () {
       if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent())) {
@@ -1041,8 +978,6 @@
           'align=center;verticalAlign=middle;points=[];fillColor=none;strokeColor=none;rounded=0;'));
       }
     }), null, null, Editor.ctrlKey + '+Shift+X').isEnabled = isGraphEnabled;
-
-
 
     // Overrides edit menu to add find and editGeometry
     this.put('edit', new Menu(mxUtils.bind(this, function (menu, parent) {
@@ -1101,32 +1036,15 @@
     };
 
     this.put('file', new Menu(mxUtils.bind(this, function (menu, parent) {
-      if (urlParams['embed'] == '1') {
-        this.addSubmenu('importFrom', menu, parent);
-        this.addSubmenu('exportAs', menu, parent);
-        this.addSubmenu('embed', menu, parent);
-
-        if (editorUi.isRevisionHistorySupported()) {
-          this.addMenuItems(menu, ['-', 'revisionHistory'], parent);
-        }
-
-        this.addMenuItems(menu, ['-', 'pageSetup', 'print', '-', 'rename', urlParams['noSaveBtn'] == '1' ? 'saveAndExit' : 'save'], parent);
-
-        if (urlParams['saveAndExit'] == '1' && urlParams['noSaveBtn'] != '1') {
-          this.addMenuItems(menu, ['saveAndExit'], parent);
-        }
-
-        this.addMenuItems(menu, ['exit'], parent);
-      }
-      else {
         var file = this.editorUi.getCurrentFile();
         this.addMenuItems(menu, ['new'], parent);
 
-        if (!mxClient.IS_CHROMEAPP  &&
-          file != null && file.constructor != LocalFile) {
+        if (!mxClient.IS_CHROMEAPP  && file != null && file.constructor != LocalFile) {
           menu.addSeparator(parent);
           var item = this.addMenuItem(menu, 'synchronize', parent);
 
+          debugger;
+          // todo 是否会进入到下面这一行
           if (!editorUi.isOffline() || mxClient.IS_CHROMEAPP ) {
             this.addLinkToItem(item, 'https://desk.draw.io/support/solutions/articles/16000087947');
           }
@@ -1157,7 +1075,7 @@
           }
         }
         this.addMenuItems(menu, ['-', 'close']);
-      }
+
     })));
 
     /**

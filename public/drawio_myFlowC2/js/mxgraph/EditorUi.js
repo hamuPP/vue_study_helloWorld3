@@ -4,6 +4,18 @@
 /**
  * Constructs a new graph editor
  */
+
+var addMySaveBtn = function(scope){
+  var container = scope.menubar.container;
+  var graph = scope.editor.graph;
+
+  var saveWFbutton = VueIns.$children[0].$childrenRefs.saveWorkFlow;
+  saveWFbutton.init({
+    graph: graph
+  })
+  container.appendChild(saveWFbutton.$el);
+  saveWFbutton.visible = true;
+};
 EditorUi = function(editor, container, lightbox)
 {
 	mxEventSource.call(this);
@@ -3336,18 +3348,20 @@ EditorUi.prototype.createSidebarFooterContainer = function()
 };
 
 /**
+ * 创建菜单栏（就是有'文件'，'编辑'按钮的那一栏）
  * Creates the required containers.
  */
 EditorUi.prototype.createUi = function() {
   // 2020年06月22日16:54:35 不要工具栏
 	// Creates menubar
+  debugger;
   console.log('chromeless', this.editor.chromeless)
-	this.menubar = this.menus.createMenubar(this.createDiv('geMenubar'));
 
-	if (this.menubar != null)
-	{
-		this.menubarContainer.appendChild(this.menubar.container);
-	}
+	this.menubar = this.menus.createMenubar(this.createDiv('geMenubar'));
+  // 先在container里加入我的自定义按钮与功能
+  addMySaveBtn(this)
+  this.menubarContainer.appendChild(this.menubar.container);
+
 
 	// Adds status bar in menubar
 	if (this.menubar != null)
@@ -3406,13 +3420,7 @@ EditorUi.prototype.createUi = function() {
 
 	// Creates toolbar
   // 2020年06月22日17:08:02 取消工具栏
-	// this.toolbar = (this.editor.chromeless) ? null : this.createToolbar(this.createDiv('geToolbar'));
 	this.toolbar = null;
-
-	if (this.toolbar != null) {
-		this.toolbarContainer.appendChild(this.toolbar.container);
-		this.container.appendChild(this.toolbarContainer);
-	}
 
 	// HSplit
 	if (this.sidebar != null)

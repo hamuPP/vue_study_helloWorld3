@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="vue-app">
-    <div id="nav" class="nav">
+    <div id="nav" class="nav" v-if="navVisible">
       <router-link to="/">Home</router-link>
       |
       <router-link to="/about">About</router-link>
@@ -58,6 +58,7 @@
     },
     data() {
       return {
+        navVisible: false,// 隐藏导航
         allRoutes: [
           {
             name: 'Element',
@@ -145,6 +146,7 @@
     }
   }
   .bottom-container{
-    height: calc(100% - 100px);
+    /*height: calc(100% - 100px);*/
+    height: 100%;
   }
 </style>

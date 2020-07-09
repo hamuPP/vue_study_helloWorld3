@@ -46,13 +46,12 @@
     <nodeChildProcess
             ref="nodeChildProcess">
     </nodeChildProcess>
+
+    <saveWorkFlow ref="saveWorkFlow"></saveWorkFlow>
   </div>
 </template>
 
 <script>
-
-  // import Vue from 'vue'
-
   var mxDevUrl = 'drawio_myFlowC2/';
 
   var geBasePath = mxDevUrl + 'js/mxgraph/';
@@ -75,10 +74,11 @@
   import wfParamTable from '../drawio_myFlowChart/wfForm/wfParamEditTable.vue'
   import nodePeopleDefine from '../drawio_myFlowChart/node/peopleDefine.vue'
   import nodeChildProcess from '../drawio_myFlowChart/node/childProcess.vue'
+  import saveWorkFlow from '../drawio_myFlowChart/saveWorkFlow.vue'
   export default {
     name: "can-iframe-use",
     inject: ['rootAppVue'],
-    components: {paramsTable, lineAttributesForm, wfEditForm, wfParamTable, nodePeopleDefine, nodeChildProcess},
+    components: {paramsTable, lineAttributesForm, wfEditForm, wfParamTable, nodePeopleDefine, nodeChildProcess, saveWorkFlow},
     created() {
       window.showDialog_ME = showDialog_ME;
       var LazyLoad = window.LazyLoad;
@@ -115,8 +115,6 @@
 
             drawDevUrl + 'js/diagramly/DrawioFile.js',
             drawDevUrl + 'js/diagramly/LocalFile.js',
-            drawDevUrl + 'js/diagramly/StorageFile.js',
-            drawDevUrl + 'js/diagramly/StorageLibrary.js',
             drawDevUrl + 'js/diagramly/Dialogs.js',
             drawDevUrl + 'js/diagramly/Editor.js',
             drawDevUrl + 'js/diagramly/EditorUi.js',
@@ -128,7 +126,6 @@
             drawDevUrl + 'js/diagramly/DriveComment.js',
 
             drawDevUrl + 'js/diagramly/DrawioClient.js',
-            drawDevUrl + 'js/diagramly/DrawioUser.js',
 
             drawDevUrl + 'js/diagramly/App.js',
             drawDevUrl + 'js/diagramly/Menus.js',
@@ -136,7 +133,6 @@
             drawDevUrl + 'js/diagramly/Pages.js',
             drawDevUrl + 'js/diagramly/Trees.js',
             drawDevUrl + 'js/diagramly/DistanceGuides.js',
-            drawDevUrl + 'js/diagramly/mxRuler.js',
             drawDevUrl + 'js/diagramly/DevTools.js',
 
           ], function () {
@@ -156,6 +152,7 @@
       this.rootAppVue.$childrenRefs.wfParams = this.$refs.wfParams;
       this.rootAppVue.$childrenRefs.nodePeopleDefine = this.$refs.nodePeopleDefine;
       this.rootAppVue.$childrenRefs.nodeChildProcess = this.$refs.nodeChildProcess;
+      this.rootAppVue.$childrenRefs.saveWorkFlow = this.$refs.saveWorkFlow;
     },
     methods: {
       paramApplyHandle(val){
