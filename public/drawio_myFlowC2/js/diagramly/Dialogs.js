@@ -1804,8 +1804,7 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 	
 	if (showName)
 	{
-		mxUtils.write(header, ((editorUi.mode == null  ||
-				editorUi.mode == App.MODE_BROWSER) ? mxResources.get('diagramName') : mxResources.get('filename')) + ':');
+		mxUtils.write(header, ((editorUi.mode == null) ? mxResources.get('diagramName') : mxResources.get('filename')) + ':');
 	}
 	
 	var ext = '.drawio';
@@ -2739,16 +2738,6 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 		{
 			deviceOption.setAttribute('selected', 'selected');
 		}
-	}
-	debugger;
-	if (allowBrowser && isLocalStorage && urlParams['browser'] != '0')
-	{
-		var browserOption = document.createElement('option');
-		browserOption.setAttribute('value', App.MODE_BROWSER);
-		mxUtils.write(browserOption, mxResources.get('browser'));
-		serviceSelect.appendChild(browserOption);
-		
-		addLogo(IMAGE_PATH + '/osa_database.png', mxResources.get('browser'), App.MODE_BROWSER);
 	}
 
 	function change(newMode)

@@ -2830,17 +2830,6 @@
 	    c.insertBefore(title, content);
 	}
 
-	
-	/**
-	 * Translates this point by the given vector.
-	 * 
-	 * @param {number} dx X-coordinate of the translation.
-	 * @param {number} dy Y-coordinate of the translation.
-	 */
-	EditorUi.prototype.getLibraryStorageHint = function(file)
-	{
-		return '';
-	};
 
 	/**
 	 * Adds the library entries to the given DOM node.
@@ -7351,9 +7340,7 @@
 		    this.keyHandler.bindAction(86, true, 'pasteStyle', true); // Ctrl+Shift+V
 		    this.keyHandler.bindAction(77, true, 'editGeometry', true); // Ctrl+Shift+M
 		    this.keyHandler.bindAction(88, true, 'insertText', true); // Ctrl+Shift+X
-		    this.keyHandler.bindAction(75, true, 'insertRectangle'); // Ctrl+K
-		    this.keyHandler.bindAction(75, true, 'insertEllipse', true); // Ctrl+Shift+K
-			
+
 		    if (!mxClient.IS_CHROMEAPP && !EditorUi.isElectronApp)
 			{
 		    	this.altShiftActions[83] = 'synchronize'; // Alt+Shift+S
@@ -7486,12 +7473,6 @@
 				mxSettings.setUnit(evt.getProperty('unit'));
 				mxSettings.save();		
 			});
-
-			var showRuler = this.canvasSupported && document.documentMode != 9 &&
-				(urlParams['ruler'] == '1' || mxSettings.isRulerOn()) &&
-				(!this.editor.isChromelessView() || this.editor.editable);
-			
-			this.ruler = (showRuler) ? new mxDualRuler(this, view.unit) : null;
 			this.refresh();
 		}
 		
@@ -8793,12 +8774,6 @@
 		this.hsplit.style.display = (enabled) ? '' : 'none';
 		this.editor.graph.setEnabled(enabled);
 		
-		if (this.ruler != null)
-		{
-			this.ruler.hRuler.container.style.visibility = (enabled) ? '' : 'hidden';
-			this.ruler.vRuler.container.style.visibility = (enabled) ? '' : 'hidden';
-		}
-		
 		if (this.tabContainer != null)
 		{
 			this.tabContainer.style.visibility = (enabled) ? '' : 'hidden';	
@@ -10034,8 +10009,6 @@
 		this.actions.get('editDiagram').setEnabled(active && (file == null || !file.isRestricted()));
 		this.actions.get('publishLink').setEnabled(file != null && !file.isRestricted());
 		this.actions.get('find').setEnabled(this.diagramContainer.style.visibility != 'hidden');
-		this.actions.get('layers').setEnabled(this.diagramContainer.style.visibility != 'hidden');
-		this.actions.get('outline').setEnabled(this.diagramContainer.style.visibility != 'hidden');
 		this.actions.get('rename').setEnabled((file != null && file.isRenamable()) || urlParams['embed'] == '1');
 		this.actions.get('close').setEnabled(file != null);
 		this.menus.get('publish').setEnabled(file != null && !file.isRestricted());
@@ -11143,6 +11116,7 @@ var CommentsWindow = function(editorUi, x, y, w, h, saveCallback)
 				if ((mxEvent.isControlDown(evt) || (mxClient.IS_MAC &&
 					mxEvent.isMetaDown(evt))) && evt.keyCode == 13 /* Ctrl+Enter */)
 				{
+				  debugger;
 					saveBtn.click();
 					mxEvent.consume(evt);
 				}

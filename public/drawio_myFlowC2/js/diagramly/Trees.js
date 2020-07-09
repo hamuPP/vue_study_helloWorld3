@@ -13,65 +13,6 @@
 	 * Overrides folding based on treeFolding style.
 	 */
 	var graphFoldCells = Graph.prototype.foldCells;
-	
-	Graph.prototype.foldCells = function(collapse, recurse, cells, checkFoldable, evt)
-	{
-		recurse = (recurse != null) ? recurse : false;
-		
-		if (cells == null)
-		{
-			cells = this.getFoldableCells(this.getSelectionCells(), collapse);
-		}
-
-		this.stopEditing();
-		
-		this.model.beginUpdate();
-		try
-		{
-			var newCells = cells.slice();
-			var tmp = [];
-			
-			for (var i = 0; i < cells.length; i++)
-			{
-				var style = this.getCurrentCellStyle(cells[i]);
-				
-				if (mxUtils.getValue(style, 'treeFolding', '0') == '1')
-				{
-					this.traverse(cells[i], true, mxUtils.bind(this, function(vertex, edge)
-					{
-						if (edge != null)
-						{
-							tmp.push(edge);
-						}
-						
-						if (vertex != cells[i])
-						{
-							tmp.push(vertex);
-						}
-						
-						// Stop traversal on collapsed vertices
-						return vertex == cells[i] || !this.model.isCollapsed(vertex);
-					}));
-					
-					this.model.setCollapsed(cells[i], collapse);
-				}
-			}
-
-			for (var i = 0; i < tmp.length; i++)
-			{
-				this.model.setVisible(tmp[i], !collapse);
-			}
-			
-			cells = newCells;
-			cells = graphFoldCells.apply(this, arguments);
-		}
-		finally
-		{
-			this.model.endUpdate();
-		}
-		
-		return cells;
-	};
 
 	/**
 	 * Overrides functionality in editor.
@@ -81,7 +22,7 @@
 	EditorUi.prototype.init = function()
 	{
 		editorUiInit.apply(this, arguments);
-		
+		debugger;//addTrees在干嘛
 		if (!this.editor.isChromelessView() || this.editor.editable)
 		{
 			this.addTrees();

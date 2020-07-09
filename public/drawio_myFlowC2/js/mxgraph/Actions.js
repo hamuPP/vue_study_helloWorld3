@@ -228,17 +228,6 @@ Actions.prototype.init = function()
 	{
 		deleteCells(true);
 	}, null, null, Editor.ctrlKey + '+Delete');
-	this.addAction('duplicate', function()
-	{
-		try
-		{
-			graph.setSelectionCells(graph.duplicateCells());
-		}
-		catch (e)
-		{
-			ui.handleError(e);
-		}
-	}, null, null, Editor.ctrlKey + '+D');
 	this.put('turn', new Action(mxResources.get('turn') + ' / ' + mxResources.get('reverse'), function(evt)
 	{
 		graph.turnShapes(graph.getSelectionCells(), (evt != null) ? mxEvent.isShiftDown(evt) : false);
@@ -315,33 +304,6 @@ Actions.prototype.init = function()
 		var cell = graph.getSelectionCell() || graph.getModel().getRoot();
 		ui.showDataDialog(cell);
 	}, null, null, Editor.ctrlKey + '+M');
-	this.addAction('editTooltip...', function()
-	{
-		var graph = ui.editor.graph;
-		
-		if (graph.isEnabled() && !graph.isSelectionEmpty())
-		{
-			var cell = graph.getSelectionCell();
-			var tooltip = '';
-			
-			if (mxUtils.isNode(cell.value))
-			{
-				var tmp = cell.value.getAttribute('tooltip');
-				
-				if (tmp != null)
-				{
-					tooltip = tmp;
-				}
-			}
-			
-	    	var dlg = new TextareaDialog(ui, mxResources.get('editTooltip') + ':', tooltip, function(newValue)
-			{
-				graph.setTooltipForCell(cell, newValue);
-			});
-			ui.showDialog(dlg.container, 320, 200, true, true);
-			dlg.init();
-		}
-	}, null, null, 'Alt+Shift+T');
 	this.addAction('openLink', function()
 	{
 		var link = graph.getLinkForCell(graph.getSelectionCell());
@@ -835,11 +797,7 @@ Actions.prototype.init = function()
 			}
 		}, null, null, shortcut);
 	});
-	
-	toggleFontStyle('bold', mxConstants.FONT_BOLD, function() { document.execCommand('bold', false, null); }, Editor.ctrlKey + '+B');
-	toggleFontStyle('italic', mxConstants.FONT_ITALIC, function() { document.execCommand('italic', false, null); }, Editor.ctrlKey + '+I');
-	toggleFontStyle('underline', mxConstants.FONT_UNDERLINE, function() { document.execCommand('underline', false, null); }, Editor.ctrlKey + '+U');
-	
+
 	// Color actions
 	this.addAction('fontColor...', function() { ui.menus.pickColor(mxConstants.STYLE_FONTCOLOR, 'forecolor', '000000'); });
 	this.addAction('strokeColor...', function() { ui.menus.pickColor(mxConstants.STYLE_STROKECOLOR); });
@@ -1111,63 +1069,7 @@ Actions.prototype.init = function()
 			}, graph.cellEditor.isContentEditing(), !graph.cellEditor.isContentEditing());
 		}
 	}).isEnabled = isGraphEnabled;
-	action = this.addAction('layers', mxUtils.bind(this, function()
-	{
-		if (this.layersWindow == null)
-		{
-			// LATER: Check outline window for initial placement
-			this.layersWindow = new LayersWindow(ui, document.body.offsetWidth - 280, 120, 220, 196);
-			this.layersWindow.window.addListener('show', function()
-			{
-				ui.fireEvent(new mxEventObject('layers'));
-			});
-			this.layersWindow.window.addListener('hide', function()
-			{
-				ui.fireEvent(new mxEventObject('layers'));
-			});
-			this.layersWindow.window.setVisible(true);
-			ui.fireEvent(new mxEventObject('layers'));
-			
-			this.layersWindow.init();
-		}
-		else
-		{
-			this.layersWindow.window.setVisible(!this.layersWindow.window.isVisible());
-		}
-	}), null, null, Editor.ctrlKey + '+Shift+L');
 	action.setToggleAction(true);
-	action.setSelectedCallback(mxUtils.bind(this, function() { return this.layersWindow != null && this.layersWindow.window.isVisible(); }));
-	action = this.addAction('formatPanel', mxUtils.bind(this, function()
-	{
-		ui.toggleFormatPanel();
-	}), null, null, Editor.ctrlKey + '+Shift+P');
-	action.setToggleAction(true);
-	action.setSelectedCallback(mxUtils.bind(this, function() { return ui.formatWidth > 0; }));
-	action = this.addAction('outline', mxUtils.bind(this, function()
-	{
-		if (this.outlineWindow == null)
-		{
-			// LATER: Check layers window for initial placement
-			this.outlineWindow = new OutlineWindow(ui, document.body.offsetWidth - 260, 100, 180, 180);
-			this.outlineWindow.window.addListener('show', function()
-			{
-				ui.fireEvent(new mxEventObject('outline'));
-			});
-			this.outlineWindow.window.addListener('hide', function()
-			{
-				ui.fireEvent(new mxEventObject('outline'));
-			});
-			this.outlineWindow.window.setVisible(true);
-			ui.fireEvent(new mxEventObject('outline'));
-		}
-		else
-		{
-			this.outlineWindow.window.setVisible(!this.outlineWindow.window.isVisible());
-		}
-	}), null, null, Editor.ctrlKey + '+Shift+O');
-	
-	action.setToggleAction(true);
-	action.setSelectedCallback(mxUtils.bind(this, function() { return this.outlineWindow != null && this.outlineWindow.window.isVisible(); }));
 };
 
 /**

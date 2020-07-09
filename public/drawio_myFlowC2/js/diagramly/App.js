@@ -1378,7 +1378,7 @@ App.prototype.createBackground = function()
 		// and should not be modified if mode is undefined
 		if (this.mode != null)
 		{
-			Editor.useLocalStorage = this.mode == App.MODE_BROWSER;
+			Editor.useLocalStorage = false;
 		}
 
 		if (this.appIcon != null)
@@ -1387,7 +1387,7 @@ App.prototype.createBackground = function()
 			mode = (file != null) ? file.getMode() : mode;
 
 				this.appIcon.removeAttribute('title');
-				this.appIcon.style.cursor = (mode == App.MODE_DEVICE) ? 'pointer' : 'default';
+				this.appIcon.style.cursor = 'pointer';
 
 		}
 		
@@ -1514,9 +1514,7 @@ App.prototype.open = function()
 						filename = filename.substring(0, filename.length - 4) + '.drawio';
 					}
 					
-					this.fileLoaded((mxClient.IS_IOS) ?
-						new StorageFile(this, xml, filename) :
-						new LocalFile(this, xml, filename, temp));
+					this.fileLoaded(new LocalFile(this, xml, filename, temp));
 				}));
 			}
 		}
@@ -2035,9 +2033,7 @@ App.prototype.pickFile = function(mode)
 						filename = filename.substring(0, filename.length - 4) + '.drawio';
 					}
 					
-					this.fileLoaded((mode == App.MODE_BROWSER) ?
-						new StorageFile(this, xml, filename) :
-						new LocalFile(this, xml, filename));
+					this.fileLoaded(new LocalFile(this, xml, filename));
 				}));
 				
 				// Extends dialog close to show splash screen
@@ -2076,7 +2072,6 @@ App.prototype.saveFile = function(forceDialog, success)
 		// FIXME: Invoke for local files
 		var done = mxUtils.bind(this, function()
 		{
-		  debugger;
 			if (EditorUi.enableDrafts)
 			{
 				file.removeDraft();
@@ -2086,7 +2081,6 @@ App.prototype.saveFile = function(forceDialog, success)
 			{
 				// Workaround for possible status update while save as dialog is showing
 				// is to show no saved status for device files
-        debugger;
 				if (file.getMode() != App.MODE_DEVICE)
 				{
 					this.editor.setStatus(mxUtils.htmlEntities(mxResources.get('allChangesSaved')));
@@ -2153,7 +2147,6 @@ App.prototype.saveFile = function(forceDialog, success)
 					{
 						this.hideDialog();
 
-						debugger;
 						if (prev == null && mode == App.MODE_DEVICE)
 						{
 							this.setMode(App.MODE_DEVICE);
@@ -2464,34 +2457,6 @@ App.prototype.loadFile = function(id, sameWindow, file, success, force)
 	}
 };
 
-/**
- * Translates this point by the given vector.
- * 
- * @param {number} dx X-coordinate of the translation.
- * @param {number} dy Y-coordinate of the translation.
- */
-App.prototype.getLibraryStorageHint = function(file)
-{
-	var tip = file.getTitle();
-	
-	if (file.constructor != LocalLibrary)
-	{
-		tip += '\n' + file.getHash();
-	}
-
-
-
-  if (file.constructor == StorageLibrary)
-	{
-		tip += ' (' + mxResources.get('browser') + ')';
-	}
-	else if (file.constructor == LocalLibrary)
-	{
-		tip += ' (' + mxResources.get('device') + ')';
-	}
-
-	return tip;
-};
 
 /**
  * Updates action states depending on the selection.

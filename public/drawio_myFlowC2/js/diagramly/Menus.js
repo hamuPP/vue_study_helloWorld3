@@ -144,25 +144,6 @@
     mmAction.setSelectedCallback(function () {
       return editorUi.editor.graph.view.unit == mxConstants.MILLIMETERS;
     });
-    var rulerAction = editorUi.actions.addAction('ruler', function () {
-      mxSettings.setRulerOn(!mxSettings.isRulerOn());
-      mxSettings.save();
-
-      if (editorUi.ruler != null) {
-        editorUi.ruler.destroy();
-        editorUi.ruler = null;
-        editorUi.refresh();
-      }
-      else {
-        editorUi.ruler = new mxDualRuler(editorUi, editorUi.editor.graph.view.unit);
-        editorUi.refresh();
-      }
-    });
-    rulerAction.setEnabled(editorUi.canvasSupported && document.documentMode != 9);
-    rulerAction.setToggleAction(true);
-    rulerAction.setSelectedCallback(function () {
-      return editorUi.ruler != null;
-    });
 
     editorUi.actions.put('exportXml', new Action(mxResources.get('formatXml') + '...', function () {
       var div = document.createElement('div');
@@ -300,6 +281,7 @@
     }));
 
     editorUi.actions.addAction('open...', function () {
+      debugger;// 检查open是哪里会调用
       editorUi.pickFile();
     });
 
@@ -1221,57 +1203,6 @@
       }
     }), null, null, Editor.ctrlKey + '+Shift+X').isEnabled = isGraphEnabled;
 
-    editorUi.actions.put('insertRectangle', new Action(mxResources.get('rectangle'), function () {
-      if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent())) {
-        insertVertex('', 120, 60, 'whiteSpace=wrap;html=1;');
-      }
-    }), null, null, Editor.ctrlKey + '+K').isEnabled = isGraphEnabled;
-
-    editorUi.actions.put('insertEllipse', new Action(mxResources.get('ellipse'), function () {
-      if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent())) {
-        insertVertex('', 80, 80, 'ellipse;whiteSpace=wrap;html=1;');
-      }
-    }), null, null, Editor.ctrlKey + '+Shift+K').isEnabled = isGraphEnabled;
-
-    editorUi.actions.put('insertRhombus', new Action(mxResources.get('rhombus'), function () {
-      if (graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent())) {
-        insertVertex('', 80, 80, 'rhombus;whiteSpace=wrap;html=1;');
-      }
-    })).isEnabled = isGraphEnabled;
-
-    var addInsertMenuItems = mxUtils.bind(this, function (menu, parent, methods) {
-      for (var i = 0; i < methods.length; i++) {
-        if (methods[i] == '-') {
-          menu.addSeparator(parent);
-        }
-        else {
-          addInsertItem(menu, parent, mxResources.get(methods[i]) + '...', methods[i]);
-        }
-      }
-    });
-
-    this.put('insert', new Menu(mxUtils.bind(this, function (menu, parent) {
-      this.addMenuItems(menu, ['insertRectangle', 'insertEllipse',
-        'insertRhombus', '-', 'insertText', 'insertLink', '-',
-        'createShape', 'insertFreehand', '-', 'insertImage'], parent);
-
-      if (editorUi.insertTemplateEnabled && !editorUi.isOffline()) {
-        this.addMenuItems(menu, ['insertTemplate'], parent);
-      }
-
-      menu.addSeparator(parent);
-      this.addSubmenu('insertLayout', menu, parent, mxResources.get('layout'));
-      this.addSubmenu('insertAdvanced', menu, parent, mxResources.get('advanced'));
-    })));
-
-    this.put('insertLayout', new Menu(mxUtils.bind(this, function (menu, parent) {
-      addInsertMenuItems(menu, parent, ['horizontalFlow', 'verticalFlow', '-', 'horizontalTree',
-        'verticalTree', 'radialTree', '-', 'organic', 'circle']);
-    })));
-
-    this.put('insertAdvanced', new Menu(mxUtils.bind(this, function (menu, parent) {
-      addInsertMenuItems(menu, parent, ['fromText', 'plantUml', 'mermaid', '-', 'formatSql']);
-    })));
 
 
     // Overrides edit menu to add find and editGeometry

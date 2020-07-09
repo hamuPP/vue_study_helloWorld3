@@ -4,7 +4,6 @@
  */
 DrawioFile = function(ui, data)
 {
-  debugger;
 	mxEventSource.call(this);
 	
 	/**
