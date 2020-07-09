@@ -13,7 +13,7 @@
 	 * Known file types.
 	 */
 	Editor.prototype.diagramFileTypes = [
-		{description: 'diagramXmlDesc', extension: 'drawio'},
+		// {description: 'diagramXmlDesc', extension: 'drawio'}, // 2020年07月08日18:03:34 取消drawio后缀的文件名
 		{description: 'diagramPngDesc', extension: 'png'},
 		{description: 'diagramSvgDesc', extension: 'svg'},
 		{description: 'diagramHtmlDesc', extension: 'html'},
@@ -129,9 +129,9 @@
 	Editor.enableCustomProperties = true;
 
 	/**
-	 * Specifies if XML files should be compressed. Default is true.
+	 * Specifies if XML files should be compressed. Default is false.
 	 */
-	Editor.compressXml = true;
+	Editor.compressXml = false;
 
 	/**
 	 * Specifies global variables.
@@ -2520,7 +2520,8 @@
 	 */
 	if (window.ColorDialog)
 	{
-		FilenameDialog.filenameHelpLink = 'https://desk.draw.io/support/solutions/articles/16000091426'; 
+	  debugger;
+		FilenameDialog.filenameHelpLink = 'https://desk.draw.io/support/solutions/articles/16000091426_todo_ccc';
 		
 		var colorDialogAddRecentColor = ColorDialog.addRecentColor;
 		

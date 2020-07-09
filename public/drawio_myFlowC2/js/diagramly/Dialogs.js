@@ -11,8 +11,6 @@ var StorageDialog = function(editorUi, fn, rowLimit) {
 	div.style.whiteSpace = 'nowrap';
 	div.style.paddingTop = '0px';
 	div.style.paddingBottom = '20px';
-  debugger;
-
 
 	var demo = document.createElement('div');
 	demo.style.position = 'absolute';
@@ -1846,15 +1844,6 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
 			typeSelect.style.width = '140px';
 			header.appendChild(typeSelect);
 		}
-		
-		if (editorUi.editor.fileExtensions != null)
-		{
-			var hint = FilenameDialog.createTypeHint(editorUi,
-				nameInput, editorUi.editor.fileExtensions);
-			hint.style.marginTop = '12px';
-			
-			header.appendChild(hint);
-		}
 	}
 
 	var hasTabs = false;
@@ -2528,9 +2517,11 @@ var NewDialog = function(editorUi, compact, showName, callback, createOnly, canc
  * Constructs a dialog for creating new files from a template URL.
  * Also used for dialog choosing where to save or export resources
  */
+// todo 找这里面的 help 取消，以及取消下拉框第一项
 var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLabel, overrideExtension, allowBrowser,
 	allowTab, helpLink, showDeviceButton, rowLimit, data, mimeType, base64Encoded, hints, hideDialog)
 {
+  debugger;
 	overrideExtension = (overrideExtension != null) ? overrideExtension : true;
 	allowBrowser = (allowBrowser != null) ? allowBrowser : true;
 	rowLimit = (rowLimit != null) ? rowLimit : 4;
@@ -2540,7 +2531,6 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 	div.style.whiteSpace = 'nowrap';
 	
 	var showButtons = true;
-
 
 	var h3 = document.createElement('h2');
 	mxUtils.write(h3, dlgTitle || mxResources.get('create'));
@@ -2573,6 +2563,7 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 
 	div.appendChild(nameInput);
 
+	debugger;// hints是？
 	if (hints != null)
 	{
 		if (editorUi.editor.diagramFileTypes != null)
@@ -2582,8 +2573,6 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 			typeSelect.style.width = '80px';
 			div.appendChild(typeSelect);
 		}
-		
-		div.appendChild(FilenameDialog.createTypeHint(editorUi, nameInput, hints));
 	}
 	
 	// Disables SVG preview if SVG is not supported in browser
@@ -2737,8 +2726,8 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 	// Adds all papersize options
 	var serviceSelect = document.createElement('select');
 	serviceSelect.style.marginLeft = '10px';
-	
-	if (!Editor.useLocalStorage || urlParams['storage'] == 'device' ||
+	debugger;
+	if (!Editor.useLocalStorage ||
 		(editorUi.getCurrentFile() != null/* && !mxClient.IS_IOS*/))
 	{
 		var deviceOption = document.createElement('option');
@@ -2750,25 +2739,14 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 		{
 			deviceOption.setAttribute('selected', 'selected');
 		}
-		
-		if (showDeviceButton)
-		{
-
-			addLogo(IMAGE_PATH + '/osa_drive-harddisk_cc.png', mxResources.get('device'), App.MODE_DEVICE);
-		}
 	}
-	
+	debugger;
 	if (allowBrowser && isLocalStorage && urlParams['browser'] != '0')
 	{
 		var browserOption = document.createElement('option');
 		browserOption.setAttribute('value', App.MODE_BROWSER);
 		mxUtils.write(browserOption, mxResources.get('browser'));
 		serviceSelect.appendChild(browserOption);
-		
-		if (editorUi.mode == App.MODE_BROWSER)
-		{
-			browserOption.setAttribute('selected', 'selected');
-		}
 		
 		addLogo(IMAGE_PATH + '/osa_database.png', mxResources.get('browser'), App.MODE_BROWSER);
 	}
@@ -2809,17 +2787,6 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 		div.appendChild(serviceSelect);
 		mxEvent.addListener(serviceSelect, 'change', change);
 		change();
-	}
-	
-	if (helpLink != null)
-	{
-		var helpBtn = mxUtils.button(mxResources.get('help'), function()
-		{
-			editorUi.openLink(helpLink);
-		});
-		
-		helpBtn.className = 'geBtn';
-		btns.appendChild(helpBtn);
 	}
 	
 	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
@@ -2868,17 +2835,6 @@ var CreateDialog = function(editorUi, title, createFn, cancelFn, dlgTitle, btnLa
 		
 		laterBtn.className = 'geBtn';
 		btns.appendChild(laterBtn);
-	}
-
-	if (allowTab && Editor.popupsAllowed)
-	{
-		var openBtn = mxUtils.button(mxResources.get('openInNewWindow'), function()
-		{
-			create('_blank');
-		});
-		
-		openBtn.className = 'geBtn';
-		btns.appendChild(openBtn);
 	}
 	
 	if (CreateDialog.showDownloadButton)
@@ -6743,187 +6699,6 @@ var FontDialog = function(editorUi, curFontname, curUrl, curType, fn)
 	});
 
 	td.appendChild(okBtn);
-	
-	if (!editorUi.editor.cancelFirst)
-	{
-		td.appendChild(cancelBtn);
-	}
-
-	row.appendChild(td);
-	tbody.appendChild(row);
-	table.appendChild(tbody);
-	
-	this.container = table;
-};
-
-
-/**
- * Constructs a new page setup dialog.
- */
-var FilePropertiesDialog = function(editorUi)
-{	
-	var row, td;
-	var table = document.createElement('table');
-	var tbody = document.createElement('tbody');
-	table.style.width = '100%';
-	table.style.marginTop = '8px';
-	
-	var file = editorUi.getCurrentFile();
-	var filename = (file != null && file.getTitle() != null) ?
-		file.getTitle() : this.editorUi.defaultFilename;
-	var isPng = /(\.png)$/i.test(filename);
-	var apply = null;
-
-	if (isPng)
-	{
-		var scale = 1;
-		var border = 0;
-		var node = editorUi.fileNode;
-	
-		if (node != null)
-		{
-			if (node.hasAttribute('scale'))
-			{
-				scale = parseFloat(node.getAttribute('scale'));
-			}
-			
-			if (node.hasAttribute('border'))
-			{
-				border = parseInt(node.getAttribute('border'));
-			}
-		}
-		
-		row = document.createElement('tr');
-		td = document.createElement('td');
-		td.style.whiteSpace = 'nowrap';
-		td.style.fontSize = '10pt';
-		td.style.width = '120px';
-		mxUtils.write(td, mxResources.get('zoom') + ':');
-		
-		row.appendChild(td);
-	
-		var zoomInput = document.createElement('input');
-		zoomInput.setAttribute('value', (scale * 100) + '%');
-		zoomInput.style.marginLeft = '4px';
-		zoomInput.style.width ='180px';
-		
-		td = document.createElement('td');
-		td.style.whiteSpace = 'nowrap';
-		td.appendChild(zoomInput);
-		row.appendChild(td);
-		tbody.appendChild(row);
-		
-		row = document.createElement('tr');
-		td = document.createElement('td');
-		td.style.whiteSpace = 'nowrap';
-		td.style.fontSize = '10pt';
-		td.style.width = '120px';
-		mxUtils.write(td, mxResources.get('borderWidth') + ':');
-		
-		row.appendChild(td);
-	
-		var borderInput = document.createElement('input');
-		borderInput.setAttribute('value', border);
-		borderInput.style.marginLeft = '4px';
-		borderInput.style.width ='180px';
-		
-		td = document.createElement('td');
-		td.style.whiteSpace = 'nowrap';
-		td.appendChild(borderInput);
-		row.appendChild(td);
-		tbody.appendChild(row);
-		
-		this.init = function()
-		{
-			zoomInput.focus();
-			
-			if (mxClient.IS_GC || mxClient.IS_FF || document.documentMode >= 5 || mxClient.IS_QUIRKS)
-			{
-				zoomInput.select();
-			}
-			else
-			{
-				document.execCommand('selectAll', false, null);
-			}
-		};
-		
-		apply = function()
-		{
-			if (editorUi.fileNode != null)
-			{
-				editorUi.fileNode.setAttribute('scale', Math.max(0, parseInt(zoomInput.value) / 100));
-				editorUi.fileNode.setAttribute('border', Math.max(0, parseInt(borderInput.value)));
-			}
-			
-			editorUi.hideDialog();
-		};
-	}
-	else
-	{
-		var compressed = (file != null) ? file.isCompressed() : Editor.compressXml;
-
-		row = document.createElement('tr');
-		td = document.createElement('td');
-		td.style.whiteSpace = 'nowrap';
-		td.style.fontSize = '10pt';
-		td.style.width = '120px';
-		mxUtils.write(td, mxResources.get('compressed') + ':');
-		
-		row.appendChild(td);
-	
-		var compressedInput = document.createElement('input');
-		compressedInput.setAttribute('type', 'checkbox');
-		
-		if (compressed)
-		{
-			compressedInput.setAttribute('checked', 'checked');
-			compressedInput.defaultChecked = true;
-		}
-
-		td = document.createElement('td');
-		td.style.whiteSpace = 'nowrap';
-		td.appendChild(compressedInput);
-		row.appendChild(td);
-		tbody.appendChild(row);
-		
-		this.init = function()
-		{
-			compressedInput.focus();
-		};
-		
-		apply = function()
-		{
-			if (editorUi.fileNode != null)
-			{
-				editorUi.fileNode.setAttribute('compressed', (compressedInput.checked) ? 'true' : 'false');
-			}
-			
-			editorUi.hideDialog();
-		};
-	}
-	
-	var genericBtn = mxUtils.button(mxResources.get('apply'), apply);
-	genericBtn.className = 'geBtn gePrimaryBtn';
-	
-	row = document.createElement('tr');
-	td = document.createElement('td');
-	td.colSpan = 2;
-	td.style.paddingTop = '20px';
-	td.style.whiteSpace = 'nowrap';
-	td.setAttribute('align', 'right');
-	
-	var cancelBtn = mxUtils.button(mxResources.get('cancel'), function()
-	{
-		editorUi.hideDialog();
-	});
-	cancelBtn.className = 'geBtn';
-	
-	if (editorUi.editor.cancelFirst)
-	{
-		td.appendChild(cancelBtn);
-	}
-
-	td.appendChild(genericBtn);
 	
 	if (!editorUi.editor.cancelFirst)
 	{

@@ -758,7 +758,6 @@ OpenFile.prototype.cancel = function(cancel)
  */
 function Dialog(editorUi, elt, w, h, modal, closable, onClose, noScroll, transparent, onResize, ignoreBgClick)
 {
-  debugger;
 	var dx = 0;
 	
 	if (mxClient.IS_VML && (document.documentMode == null || document.documentMode < 8))
@@ -2068,8 +2067,6 @@ var FilenameDialog = function(editorUi, filename, buttonText, fn, label, validat
 				td.appendChild(typeSelect);
 				nameInput.style.width = (w != null) ? (w - 40) + 'px' : '140px';
 			}
-
-			td.appendChild(FilenameDialog.createTypeHint(editorUi, nameInput, hints));
 		}
 	}
 	
@@ -2143,58 +2140,6 @@ var FilenameDialog = function(editorUi, filename, buttonText, fn, label, validat
  * 
  */
 FilenameDialog.filenameHelpLink = null;
-
-/**
- * 
- */
-FilenameDialog.createTypeHint = function(ui, nameInput, hints)
-{
-	var hint = document.createElement('img');
-	hint.style.cssText = 'vertical-align:top;height:16px;width:16px;margin-left:4px;background-repeat:no-repeat;background-position:center bottom;cursor:pointer;';
-	mxUtils.setOpacity(hint, 70);
-	
-	var nameChanged = function()
-	{
-		hint.setAttribute('src', Editor.helpImage);
-		hint.setAttribute('title', mxResources.get('help'));
-		
-		for (var i = 0; i < hints.length; i++)
-		{
-			if (hints[i].ext.length > 0 && nameInput.value.toLowerCase().substring(
-				nameInput.value.length - hints[i].ext.length - 1) == '.' + hints[i].ext)
-			{
-				hint.setAttribute('src',  mxClient.imageBasePath + '/warning.png');
-				hint.setAttribute('title', mxResources.get(hints[i].title));
-				break;
-			}
-		}
-	};
-	
-	mxEvent.addListener(nameInput, 'keyup', nameChanged);
-	mxEvent.addListener(nameInput, 'change', nameChanged);
-	mxEvent.addListener(hint, 'click', function(evt)
-	{
-		var title = hint.getAttribute('title');
-		
-		if (hint.getAttribute('src') == Editor.helpImage)
-		{
-			ui.editor.graph.openLink(FilenameDialog.filenameHelpLink);
-		}
-		else if (title != '')
-		{
-			ui.showError(null, title, mxResources.get('help'), function()
-			{
-				ui.editor.graph.openLink(FilenameDialog.filenameHelpLink);
-			}, null, mxResources.get('ok'), null, null, null, 340, 90);
-		}
-		
-		mxEvent.consume(evt);
-	});
-	
-	nameChanged();
-	
-	return hint;
-};
 
 /**
  * 

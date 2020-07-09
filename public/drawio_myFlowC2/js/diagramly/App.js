@@ -1116,11 +1116,6 @@ App.prototype.updateDocumentTitle = function()
 		var title = this.editor.appName;
 		var file = this.getCurrentFile();
 		
-		if (this.isOfflineApp())
-		{
-			title += ' app';
-		}
-		
 		if (file != null)
 		{
 			var filename = (file.getTitle() != null) ? file.getTitle() : this.defaultFilename;
@@ -2073,6 +2068,7 @@ App.prototype.pickFile = function(mode)
  */
 App.prototype.saveFile = function(forceDialog, success)
 {
+  debugger;
 	var file = this.getCurrentFile();
 	
 	if (file != null)
@@ -2080,6 +2076,7 @@ App.prototype.saveFile = function(forceDialog, success)
 		// FIXME: Invoke for local files
 		var done = mxUtils.bind(this, function()
 		{
+		  debugger;
 			if (EditorUi.enableDrafts)
 			{
 				file.removeDraft();
@@ -2089,6 +2086,7 @@ App.prototype.saveFile = function(forceDialog, success)
 			{
 				// Workaround for possible status update while save as dialog is showing
 				// is to show no saved status for device files
+        debugger;
 				if (file.getMode() != App.MODE_DEVICE)
 				{
 					this.editor.setStatus(mxUtils.htmlEntities(mxResources.get('allChangesSaved')));
@@ -2107,6 +2105,7 @@ App.prototype.saveFile = function(forceDialog, success)
 		
 		if (!forceDialog && file.getTitle() != null && this.mode != null)
 		{
+		  debugger;
 			this.save(file.getTitle(), done);
 		}
 		else
@@ -2125,6 +2124,7 @@ App.prototype.saveFile = function(forceDialog, success)
 			
 			var dlg = new CreateDialog(this, filename, mxUtils.bind(this, function(name, mode, input)
 			{
+			  debugger;
 				if (name != null && name.length > 0)
 				{
 					// Handles special case where PDF export is detected
@@ -2152,7 +2152,8 @@ App.prototype.saveFile = function(forceDialog, success)
 					else
 					{
 						this.hideDialog();
-						
+
+						debugger;
 						if (prev == null && mode == App.MODE_DEVICE)
 						{
 							this.setMode(App.MODE_DEVICE);
@@ -2178,6 +2179,7 @@ App.prototype.saveFile = function(forceDialog, success)
 						{
 							this.pickFolder(mode, mxUtils.bind(this, function(folderId)
 							{
+							  debugger;
 								this.createFile(name, this.getFileData(/(\.xml)$/i.test(name) ||
 									name.indexOf('.') < 0 || /(\.drawio)$/i.test(name),
 									/(\.svg)$/i.test(name), /(\.html)$/i.test(name)),
@@ -2195,7 +2197,7 @@ App.prototype.saveFile = function(forceDialog, success)
 				this.hideDialog();
 			}), mxResources.get('saveAs'), mxResources.get('download'), null, null, allowTab,
 				null, true, rowLimit, null, null, null, this.editor.fileExtensions, false);
-			this.showDialog(dlg.container, 400, (serviceCount > rowLimit) ? 390 : 270, true, true);
+			this.showDialog(dlg.container, 400, (serviceCount > rowLimit) ? 390 : 140, true, true);
 			dlg.init();
 		}
 	}
@@ -2661,6 +2663,7 @@ App.prototype.updateButtonContainer = function()
  */
 App.prototype.save = function(name, done)
 {
+  debugger;
 	var file = this.getCurrentFile();
 	var msg = mxResources.get('saving');
 	

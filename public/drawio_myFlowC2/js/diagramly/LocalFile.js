@@ -102,7 +102,8 @@ LocalFile.prototype.saveFile = function(title, revision, success, error)
 	
 	var doSave = mxUtils.bind(this, function(data)
 	{
-		if (this.ui.isOfflineApp() || this.ui.isLocalFileSave())
+	  debugger;
+		if (this.ui.isLocalFileSave())
 		{
 			this.ui.doSaveLocalFile(data, title, (binary) ?
 				'image/png' : 'text/xml', binary);

@@ -164,13 +164,6 @@
       return editorUi.ruler != null;
     });
 
-    editorUi.actions.addAction('properties...', function () {
-      var dlg = new FilePropertiesDialog(editorUi);
-      editorUi.showDialog(dlg.container, 320, 120, true, true);
-      dlg.init();
-    }).isEnabled = isGraphEnabled;
-
-
     editorUi.actions.put('exportXml', new Action(mxResources.get('formatXml') + '...', function () {
       var div = document.createElement('div');
       div.style.whiteSpace = 'nowrap';
@@ -362,6 +355,7 @@
     });
 
     editorUi.actions.addAction('createRevision', function () {
+      debugger;
       editorUi.actions.get('save').funct();
     }, null, null, Editor.ctrlKey + '+S');
 
@@ -1277,10 +1271,6 @@
 
     this.put('insertAdvanced', new Menu(mxUtils.bind(this, function (menu, parent) {
       addInsertMenuItems(menu, parent, ['fromText', 'plantUml', 'mermaid', '-', 'formatSql']);
-
-      menu.addItem(mxResources.get('csv') + '...', null, function () {
-        editorUi.showImportCsvDialog();
-      }, parent, null, isGraphEnabled());
     })));
 
 
