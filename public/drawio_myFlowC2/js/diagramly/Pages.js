@@ -517,7 +517,6 @@ Graph.prototype.createViewState = function(node)
 	
 	return {
 		gridEnabled: node.getAttribute('grid') != '0',
-		//gridColor: node.getAttribute('gridColor') || mxSettings.getGridColor(uiTheme == 'dark'),
 		gridSize: parseFloat(node.getAttribute('gridSize')) || mxGraph.prototype.gridSize,
 		guidesEnabled: node.getAttribute('guides') != '0',
 		foldingEnabled: node.getAttribute('fold') != '0',
@@ -1179,7 +1178,7 @@ EditorUi.prototype.updateTabContainer = function()
 				if (this.pages[index] == this.currentPage)
 				{
 					tab.className = 'geActivePage';
-					tab.style.backgroundColor = (uiTheme == 'dark') ? '#2a2a2a' : '#fff';
+					tab.style.backgroundColor = '#fff';
 				}
 				else
 				{
@@ -1332,7 +1331,7 @@ EditorUi.prototype.createTab = function(hoverEnabled)
 	tab.style.marginLeft = '-1px';
 	tab.style.height = this.tabContainer.clientHeight + 'px';
 	tab.style.padding = '12px 4px 8px 4px';
-	tab.style.border = (uiTheme == 'dark') ? '1px solid #505759' : '1px solid #e8eaed';
+	tab.style.border = '1px solid #e8eaed';
 	tab.style.borderTopStyle = 'none';
 	tab.style.borderBottomStyle = 'none';
 	tab.style.backgroundColor = this.tabContainer.style.backgroundColor;
@@ -1345,7 +1344,7 @@ EditorUi.prototype.createTab = function(hoverEnabled)
 		{
 			if (!this.editor.graph.isMouseDown)
 			{
-				tab.style.backgroundColor = (uiTheme == 'dark') ? 'black' : '#e8eaed';
+				tab.style.backgroundColor =  '#e8eaed';
 				mxEvent.consume(evt);
 			}
 		}));

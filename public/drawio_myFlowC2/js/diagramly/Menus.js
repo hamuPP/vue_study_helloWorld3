@@ -641,97 +641,55 @@
     // Note that the URL param lang=XX is available for setting the language
     // in older browsers. URL param has precedence over the saved setting.
     if (mxClient.IS_CHROMEAPP || isLocalStorage) {
-      this.put('language', new Menu(mxUtils.bind(this, function (menu, parent) {
-        var addLangItem = mxUtils.bind(this, function (id) {
-          var lang = (id == '') ? mxResources.get('automatic') : mxLanguageMap[id];
-          var item = null;
-
-          if (lang != '') {
-            item = menu.addItem(lang, null, mxUtils.bind(this, function () {
-              mxSettings.setLanguage(id);
-              mxSettings.save();
-
-              // Shows dialog in new language
-              mxClient.language = id;
-              mxResources.loadDefaultBundle = false;
-              mxResources.add(RESOURCE_BASE);
-
-              editorUi.alert(mxResources.get('restartForChangeRequired'));
-            }), parent);
-
-            if (id == mxLanguage || (id == '' && mxLanguage == null)) {
-              menu.addCheckmark(item, Editor.checkmarkImage);
-            }
-          }
-
-          return item;
-        });
-
-        var item = addLangItem('');
-        menu.addSeparator(parent);
-
-        // LATER: Sort menu by language name
-        for (var langId in mxLanguageMap) {
-          addLangItem(langId);
-        }
-      })));
-
       // Extends the menubar with the language menu
       var menusCreateMenuBar = Menus.prototype.createMenubar;
       Menus.prototype.createMenubar = function (container) {
         var menubar = menusCreateMenuBar.apply(this, arguments);
 
         if (menubar != null) {
-          var langMenu = this.get('language');
-
-          if (langMenu != null) {
-            var elt = menubar.addMenu('', langMenu.funct);
-            elt.setAttribute('title', mxResources.get('language'));
-            elt.style.width = '16px';
-            elt.style.paddingTop = '2px';
-            elt.style.paddingLeft = '4px';
-            elt.style.zIndex = '1';
-            elt.style.position = 'absolute';
-            elt.style.display = 'block';
-            elt.style.cursor = 'pointer';
-            elt.style.right = '17px';
-
-            if (uiTheme == 'atlas') {
-              elt.style.top = '6px';
-              elt.style.right = '15px';
-            }
-            else if (uiTheme == 'min') {
-              elt.style.top = '2px';
-            }
-            else {
-              elt.style.top = '0px';
-            }
-
-            if (!mxClient.IS_VML) {
-              var icon = document.createElement('div');
-              icon.style.backgroundImage = 'url(' + Editor.globeImage + ')';
-              icon.style.backgroundPosition = 'center center';
-              icon.style.backgroundRepeat = 'no-repeat';
-              icon.style.backgroundSize = '19px 19px';
-              icon.style.position = 'absolute';
-              icon.style.height = '19px';
-              icon.style.width = '19px';
-              icon.style.marginTop = '2px';
-              icon.style.zIndex = '1';
-              elt.appendChild(icon);
-              mxUtils.setOpacity(elt, 40);
-
-              if (uiTheme == 'atlas' || uiTheme == 'dark') {
-                elt.style.opacity = '0.85';
-                elt.style.filter = 'invert(100%)';
-              }
-            }
-            else {
-              elt.innerHTML = '<div class="geIcon geSprite geSprite-globe aa-bb`"/>';
-            }
-
-            document.body.appendChild(elt);
-          }
+          // var langMenu = this.get('language');
+          //
+          // if (langMenu != null) {
+          //   var elt = menubar.addMenu('', langMenu.funct);
+          //   elt.setAttribute('title', mxResources.get('language'));
+          //   elt.style.width = '16px';
+          //   elt.style.paddingTop = '2px';
+          //   elt.style.paddingLeft = '4px';
+          //   elt.style.zIndex = '1';
+          //   elt.style.position = 'absolute';
+          //   elt.style.display = 'block';
+          //   elt.style.cursor = 'pointer';
+          //   elt.style.right = '17px';
+          //
+          //     elt.style.top = '6px';
+          //     elt.style.right = '15px';
+          //
+          //
+          //
+          //   if (!mxClient.IS_VML) {
+          //     var icon = document.createElement('div');
+          //     icon.style.backgroundImage = 'url(' + Editor.globeImage + ')';
+          //     icon.style.backgroundPosition = 'center center';
+          //     icon.style.backgroundRepeat = 'no-repeat';
+          //     icon.style.backgroundSize = '19px 19px';
+          //     icon.style.position = 'absolute';
+          //     icon.style.height = '19px';
+          //     icon.style.width = '19px';
+          //     icon.style.marginTop = '2px';
+          //     icon.style.zIndex = '1';
+          //     elt.appendChild(icon);
+          //     mxUtils.setOpacity(elt, 40);
+          //
+          //       elt.style.opacity = '0.85';
+          //       elt.style.filter = 'invert(100%)';
+          //
+          //   }
+          //   else {
+          //     elt.innerHTML = '<div class="geIcon geSprite geSprite-globe aa-bb`"/>';
+          //   }
+          //
+          //   document.body.appendChild(elt);
+          // }
         }
 
         return menubar;
@@ -821,7 +779,6 @@
       }
     }));
 
-
     editorUi.actions.put('embedImage', new Action(mxResources.get('image') + '...', function () {
       editorUi.showEmbedImageDialog(function (fit, shadow, retina, lightbox, editLink, layers) {
         if (editorUi.spinner.spin(document.body, mxResources.get('loading'))) {
@@ -876,87 +833,11 @@
         }, true);
     }));
 
-    editorUi.actions.put('publishLink', new Action(mxResources.get('link') + '...', function () {
-      editorUi.showPublishLinkDialog(null, null, null, null,
-        function (linkTarget, linkColor, allPages, lightbox, editLink, layers) {
-          if (editorUi.spinner.spin(document.body, mxResources.get('loading'))) {
-            editorUi.getPublicUrl(editorUi.getCurrentFile(), function (url) {
-              editorUi.spinner.stop();
-              var dlg = new EmbedDialog(editorUi, editorUi.createLink(linkTarget,
-                linkColor, allPages, lightbox, editLink, layers, url));
-              editorUi.showDialog(dlg.container, 440, 240, true, true);
-              dlg.init();
-            });
-          }
-        });
-    }));
-
-
     action.setToggleAction(true);
     action.setSelectedCallback(function () {
       return editorUi.sidebar.isEntryVisible('search');
     });
 
-    if (urlParams['embed'] == '1') {
-      editorUi.actions.get('save').funct = function (exit) {
-        if (graph.isEditing()) {
-          graph.stopEditing();
-        }
-
-        var data = (urlParams['pages'] != '0' || (editorUi.pages != null && editorUi.pages.length > 1)) ?
-          editorUi.getFileData(true) : mxUtils.getXml(editorUi.editor.getGraphXml());
-
-        if (urlParams['proto'] == 'json') {
-          var msg = editorUi.createLoadMessage('save');
-          msg.xml = data;
-
-          if (exit) {
-            msg.exit = true;
-          }
-
-          data = JSON.stringify(msg);
-        }
-
-        var parent = window.opener || window.parent;
-        parent.postMessage(data, '*');
-
-        if (urlParams['modified'] != '0' && urlParams['keepmodified'] != '1') {
-          editorUi.editor.modified = false;
-          editorUi.editor.setStatus('');
-        }
-
-        //Add support to saving files if embedded mode is running with files
-        var file = editorUi.getCurrentFile();
-
-        if (file != null) {
-          editorUi.saveFile();
-        }
-      };
-
-      editorUi.actions.addAction('saveAndExit', function () {
-        editorUi.actions.get('save').funct(true);
-      });
-
-      editorUi.actions.addAction('exit', function () {
-        var fn = function () {
-          editorUi.editor.modified = false;
-          var msg = (urlParams['proto'] == 'json') ? JSON.stringify({
-            event: 'exit',
-            modified: editorUi.editor.modified
-          }) : '';
-          var parent = window.opener || window.parent;
-          parent.postMessage(msg, '*');
-        }
-
-        if (!editorUi.editor.modified) {
-          fn();
-        }
-        else {
-          editorUi.confirm(mxResources.get('allChangesLost'), null, fn,
-            mxResources.get('cancel'), mxResources.get('discardChanges'));
-        }
-      });
-    }
 
     this.put('exportAs', new Menu(mxUtils.bind(this, function (menu, parent) {
       if (editorUi.isExportToCanvas()) {
@@ -1061,7 +942,6 @@
 
     }))).isEnabled = isGraphEnabled;
 
-
     var renameAction = this.editorUi.actions.addAction('rename...', mxUtils.bind(this, function () {
       var file = this.editorUi.getCurrentFile();
 
@@ -1100,28 +980,6 @@
 
     renameAction.visible = urlParams['embed'] != '1';
 
-
-    this.put('publish', new Menu(mxUtils.bind(this, function (menu, parent) {
-      this.addMenuItems(menu, ['publishLink'], parent);
-    })));
-
-    editorUi.actions.put('useOffline', new Action(mxResources.get('useOffline') + '...', function () {
-      editorUi.openLink('https://app.draw.io/')
-    }));
-
-    this.editorUi.actions.addAction('share...', mxUtils.bind(this, function () {
-      try {
-        var file = editorUi.getCurrentFile();
-
-        if (file != null) {
-          editorUi.drive.showPermissions(file.getId());
-        }
-      }
-      catch (e) {
-        editorUi.handleError(e);
-      }
-    }));
-
     this.put('embed', new Menu(mxUtils.bind(this, function (menu, parent) {
       var file = editorUi.getCurrentFile();
 
@@ -1136,25 +994,6 @@
       }
     })));
 
-    var addInsertItem = function (menu, parent, title, method) {
-      if (method != 'plantUml' || (EditorUi.enablePlantUml && !editorUi.isOffline())) {
-        menu.addItem(title, null, mxUtils.bind(this, function () {
-          if (method == 'fromText' || method == 'formatSql' ||
-            method == 'plantUml' || method == 'mermaid') {
-            var dlg = new ParseDialog(editorUi, title, method);
-            editorUi.showDialog(dlg.container, 620, 420, true, false);
-            editorUi.dialog.container.style.overflow = 'auto';
-            dlg.init();
-          }
-          else {
-            var dlg = new CreateGraphDialog(editorUi, title, method);
-            editorUi.showDialog(dlg.container, 620, 420, true, false);
-            // Executed after dialog is added to dom
-            dlg.init();
-          }
-        }), parent, null, isGraphEnabled());
-      }
-    };
 
     var insertVertex = function (value, w, h, style) {
       var pt = (graph.isMouseInsertPoint()) ? graph.getInsertPoint() : graph.getFreeInsertPoint();

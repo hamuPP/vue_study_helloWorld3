@@ -19,11 +19,6 @@
 	 */
 	mxGraphView.prototype.defaultDarkGridColor = '#6e6e6e';
 	
-	if (uiTheme == 'dark')
-	{
-		mxGraphView.prototype.gridColor = mxGraphView.prototype.defaultDarkGridColor;
-	}
-	
 	/**
 	 * Switch to disable logging for mode and search terms.
 	 */
@@ -603,7 +598,7 @@
 			width: Math.round(size / 3), // The line thickness
 			radius: Math.round(size / 2), // The radius of the inner circle
 			rotate: 0, // The rotation offset
-			color: (uiTheme == 'dark') ? '#c0c0c0' : '#000', // #rgb or #rrggbb
+			color: '#000', // #rgb or #rrggbb
 			speed: 1.5, // Rounds per second
 			trail: 60, // Afterglow percentage
 			shadow: false, // Whether to render a shadow
@@ -2894,8 +2889,6 @@
 	 */
     EditorUi.initTheme = function()
     {
-    	if (uiTheme == 'atlas')
-    	{
     	  var STYLE_PATH = window.stylePathInVue ? window.stylePathInVue : window.STYLE_PATH;
     		mxClient.link('stylesheet', STYLE_PATH + '/atlas.css');
 
@@ -2908,7 +2901,7 @@
     		Editor.prototype.initialTopSpacing = 3;
     		EditorUi.prototype.menubarHeight = 41;
     		EditorUi.prototype.toolbarHeight = 38;
-    	}
+
     };
     
     EditorUi.initTheme();
@@ -9431,18 +9424,11 @@
 						{
 							var tmp = document.createElement('span');
 							mxUtils.write(tmp, data.title);
-							
-							if (uiTheme == 'atlas')
-							{
 								this.buttonContainer.style.paddingRight = '12px';
 								this.buttonContainer.style.paddingTop = '6px';
 								this.buttonContainer.style.right = '25px';
-							}
-							else if (uiTheme != 'min')
-							{
-								this.buttonContainer.style.paddingRight = '38px';
-								this.buttonContainer.style.paddingTop = '6px';
-							}
+
+
 	
 							if (this.embedFilenameSpan != null)
 							{
@@ -9596,7 +9582,7 @@
 			var div = document.createElement('div');
 			div.style.display = 'inline-block';
 			div.style.position = 'absolute';
-			div.style.paddingTop = (uiTheme == 'atlas') ? '2px' : '0px';
+			div.style.paddingTop = '2px';
 			div.style.paddingLeft = '8px';
 			div.style.paddingBottom = '2px';
 
@@ -9630,7 +9616,7 @@
 			
 			this.toolbar.container.appendChild(div);
 			this.toolbar.staticElements.push(div);
-			div.style.right = (uiTheme != 'atlas') ? '52px' : '42px';
+			div.style.right = '42px';
 		}
 	};
 
@@ -9997,7 +9983,6 @@
 		var graph = this.editor.graph;
 		var active = this.isDiagramActive();
 		var file = this.getCurrentFile();
-		var enabled = file != null || urlParams['embed'] == '1';
 		this.actions.get('pageSetup').setEnabled(active);
 		this.actions.get('autosave').setEnabled(file != null && file.isEditable() && file.isAutosaveOptional());
 		this.actions.get('guides').setEnabled(active);
@@ -10007,12 +9992,10 @@
 		this.actions.get('editGeometry').setEnabled(graph.getModel().isVertex(graph.getSelectionCell()));
 		this.actions.get('createRevision').setEnabled(active);
 		this.actions.get('editDiagram').setEnabled(active && (file == null || !file.isRestricted()));
-		this.actions.get('publishLink').setEnabled(file != null && !file.isRestricted());
 		this.actions.get('find').setEnabled(this.diagramContainer.style.visibility != 'hidden');
 		this.actions.get('rename').setEnabled((file != null && file.isRenamable()) || urlParams['embed'] == '1');
 		this.actions.get('close').setEnabled(file != null);
-		this.menus.get('publish').setEnabled(file != null && !file.isRestricted());
-		
+
 		var state = graph.view.getState(graph.getSelectionCell());
 		this.actions.get('editShape').setEnabled(active && state != null && state.shape != null && state.shape.stencil != null);
 	};
@@ -11191,7 +11174,7 @@ var CommentsWindow = function(editorUi, x, y, w, h, saveCallback)
 		cdiv.setAttribute('data-commentId', comment.id);
 		cdiv.style.marginLeft = (level * 20 + 5) + 'px';
 
-		if (comment.isResolved && uiTheme != 'dark')
+		if (comment.isResolved)
 		{
 			cdiv.style.backgroundColor = 'ghostWhite';
 		}
@@ -11410,7 +11393,7 @@ var CommentsWindow = function(editorUi, x, y, w, h, saveCallback)
 					mxUtils.write(resolveActionLnk, comment.isResolved? mxResources.get('reopen') : mxResources.get('resolve'));
 					var actionsDisplay = comment.isResolved? 'none' : '';
 					var replies = collectReplies(comment).replies;
-					var color = (uiTheme == 'dark') ? 'transparent' : (comment.isResolved? 'ghostWhite' : 'white');
+					var color = (comment.isResolved? 'ghostWhite' : 'white');
 					
 					for (var i = 0; i < replies.length; i++)
 					{
@@ -11528,11 +11511,7 @@ var CommentsWindow = function(editorUi, x, y, w, h, saveCallback)
 	resolvedLink.innerHTML = '<img src="' + IMAGE_PATH + '/check.png" style="width: 16px; padding: 2px;">';
 	resolvedLink.setAttribute('title', mxResources.get('showResolved'));
 	var resolvedChecked = false;
-	
-	if (uiTheme == 'dark')
-	{
-		resolvedLink.style.filter = 'invert(100%)';
-	}
+
 	
 	mxEvent.addListener(resolvedLink, 'click', function(evt)
 	{
@@ -11552,11 +11531,6 @@ var CommentsWindow = function(editorUi, x, y, w, h, saveCallback)
 		var refreshLink = link.cloneNode();
 		refreshLink.innerHTML = '<img src="' + IMAGE_PATH + '/update16.png" style="width: 16px; padding: 2px;">';
 		refreshLink.setAttribute('title', mxResources.get('refresh'));
-	
-		if (uiTheme == 'dark')
-		{
-			refreshLink.style.filter = 'invert(100%)';
-		}
 		
 		mxEvent.addListener(refreshLink, 'click', function(evt)
 		{
@@ -11574,11 +11548,6 @@ var CommentsWindow = function(editorUi, x, y, w, h, saveCallback)
 		var saveLink = link.cloneNode();
 		saveLink.innerHTML = '<img src="' + IMAGE_PATH + '/save.png" style="width: 20px; padding: 2px;">';
 		saveLink.setAttribute('title', mxResources.get('save'));
-	
-		if (uiTheme == 'dark')
-		{
-			saveLink.style.filter = 'invert(100%)';
-		}
 		
 		mxEvent.addListener(saveLink, 'click', function(evt)
 		{

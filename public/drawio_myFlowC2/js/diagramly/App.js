@@ -1,9 +1,4 @@
 /**
- * Copyright (c) 2006-2020, JGraph Ltd
- * Copyright (c) 2006-2020, draw.io AG
- */
-
-/**
  * Constructs a new point for the optional x and y coordinates. If no
  * coordinates are given, then the default values for <x> and <y> are used.
  * @constructor
@@ -178,19 +173,6 @@ App.MODE_DEVICE = 'device';
  * Browser Mode
  */
 App.MODE_BROWSER = 'browser';
-
-/**
- * Sets the delay for autosave in milliseconds. Default is 2000.
- */
-App.DROPBOX_APPKEY = 'libwls2fa9szdji';
-
-
-/**
- * OneDrive Client JS (file/folder picker). This is a slightly modified version to allow using accessTokens
- * But it doesn't work for IE11, so we fallback to the original one
- */
-App.ONEDRIVE_URL = mxClient.IS_IE11? 'https://js.live.net/v7.2/OneDrive.js' : window.DRAWIO_BASE_URL + '/js/onedrive/OneDrive.js';
-
 
 /**
  * Specifies the key for the pusher project.
@@ -397,50 +379,7 @@ App.main = function(callback, createUi)
       // by: ty
 			var myContainer = document.getElementById('myMainContainer')
 			var ui = (createUi != null) ? createUi() : new App(new Editor(
-					urlParams['chrome'] == '0' || uiTheme == 'min',
-					null, null, null, urlParams['chrome'] != '0'), myContainer);
-			
-			if (window.mxscript != null)
-			{
-				// Loads dropbox for all browsers but IE8 and below (no CORS) if not disabled or if enabled and in embed mode
-				// KNOWN: Picker does not work in IE11 (https://dropbox.zendesk.com/requests/1650781)
-				if (typeof window.DropboxClient === 'function' &&
-					(window.Dropbox == null && window.DrawDropboxClientCallback != null &&
-					(((urlParams['embed'] != '1' && urlParams['db'] != '0') ||
-					(urlParams['embed'] == '1' && urlParams['db'] == '1')) &&
-					isSvgBrowser && (document.documentMode == null || document.documentMode > 9))))
-				{
-					mxscript(App.DROPBOX_URL, function()
-					{
-						// Must load this after the dropbox SDK since they use the same namespace
-						mxscript(App.DROPINS_URL, function()
-						{
-							DrawDropboxClientCallback();
-						}, 'dropboxjs', App.DROPBOX_APPKEY);
-					});
-				}
-				// Disables client
-				else if (typeof window.Dropbox === 'undefined' || typeof window.Dropbox.choose === 'undefined')
-				{
-					window.DropboxClient = null;
-				}
-					
-				// Loads OneDrive for all browsers but IE6/IOS if not disabled or if enabled and in embed mode
-				if (typeof window.OneDriveClient === 'function' &&
-					(typeof OneDrive === 'undefined' && window.DrawOneDriveClientCallback != null &&
-					(((urlParams['embed'] != '1' && urlParams['od'] != '0') || (urlParams['embed'] == '1' &&
-					urlParams['od'] == '1')) && (navigator.userAgent == null ||
-					navigator.userAgent.indexOf('MSIE') < 0 || document.documentMode >= 10))))
-				{
-					mxscript(App.ONEDRIVE_URL, window.DrawOneDriveClientCallback);
-				}
-				// Disables client
-				else if (typeof window.OneDrive === 'undefined')
-				{
-					window.OneDriveClient = null;
-				}
-	
-			}
+					false, null, null, null, true), myContainer);
 			
 			if (callback != null)
 			{
@@ -823,7 +762,7 @@ App.prototype.init = function() {
 		this.menubar.container.appendChild(this.buttonContainer);
 	}
 
-	if (uiTheme == 'atlas' && this.menubar != null)
+	if (this.menubar != null)
 	{
 		if (this.toggleElement != null)
 		{
@@ -2536,20 +2475,10 @@ App.prototype.updateButtonContainer = function()
 					'margin-right:4px;float:left;cursor:pointer;width:24px;height:24px;background-size:24px 24px;' +
 					'background-position:center center;background-repeat:no-repeat;background-image:' +
 					'url(' + Editor.commentImage + ');';
-				
-				if (uiTheme == 'atlas')
-				{
+
 					this.commentButton.style.marginRight = '10px';
 					this.commentButton.style.marginTop = '-3px';
-				}
-				else if (uiTheme == 'min')
-				{
-					this.commentButton.style.marginTop = '1px';
-				}
-				else
-				{
-					this.commentButton.style.marginTop = '-5px';
-				}
+
 				
 				mxEvent.addListener(this.commentButton, 'click', mxUtils.bind(this, function()
 				{
@@ -2557,11 +2486,9 @@ App.prototype.updateButtonContainer = function()
 				}));
 				
 				this.buttonContainer.appendChild(this.commentButton);
-				
-				if (uiTheme == 'dark' || uiTheme == 'atlas')
-				{
+
 					this.commentButton.style.filter = 'invert(100%)';
-				}
+
 			}
 		}
 		else if (this.commentButton != null)
@@ -2569,54 +2496,6 @@ App.prototype.updateButtonContainer = function()
 			this.commentButton.parentNode.removeChild(this.commentButton);
 			this.commentButton = null;
 		}
-		
-		// Share
-		// if (file != null && file.constructor == DriveFile)
-		// {
-		// 	if (this.shareButton == null)
-		// 	{
-		// 		this.shareButton = document.createElement('div');
-		// 		this.shareButton.className = 'geBtn gePrimaryBtn';
-		// 		this.shareButton.style.display = 'inline-block';
-		// 		this.shareButton.style.backgroundColor = '#F2931E';
-		// 		this.shareButton.style.borderColor = '#F08705';
-		// 		this.shareButton.style.backgroundImage = 'none';
-		// 		this.shareButton.style.padding = '2px 10px 0 10px';
-		// 		this.shareButton.style.marginTop = '-10px';
-		// 		this.shareButton.style.height = '28px';
-		// 		this.shareButton.style.lineHeight = '28px';
-		// 		this.shareButton.style.minWidth = '0px';
-		// 		this.shareButton.style.cssFloat = 'right';
-		// 		this.shareButton.setAttribute('title', mxResources.get('share'));
-		//
-		// 		var icon = document.createElement('img');
-		// 		icon.setAttribute('src', this.shareImage);
-		// 		icon.setAttribute('align', 'absmiddle');
-		// 		icon.style.marginRight = '4px';
-		// 		icon.style.marginTop = '-3px';
-		// 		this.shareButton.appendChild(icon);
-		//
-		// 		if (uiTheme != 'dark' && uiTheme != 'atlas')
-		// 		{
-		// 			this.shareButton.style.color = 'black';
-		// 			icon.style.filter = 'invert(100%)';
-		// 		}
-		//
-		// 		mxUtils.write(this.shareButton, mxResources.get('share'));
-		//
-		// 		mxEvent.addListener(this.shareButton, 'click', mxUtils.bind(this, function()
-		// 		{
-		// 			this.actions.get('share').funct();
-		// 		}));
-		//
-		// 		this.buttonContainer.appendChild(this.shareButton);
-		// 	}
-		// }
-		// else if (this.shareButton != null)
-		// {
-		// 	this.shareButton.parentNode.removeChild(this.shareButton);
-		// 	this.shareButton = null;
-		// }
 	}
 };
 
@@ -2962,11 +2841,9 @@ App.prototype.updateHeader = function()
 		this.appIcon.style.margin = '14px 0px 8px 16px';
 		this.appIcon.style.opacity = '0.85';
 		this.appIcon.style.borderRadius = '3px';
-		
-		if (uiTheme != 'dark')
-		{
+
 			this.appIcon.style.backgroundColor = '#f08705';
-		}
+
 		
 		mxEvent.disableContextMenu(this.appIcon);
 		
@@ -3062,21 +2939,16 @@ App.prototype.updateHeader = function()
 		this.toggleFormatElement.setAttribute('title', mxResources.get('formatPanel') + ' (' + Editor.ctrlKey + '+Shift+P)');
 		this.toggleFormatElement.style.position = 'absolute';
 		this.toggleFormatElement.style.display = 'inline-block';
-		this.toggleFormatElement.style.top = (uiTheme == 'atlas') ? '8px' : '6px';
-		this.toggleFormatElement.style.right = (uiTheme != 'atlas' && urlParams['embed'] != '1') ? '30px' : '10px';
+		this.toggleFormatElement.style.top = '8px';
+		this.toggleFormatElement.style.right = '10px';
 		this.toggleFormatElement.style.padding = '2px';
 		this.toggleFormatElement.style.fontSize = '14px';
-		this.toggleFormatElement.className = (uiTheme != 'atlas') ? 'geButton' : '';
+		this.toggleFormatElement.className =  '';
 		this.toggleFormatElement.style.width = '16px';
 		this.toggleFormatElement.style.height = '16px';
 		this.toggleFormatElement.style.backgroundPosition = '50% 50%';
 		this.toggleFormatElement.style.backgroundRepeat = 'no-repeat';
 		this.toolbarContainer.appendChild(this.toggleFormatElement);
-		
-		if (uiTheme == 'dark')
-		{
-			this.toggleFormatElement.style.filter = 'invert(100%)';
-		}
 		
 		// Prevents focus
 	    mxEvent.addListener(this.toggleFormatElement, (mxClient.IS_POINTER) ? 'pointerdown' : 'mousedown',
@@ -3110,11 +2982,11 @@ App.prototype.updateHeader = function()
 		this.fullscreenElement.setAttribute('title', mxResources.get('fullscreen'));
 		this.fullscreenElement.style.position = 'absolute';
 		this.fullscreenElement.style.display = 'inline-block';
-		this.fullscreenElement.style.top = (uiTheme == 'atlas') ? '8px' : '6px';
-		this.fullscreenElement.style.right = (uiTheme != 'atlas' && urlParams['embed'] != '1') ? '50px' : '30px';
+		this.fullscreenElement.style.top = '8px' ;
+		this.fullscreenElement.style.right = '30px';
 		this.fullscreenElement.style.padding = '2px';
 		this.fullscreenElement.style.fontSize = '14px';
-		this.fullscreenElement.className = (uiTheme != 'atlas') ? 'geButton' : '';
+		this.fullscreenElement.className = '';
 		this.fullscreenElement.style.width = '16px';
 		this.fullscreenElement.style.height = '16px';
 		this.fullscreenElement.style.backgroundPosition = '50% 50%';
@@ -3128,29 +3000,17 @@ App.prototype.updateHeader = function()
     	{
 			evt.preventDefault();
 		}));
-		
-		// Some style changes in Atlas theme
-		if (uiTheme == 'atlas')
-		{
+
 			mxUtils.setOpacity(this.toggleFormatElement, 70);
 			mxUtils.setOpacity(this.fullscreenElement, 70);
-		}
+
 		
 		var initialPosition = this.hsplitPosition;
 		var collapsed = false;
 
-		if (uiTheme == 'dark')
-		{
-			this.fullscreenElement.style.filter = 'invert(100%)';
-		}
 		
 		mxEvent.addListener(this.fullscreenElement, 'click', mxUtils.bind(this, function(evt)
 		{
-			if (uiTheme != 'atlas' && urlParams['embed'] != '1')
-			{
-				this.toggleCompactMode(!collapsed);
-			}
-
 			this.toggleFormatPanel(!collapsed);
 			this.hsplitPosition = (!collapsed) ? 0 : initialPosition;
 			collapsed = !collapsed;
@@ -3170,7 +3030,7 @@ App.prototype.updateHeader = function()
 			this.toggleElement.style.width = '16px';
 			this.toggleElement.style.height = '16px';
 			this.toggleElement.style.color = '#666';
-			this.toggleElement.style.top = (uiTheme == 'atlas') ? '8px' : '6px';
+			this.toggleElement.style.top = '8px' ;
 			this.toggleElement.style.right = '10px';
 			this.toggleElement.style.padding = '2px';
 			this.toggleElement.style.fontSize = '14px';
@@ -3179,11 +3039,7 @@ App.prototype.updateHeader = function()
 				
 			this.toggleElement.style.backgroundPosition = '50% 50%';
 			this.toggleElement.style.backgroundRepeat = 'no-repeat';
-			
-			if (uiTheme == 'dark')
-			{
-				this.toggleElement.style.filter = 'invert(100%)';
-			}
+
 			
 			// Prevents focus
 			mxEvent.addListener(this.toggleElement, (mxClient.IS_POINTER) ? 'pointerdown' : 'mousedown',
@@ -3198,11 +3054,7 @@ App.prototype.updateHeader = function()
 				this.toggleCompactMode();
 				mxEvent.consume(evt);
 			}));
-		
-			if (uiTheme != 'atlas')
-			{
-				this.toolbarContainer.appendChild(this.toggleElement);
-			}
+
 			
 			// Enable compact mode for small screens except for Firefox where the height is wrong
 			if (!mxClient.IS_FF && screen.height <= 740 && typeof this.toggleElement.click !== 'undefined')
