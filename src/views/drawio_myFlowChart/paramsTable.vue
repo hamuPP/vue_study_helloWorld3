@@ -107,7 +107,6 @@
               selectedRows.forEach(r => {
                 ids.push(r.boId)
               });
-              debugger;
               // 请求后端
             })
             .catch(e => {
@@ -151,10 +150,8 @@
       }
     },
     created(){
-      debugger;
     },
     mounted(){
-      debugger;
     },
   }
 </script>

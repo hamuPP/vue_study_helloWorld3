@@ -89,7 +89,6 @@
       }
     },
     mounted(){
-      debugger;
     }
   }
 </script>

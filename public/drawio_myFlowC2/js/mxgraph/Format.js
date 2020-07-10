@@ -4599,11 +4599,12 @@ DiagramFormatPanel.prototype.init = function () {
   var editor = ui.editor;
   var graph = editor.graph;
 
+  debugger;
   this.container.appendChild(this.addView(this.createPanel()));
+  debugger;
   if (graph.isEnabled()) {
     this.container.appendChild(this.addOptions(this.createPanel()));
     this.container.appendChild(this.addPaperSize(this.createPanel()));
-    // this.container.appendChild(this.addStyleOps(this.createPanel()));
   }
 };
 
@@ -4641,49 +4642,7 @@ DiagramFormatPanel.prototype.addView = function (div) {
       }));
   }
 
-  if (graph.isEnabled()) {
-    // Background
-    var bg = this.createColorOption(mxResources.get('background'), function () {
-        return graph.background;
-      }, function (color) {
-        var change = new ChangePageSetup(ui, color);
-        change.ignoreImage = true;
-
-        graph.model.execute(change);
-      }, '#ffffff',
-      {
-        install: function (apply) {
-          this.listener = function () {
-            apply(graph.background);
-          };
-
-          ui.addListener('backgroundColorChanged', this.listener);
-        },
-        destroy: function () {
-          ui.removeListener(this.listener);
-        }
-      });
-
-    if (this.showBackgroundImageOption) {
-      var btn = mxUtils.button(mxResources.get('image'), function (evt) {
-        ui.showBackgroundImageDialog();
-        mxEvent.consume(evt);
-      })
-
-      btn.style.position = 'absolute';
-      btn.className = 'geColorBtn';
-      btn.style.marginTop = '-4px';
-      btn.style.paddingBottom = (document.documentMode == 11 || mxClient.IS_MT) ? '0px' : '2px';
-      btn.style.height = '22px';
-      btn.style.right = (mxClient.IS_QUIRKS) ? '52px' : '72px';
-      btn.style.width = '56px';
-
-      bg.appendChild(btn);
-    }
-
-    div.appendChild(bg);
-  }
-
+  debugger;
   return div;
 };
 

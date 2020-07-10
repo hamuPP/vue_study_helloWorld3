@@ -183,8 +183,10 @@
         </el-table>
       </el-col>
     </div>
-    <el-button type="primary" @click="handleApply">应用</el-button>
-    <el-button @click="handleCancle">取消</el-button>
+    <div class="cus-operation-buttons">
+      <el-button size="mini" type="primary" @click="handleApply">应用</el-button>
+      <el-button size="mini" @click="handleCancle">取消</el-button>
+    </div>
   </div>
 </template>
 

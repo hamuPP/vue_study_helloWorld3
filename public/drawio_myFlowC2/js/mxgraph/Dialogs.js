@@ -1119,7 +1119,7 @@ var EditDataDialogInline_line = function (ui, cell) {
 };
 
 // 我改的节点属性配置表单
-var EditDataDialogInline = function (ui, cell) {
+var EditDataDialogInline_bk = function (ui, cell) {
   var div = document.createElement('div');
   div.className = 'node-attributes-box';
   var graph = ui.editor.graph;
@@ -1130,34 +1130,6 @@ var EditDataDialogInline = function (ui, cell) {
   // Converts the value to an XML node
   // 节点的属性上加上业务的属性
   var mine = window.myProj.nodeBasicAttributes;
-  //
-  // if (!mxUtils.isNode(value)) {
-  //   console.log('if')
-  //   var doc = mxUtils.createXmlDocument();
-  //   obj = doc.createElement('object');
-  //   obj.setAttribute('label', value || '');
-  //
-  //   // 数量不够的，是新建的节点。需要加上节点参数
-  //   if (obj.attributes.length < 2) {
-  //     for (var meIdx = 0, melen = mine.length; meIdx < melen; meIdx++) {
-  //       var child = mine[meIdx];
-  //       var childValue = child.value || '';
-  //       if (child.type == 'flowId') {
-  //         childValue = new Date().getTime();
-  //       }
-  //       obj.setAttribute(child.name, childValue);
-  //     }
-  //
-  //     // 设置这些值，现在是为了将time值保存进来  不要-->引发表格变成了2个
-  //     // graph.getModel().setValue(cell, obj);
-  //   }
-  //   value = obj;
-  // } else {
-  //   console.log('else')
-  //   obj = graph.getModel().getValue(cell);
-  //   var attributesInCell = graph.getModel().getValue(cell).attributes;// 当前选中节点上带的数据，把这些值设置进节点信息的参数里
-  // }
-
   obj = mergeSelectedCellAttribute('nodeBasicAttributes', graph, cell, mine);
   value = obj;
 
@@ -1314,6 +1286,27 @@ var EditDataDialogInline = function (ui, cell) {
   div.appendChild(buttons);
   this.container = div;
 };
+
+// 节点属性改为vue页面
+var EditDataDialogInline = function (ui, cell) {
+  console.log('执行')
+  var div = document.createElement('div');
+  div.className = 'node-attributes-box node-attributes';
+  var graph = ui.editor.graph;
+
+  // 显示先前注册在根组件的参数tabel
+  var paramsTable = VueIns.$children[0].$childrenRefs.nodeAttributes;
+  paramsTable.visible = true;
+  paramsTable.init({
+    graph: graph,
+    mxCell: cell
+  })
+  div.appendChild(paramsTable.$el)
+  // 显示先前注册在根组件的子流程form
+
+  this.container = div;
+};
+
 
 // url定义的表单
 var EditDataDialogInline_URLdefine = function (ui, cell) {
@@ -1492,7 +1485,6 @@ var EditDataDialogInline_URLdefine = function (ui, cell) {
 
 // 子流程
 var EditDataDialogInline_childProcess = function (ui, cell) {
-  //nodeChildProcess
   var div = document.createElement('div');
   div.className = 'node-attributes-box param-setting';
   var graph = ui.editor.graph;

@@ -36,4 +36,30 @@
 		}
 	}
 
+	// button的样式
+	.form-buttons{
+		text-align: center;
+	}
+	.el-button {
+		line-height: 26px;
+		padding: 0;
+		text-align: center;
+		height: 26px;
+		width: 52px;
+	}
+
+	// select 的样式
+	.el-select{
+		width: 100%;
+	}
+
+	// 里面的小分组
+	.inner-group-title{
+		margin: 5px 0;
+		padding-left: 10px;
+		[class^=el-icon]{
+			color: #409eff;
+
+		}
+	}
 }

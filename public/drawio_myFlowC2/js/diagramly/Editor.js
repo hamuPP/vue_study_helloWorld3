@@ -2816,49 +2816,50 @@
 		{
 			var div = diagramFormatPanelAddView.apply(this, arguments);
 			var file = this.editorUi.getCurrentFile();
-			
-			if (mxClient.IS_SVG && this.isShadowOptionVisible())
-			{
-				var ui = this.editorUi;
-				var editor = ui.editor;
-				var graph = editor.graph;
-				
-				var option = this.createOption(mxResources.get('shadow'), function()
-				{
-					return graph.shadowVisible;
-				}, function(checked)
-				{
-					var change = new ChangePageSetup(ui);
-					change.ignoreColor = true;
-					change.ignoreImage = true;
-					change.shadowVisible = checked;
-					
-					graph.model.execute(change);
-				},
-				{
-					install: function(apply)
-					{
-						this.listener = function()
-						{
-							apply(graph.shadowVisible);
-						};
-						
-						ui.addListener('shadowVisibleChanged', this.listener);
-					},
-					destroy: function()
-					{
-						ui.removeListener(this.listener);
-					}
-				});
-				
-				if (!Editor.shadowOptionEnabled)
-				{
-					option.getElementsByTagName('input')[0].setAttribute('disabled', 'disabled');
-					mxUtils.setOpacity(option, 60);
-				}
-				
-				div.appendChild(option);
-			}
+
+			// 不显示阴影配置 2020年07月10日10:44:34
+			// if (mxClient.IS_SVG && this.isShadowOptionVisible())
+			// {
+			// 	var ui = this.editorUi;
+			// 	var editor = ui.editor;
+			// 	var graph = editor.graph;
+			//
+			// 	var option = this.createOption(mxResources.get('shadow'), function()
+			// 	{
+			// 		return graph.shadowVisible;
+			// 	}, function(checked)
+			// 	{
+			// 		var change = new ChangePageSetup(ui);
+			// 		change.ignoreColor = true;
+			// 		change.ignoreImage = true;
+			// 		change.shadowVisible = checked;
+			//
+			// 		graph.model.execute(change);
+			// 	},
+			// 	{
+			// 		install: function(apply)
+			// 		{
+			// 			this.listener = function()
+			// 			{
+			// 				apply(graph.shadowVisible);
+			// 			};
+			//
+			// 			ui.addListener('shadowVisibleChanged', this.listener);
+			// 		},
+			// 		destroy: function()
+			// 		{
+			// 			ui.removeListener(this.listener);
+			// 		}
+			// 	});
+			//
+			// 	if (!Editor.shadowOptionEnabled)
+			// 	{
+			// 		option.getElementsByTagName('input')[0].setAttribute('disabled', 'disabled');
+			// 		mxUtils.setOpacity(option, 60);
+			// 	}
+			//
+			// 	div.appendChild(option);
+			// }
 			
 			return div;
 		};

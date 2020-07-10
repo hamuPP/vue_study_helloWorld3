@@ -48,6 +48,10 @@
     </nodeChildProcess>
 
     <saveWorkFlow ref="saveWorkFlow"></saveWorkFlow>
+
+    <renyuanChuandi ref="renyuanChuandiDialog"></renyuanChuandi>
+
+    <nodeAttributes ref="nodeAttributesForm"></nodeAttributes>
   </div>
 </template>
 
@@ -71,13 +75,23 @@
   import lineAttributesForm from '../drawio_myFlowChart/line/lineAttributesForm'
   import wfEditForm from '../drawio_myFlowChart/wfForm/wfForm'
   import wfParamTable from '../drawio_myFlowChart/wfForm/wfParamEditTable.vue'
+  import nodeAttributes from '../drawio_myFlowChart/node/nodeAttributes.vue'
   import nodePeopleDefine from '../drawio_myFlowChart/node/peopleDefine.vue'
   import nodeChildProcess from '../drawio_myFlowChart/node/childProcess.vue'
   import saveWorkFlow from '../drawio_myFlowChart/saveWorkFlow.vue'
+  import renyuanChuandi from '../drawio_myFlowChart/node/renyuanChuandi.vue'
   export default {
     name: "can-iframe-use",
     inject: ['rootAppVue'],
-    components: {paramsTable, lineAttributesForm, wfEditForm, wfParamTable, nodePeopleDefine, nodeChildProcess, saveWorkFlow},
+    components: {
+      paramsTable,
+      lineAttributesForm, wfEditForm,
+      wfParamTable,
+      nodeAttributes,// 节点属性
+      nodePeopleDefine, nodeChildProcess,
+      saveWorkFlow,
+      renyuanChuandi
+    },
     created() {
       var LazyLoad = window.LazyLoad;
       // Load multiple JS files and execute a callback when they've all finished.
@@ -148,9 +162,11 @@
       this.rootAppVue.$childrenRefs.lineAttributesForm = this.$refs.lineAttributesForm;
       this.rootAppVue.$childrenRefs.wfForm = this.$refs.wfForm;
       this.rootAppVue.$childrenRefs.wfParams = this.$refs.wfParams;
+      this.rootAppVue.$childrenRefs.nodeAttributes = this.$refs.nodeAttributesForm;
       this.rootAppVue.$childrenRefs.nodePeopleDefine = this.$refs.nodePeopleDefine;
       this.rootAppVue.$childrenRefs.nodeChildProcess = this.$refs.nodeChildProcess;
       this.rootAppVue.$childrenRefs.saveWorkFlow = this.$refs.saveWorkFlow;
+      this.rootAppVue.$childrenRefs.renyuanChuandi = this.$refs.renyuanChuandiDialog;
     },
     methods: {
       paramApplyHandle(val){

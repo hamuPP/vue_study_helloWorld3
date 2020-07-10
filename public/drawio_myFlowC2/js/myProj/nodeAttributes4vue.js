@@ -165,8 +165,7 @@ function userTree(h, loadNode) {
 }
 
 
-function showUserSelectDialog(parentElment, mxCellObj, labelText) {
-  debugger;
+function showUserSelectDialog_bk(parentElment, mxCellObj, labelText) {
   // 如果已经有之前创建的dialog，则显示其即可，不要再创建新的了,同时，更新数据
   if (window.$refs && window.$refs.userDialog) {
     window.$refs.userDialog.dialogVisible = true;
@@ -296,6 +295,16 @@ function showUserSelectDialog(parentElment, mxCellObj, labelText) {
   document.body.appendChild(dom1)
 }
 
+
+// 人员传递的弹窗
+// 改为用vue页面的形式
+function showUserSelectDialog(parentElment, mxCellObj, labelText) {
+  var renyuanChuandiDialog = VueIns.$children[0].$childrenRefs.renyuanChuandi;
+  renyuanChuandiDialog.init({
+
+  })
+  renyuanChuandiDialog.visible = true;
+}
 /**
  * 仿照mxClient.js中的mxForm，做的，把table改成div，方便样式控制
  * URLdefine

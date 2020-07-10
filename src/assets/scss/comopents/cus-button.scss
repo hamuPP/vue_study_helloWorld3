@@ -2,3 +2,14 @@
 	//font-family: Microsoft YaHei,Avenir, Helvetica, Arial, sans-serif;
 	font-family: inherit;
 }
+.cus-operation-buttons{
+	text-align: center;
+	margin: 5px 0;
+	.el-button {
+		line-height: 26px;
+		padding: 0;
+		text-align: center;
+		height: 26px;
+		width: 52px;
+	}
+}
