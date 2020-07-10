@@ -16,6 +16,17 @@ var addMySaveBtn = function(scope){
   container.appendChild(saveWFbutton.$el);
   saveWFbutton.visible = true;
 };
+var addMyWFselect = function(scope){
+  var container = scope.menubar.container;
+  var graph = scope.editor.graph;
+
+  var workFlowSelect = VueIns.$children[0].$childrenRefs.workFlowSelect;
+  workFlowSelect.init({
+    graph: graph
+  })
+  container.appendChild(workFlowSelect.$el);
+  workFlowSelect.visible = true;
+};
 EditorUi = function(editor, container, lightbox)
 {
 	mxEventSource.call(this);
@@ -3359,7 +3370,8 @@ EditorUi.prototype.createUi = function() {
 
 	this.menubar = this.menus.createMenubar(this.createDiv('geMenubar'));
   // 先在container里加入我的自定义按钮与功能
-  addMySaveBtn(this)
+  addMySaveBtn(this);
+  addMyWFselect(this)
   this.menubarContainer.appendChild(this.menubar.container);
 
 

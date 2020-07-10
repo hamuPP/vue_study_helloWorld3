@@ -48,6 +48,7 @@
     </nodeChildProcess>
 
     <saveWorkFlow ref="saveWorkFlow"></saveWorkFlow>
+    <workFlowSelect ref="workFlowSelect"></workFlowSelect>
 
     <renyuanChuandi ref="renyuanChuandiDialog"></renyuanChuandi>
 
@@ -79,6 +80,7 @@
   import nodePeopleDefine from '../drawio_myFlowChart/node/peopleDefine.vue'
   import nodeChildProcess from '../drawio_myFlowChart/node/childProcess.vue'
   import saveWorkFlow from '../drawio_myFlowChart/saveWorkFlow.vue'
+  import workFlowSelect from '../drawio_myFlowChart/workFlowSelect.vue'
   import renyuanChuandi from '../drawio_myFlowChart/node/renyuanChuandi.vue'
   export default {
     name: "can-iframe-use",
@@ -90,6 +92,7 @@
       nodeAttributes,// 节点属性
       nodePeopleDefine, nodeChildProcess,
       saveWorkFlow,
+      workFlowSelect,
       renyuanChuandi
     },
     created() {
@@ -166,6 +169,7 @@
       this.rootAppVue.$childrenRefs.nodePeopleDefine = this.$refs.nodePeopleDefine;
       this.rootAppVue.$childrenRefs.nodeChildProcess = this.$refs.nodeChildProcess;
       this.rootAppVue.$childrenRefs.saveWorkFlow = this.$refs.saveWorkFlow;
+      this.rootAppVue.$childrenRefs.workFlowSelect = this.$refs.workFlowSelect;
       this.rootAppVue.$childrenRefs.renyuanChuandi = this.$refs.renyuanChuandiDialog;
     },
     methods: {
