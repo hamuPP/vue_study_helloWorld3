@@ -297,14 +297,7 @@ App.main = function(callback, createUi)
 			window.DriveClient = null;
 		}
 	}
-	
-	/**
-	 * Asynchronous MathJax extension.
-	 */
-	if (urlParams['math'] != '0')
-	{
-		Editor.initMath();
-	}
+
 
 	function doLoad(bundle)
 	{

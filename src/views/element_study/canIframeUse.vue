@@ -5,14 +5,11 @@
   <div>
     <div id="geInfo">
       <div class="geBlock" style="text-align:center;min-width:50%;">
+        ${x}^{(2)}\text{=}\begin{bmatrix} 1416\\\ 3\\\ 2\\\ 40 \end{bmatrix}$
+
+
         <h1>Flowchart Maker and Online Diagram Software</h1>
-        <!--<p>-->
-          <!--diagrams.net (formerly draw.io) is free online diagram software. You can use it as a flowchart maker, network-->
-          <!--diagram software, to create UML online, as an ER diagram tool,-->
-          <!--to design database schema, to build BPMN online, as a circuit diagram maker, and more. draw.io can import-->
-          <!--.vsdx,-->
-          <!--Gliffy&trade; and Lucidchart&trade; files .-->
-        <!--</p>-->
+
         <h2 id="geStatus">Loading...</h2>
         <p>
           Please ensure JavaScript is enabled.
