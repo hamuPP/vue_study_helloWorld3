@@ -5,6 +5,7 @@
   <el-select
           v-model="value"
           v-if="visible"
+          size="mini"
           placeholder="请选择">
     <el-option
             v-for="item in options"
