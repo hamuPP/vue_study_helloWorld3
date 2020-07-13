@@ -6272,6 +6272,7 @@ if (typeof mxVertexHandler != 'undefined')
 		Graph.prototype.getSvg = function(background, scale, border, nocrop, crisp,
 			ignoreSelection, showText, imgExport, linkTarget, hasShadow)
 		{
+		  debugger;
 			//Disable Css Transforms if it is used
 			var origUseCssTrans = this.useCssTransforms;
 			
@@ -6281,7 +6282,7 @@ if (typeof mxVertexHandler != 'undefined')
 				this.view.revalidate();
 				this.sizeDidChange();
 			}
-
+			debugger;
 			try 
 			{
 				scale = (scale != null) ? scale : 1;
@@ -6497,6 +6498,7 @@ if (typeof mxVertexHandler != 'undefined')
 		 */
 		Graph.prototype.addForeignObjectWarning = function(canvas, root)
 		{
+		  debugger;
 			if (root.getElementsByTagName('foreignObject').length > 0)
 			{
 				var sw = canvas.createElement('switch');

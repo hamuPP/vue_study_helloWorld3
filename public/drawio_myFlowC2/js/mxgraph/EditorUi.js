@@ -3136,7 +3136,6 @@ EditorUi.prototype.updateActionStates = function()
 
 	// Updates menu states
    	var state = graph.view.getState(graph.getSelectionCell());
-    this.menus.get('navigation').setEnabled(selected || graph.view.currentRoot != null);
     this.actions.get('collapsible').setEnabled(vertexSelected &&
     	(graph.isContainer(graph.getSelectionCell()) || graph.model.getChildCount(graph.getSelectionCell()) > 0));
     this.actions.get('home').setEnabled(graph.view.currentRoot != null);
@@ -3151,11 +3150,7 @@ EditorUi.prototype.updateActionStates = function()
     this.actions.get('grid').setEnabled(!this.editor.chromeless || this.editor.editable);
 
     var unlocked = graph.isEnabled() && !graph.isCellLocked(graph.getDefaultParent());
-    this.menus.get('layout').setEnabled(unlocked);
     this.menus.get('insert').setEnabled(unlocked);
-    this.menus.get('direction').setEnabled(unlocked && vertexSelected);
-    this.menus.get('align').setEnabled(unlocked && vertexSelected && graph.getSelectionCount() > 1);
-    this.menus.get('distribute').setEnabled(unlocked && vertexSelected && graph.getSelectionCount() > 1);
     this.actions.get('selectVertices').setEnabled(unlocked);
     this.actions.get('selectEdges').setEnabled(unlocked);
     this.actions.get('selectAll').setEnabled(unlocked);
@@ -3365,7 +3360,6 @@ EditorUi.prototype.createSidebarFooterContainer = function()
 EditorUi.prototype.createUi = function() {
   // 2020年06月22日16:54:35 不要工具栏
 	// Creates menubar
-  debugger;
   console.log('chromeless', this.editor.chromeless)
 
 	this.menubar = this.menus.createMenubar(this.createDiv('geMenubar'));
@@ -3642,7 +3636,6 @@ EditorUi.prototype.showError = function(title, msg, btn, fn, retry, btn2, fn2, b
  */
 EditorUi.prototype.showDialog = function(elt, w, h, modal, closable, onClose, noScroll, transparent, onResize, ignoreBgClick)
 {
-  debugger;
 	this.editor.graph.tooltipHandler.hideTooltip();
 	
 	if (this.dialogs == null)

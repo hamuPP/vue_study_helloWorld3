@@ -28,7 +28,7 @@ var mxClient = {
   IS_FF: "undefined" !== typeof InstallTrigger,
   IS_MT: 0 <= navigator.userAgent.indexOf("Firefox/") && 0 > navigator.userAgent.indexOf("Firefox/1.") && 0 > navigator.userAgent.indexOf("Firefox/2.") || 0 <= navigator.userAgent.indexOf("Iceweasel/") && 0 > navigator.userAgent.indexOf("Iceweasel/1.") && 0 > navigator.userAgent.indexOf("Iceweasel/2.") || 0 <= navigator.userAgent.indexOf("SeaMonkey/") && 0 > navigator.userAgent.indexOf("SeaMonkey/1.") || 0 <= navigator.userAgent.indexOf("Iceape/") &&
     0 > navigator.userAgent.indexOf("Iceape/1."),
-  IS_VML: "MICROSOFT INTERNET EXPLORER" == navigator.appName.toUpperCase(),
+  IS_VML: "MICROSOFT INTERNET EXPLORER" == navigator.appName.toUpperCase(),//  ie10
   IS_SVG: "MICROSOFT INTERNET EXPLORER" != navigator.appName.toUpperCase(),
   NO_FO: !document.createElementNS || "[object SVGForeignObjectElement]" != document.createElementNS("http://www.w3.org/2000/svg", "foreignObject") || 0 <= navigator.userAgent.indexOf("Opera/"),
   IS_WIN: 0 < navigator.appVersion.indexOf("Win"),
@@ -93,7 +93,7 @@ mxClient.language = 'zh';
 mxClient.defaultLanguage = 'en';
 mxLoadStylesheets && mxClient.link("stylesheet", mxClient.basePath + "/css/common.css");
 "undefined" != typeof mxLanguages && null != mxLanguages && (mxClient.languages = mxLanguages);
-mxClient.IS_VML && (mxClient.IS_SVG ? mxClient.IS_VML = !1 : (null != document.namespaces && (8 == document.documentMode ? (document.namespaces.add(mxClient.VML_PREFIX, "urn:schemas-microsoft-com:vml", "#default#VML"), document.namespaces.add(mxClient.OFFICE_PREFIX, "urn:schemas-microsoft-com:office:office", "#default#VML")) : (document.namespaces.add(mxClient.VML_PREFIX, "urn:schemas-microsoft-com:vml"), document.namespaces.add(mxClient.OFFICE_PREFIX, "urn:schemas-microsoft-com:office:office"))), mxClient.IS_QUIRKS && 30 <= document.styleSheets.length ?
+mxClient.IS_VML && (mxClient.IS_SVG ? mxClient.IS_VML = false : (null != document.namespaces && (8 == document.documentMode ? (document.namespaces.add(mxClient.VML_PREFIX, "urn:schemas-microsoft-com:vml", "#default#VML"), document.namespaces.add(mxClient.OFFICE_PREFIX, "urn:schemas-microsoft-com:office:office", "#default#VML")) : (document.namespaces.add(mxClient.VML_PREFIX, "urn:schemas-microsoft-com:vml"), document.namespaces.add(mxClient.OFFICE_PREFIX, "urn:schemas-microsoft-com:office:office"))), mxClient.IS_QUIRKS && 30 <= document.styleSheets.length ?
   function () {
     var a = document.createElement("style");
     a.type = "text/css";

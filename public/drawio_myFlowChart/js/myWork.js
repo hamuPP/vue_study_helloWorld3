@@ -139,35 +139,35 @@
       pageSize: 10000,
       name: ''
     };
-    // mxUtils.post(listsearchUrl, listheaders, listqueryData, function (mxXmlRequest) {
-    //   var resText = mxXmlRequest.getText();
-    //   try {
-    //     var res = JSON.parse(resText);
-    //     if (res && res.dataList && res.dataList[0]) {
-    //       var datas = res.dataList[0].page.data;
-    //       var optionsList = [];
-    //       for (var r = 0, rlen = datas.length; r < rlen; r++) {
-    //         optionsList.push({
-    //           value: datas[r].id,
-    //           text: datas[r].workFlowName
-    //         })
-    //       }
-    //       liuchengOptionsList = optionsList;
-    //       for (var i = 0, len = optionsList.length; i < len; i++) {
-    //         let childOpt = optionsList[i];
-    //         var eleOption = document.createElement("option");
-    //         eleOption.setAttribute("value", childOpt.value);
-    //         eleOption.innerHTML = childOpt.text;
-    //
-    //         eleSelect.appendChild(eleOption)
-    //       }
-    //       // 切换选中值，查询对应的流程的数据
-    //
-    //     }
-    //   } catch (e) {
-    //     mxUtils.alert('网络错误：' + mxXmlRequest.getStatus())
-    //   }
-    // });
+    mxUtils.post(listsearchUrl, listheaders, listqueryData, function (mxXmlRequest) {
+      var resText = mxXmlRequest.getText();
+      try {
+        var res = JSON.parse(resText);
+        if (res && res.dataList && res.dataList[0]) {
+          var datas = res.dataList[0].page.data;
+          var optionsList = [];
+          for (var r = 0, rlen = datas.length; r < rlen; r++) {
+            optionsList.push({
+              value: datas[r].id,
+              text: datas[r].workFlowName
+            })
+          }
+          liuchengOptionsList = optionsList;
+          for (var i = 0, len = optionsList.length; i < len; i++) {
+            let childOpt = optionsList[i];
+            var eleOption = document.createElement("option");
+            eleOption.setAttribute("value", childOpt.value);
+            eleOption.innerHTML = childOpt.text;
+
+            eleSelect.appendChild(eleOption)
+          }
+          // 切换选中值，查询对应的流程的数据
+
+        }
+      } catch (e) {
+        mxUtils.alert('网络错误：' + mxXmlRequest.getStatus())
+      }
+    });
   };
 
   var _addFlowChartSearch = function (scope, wrapperElement) {

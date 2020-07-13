@@ -22,7 +22,6 @@
 	EditorUi.prototype.init = function()
 	{
 		editorUiInit.apply(this, arguments);
-		debugger;//addTrees在干嘛
 		if (!this.editor.isChromelessView() || this.editor.editable)
 		{
 			this.addTrees();

@@ -9,10 +9,7 @@
 App = function(editor, container, lightbox)
 {
 	EditorUi.call(this, editor, container, false);
-	
-	// Logs unloading of window with modifications for Google Drive file
-	if (!mxClient.IS_CHROMEAPP )
-	{
+	debugger;
 		window.onunload = mxUtils.bind(this, function()
 		{
 			var file = this.getCurrentFile();
@@ -32,18 +29,11 @@ App = function(editor, container, lightbox)
 					'-change_' + ((file.lastChanged != null) ? Math.round((Date.now() - file.lastChanged.getTime()) / 1000) : 'x') +
 					'-alive_' + Math.round((Date.now() - App.startTime.getTime()) / 1000),
 					label: (file.sync != null) ? ('client_' + file.sync.clientId) : 'nosync'};
-					
-				if (file.constructor == DriveFile && file.desc != null && this.drive != null)
-				{
-					evt.label += ((this.drive.user != null) ? ('-user_' + this.drive.user.id) : '-nouser') + '-rev_' +
-						file.desc.headRevisionId + '-mod_' + file.desc.modifiedDate + '-size_' + file.getSize() +
-						'-mime_' + file.desc.mimeType;
-				}
 
 				EditorUi.logEvent(evt);
 			}
 		});
-	}
+
 
 	// Logs changes to autosave
 	this.editor.addListener('autosaveChanged', mxUtils.bind(this, function()
@@ -116,8 +106,8 @@ App = function(editor, container, lightbox)
 	}
 	
 	// Process the queue for waiting plugins
-	if (App.DrawPlugins != null)
-	{
+  debugger;
+	if (App.DrawPlugins != null) {
 		
 		// Installs global callback for plugins
 		window.Draw.loadPlugin = mxUtils.bind(this, function(callback)
@@ -134,15 +124,17 @@ App = function(editor, container, lightbox)
 		});
 		
 		//Set a timeout in case a plugin doesn't load quickly or doesn't load at all
-		setTimeout(mxUtils.bind(this, function() {
-			//Force finish loading if its not yet called
-      debugger;
-			if (App.embedModePluginsCount > 0)
-			{
-				App.embedModePluginsCount = 0;
-				this.initializeEmbedMode();
-			}
-		}), 5000); //5 sec timeout
+    // debugger;
+    // 注释掉  todo
+		// setTimeout(mxUtils.bind(this, function() {
+		// 	//Force finish loading if its not yet called
+    //   debugger;
+		// 	if (App.embedModePluginsCount > 0)
+		// 	{
+		// 		App.embedModePluginsCount = 0;
+		// 		this.initializeEmbedMode();
+		// 	}
+		// }), 5000); //5 sec timeout
 	}
 
 	this.load();
@@ -762,7 +754,7 @@ App.prototype.init = function() {
 			this.toggleElement.click();
 			this.toggleElement.style.display = 'none';
 		}
-		
+		// todo 是logo的图片
 		this.icon = document.createElement('img');
 		this.icon.setAttribute('src', IMAGE_PATH + '/logo-flat-small.png');
 		this.icon.setAttribute('title', mxResources.get('draw.io'));
@@ -1996,7 +1988,6 @@ App.prototype.pickFile = function(mode)
  */
 App.prototype.saveFile = function(forceDialog, success)
 {
-  debugger;
 	var file = this.getCurrentFile();
 	
 	if (file != null)
@@ -2031,7 +2022,6 @@ App.prototype.saveFile = function(forceDialog, success)
 		
 		if (!forceDialog && file.getTitle() != null && this.mode != null)
 		{
-		  debugger;
 			this.save(file.getTitle(), done);
 		}
 		else

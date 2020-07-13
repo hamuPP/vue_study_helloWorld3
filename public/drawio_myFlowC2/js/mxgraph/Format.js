@@ -4599,9 +4599,7 @@ DiagramFormatPanel.prototype.init = function () {
   var editor = ui.editor;
   var graph = editor.graph;
 
-  debugger;
   this.container.appendChild(this.addView(this.createPanel()));
-  debugger;
   if (graph.isEnabled()) {
     this.container.appendChild(this.addOptions(this.createPanel()));
     this.container.appendChild(this.addPaperSize(this.createPanel()));
@@ -4641,8 +4639,6 @@ DiagramFormatPanel.prototype.addView = function (div) {
         }
       }));
   }
-
-  debugger;
   return div;
 };
 

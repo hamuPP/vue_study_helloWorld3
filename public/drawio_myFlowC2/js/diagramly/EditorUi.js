@@ -1735,6 +1735,7 @@
 	EditorUi.prototype.downloadFile = function(format, uncompressed, addShadow, ignoreSelection, currentPage,
 		pageVisible, transparent, scale, border, grid, includeXml)
 	{
+	  debugger;
 		try
 		{
 			ignoreSelection = (ignoreSelection != null) ? ignoreSelection : this.editor.graph.isSelectionEmpty();
@@ -3806,15 +3807,7 @@
 	{
 		return this.getFileData(true);
 	};
-		
-	/**
-	 * Hook for subclassers.
-	 */
-	// EditorUi.prototype.exportFile = function(data, filename, mimeType, base64Encoded, mode, folderId)
-	// {
-	//   debugger;
-	// 	// do nothing
-	// };
+
 	
 	/**
 	 * Hook for subclassers.
