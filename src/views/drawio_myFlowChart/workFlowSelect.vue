@@ -7,7 +7,8 @@
           v-model="value"
           v-if="visible"
           size="mini"
-          placeholder="请选择">
+          placeholder="请选择"
+          @change="changeHand">
     <el-option
             v-for="item in options"
             :key="item.value"
@@ -24,6 +25,7 @@
     name: "workFlowSelect",
     computed: mapGetters({
       listData: 'getWorkFlowList',
+      getWorkFlowResult: 'getWorkFlowResult'
     }),
     data(){
       return {
@@ -48,6 +50,9 @@
           }
         }
         this.options = optionsList
+      },
+      getWorkFlowResult(n,o){
+        debugger;
       }
     },
     created(){},
@@ -65,6 +70,15 @@
           name: ''
         };
         this.$store.dispatch('getWorkFlowList', {reqData: req});
+      },
+      changeHand(val){
+        debugger
+        let req = {
+          workflowid: val,
+          businessType: 'ProjectApply'
+        };
+        this.$store.dispatch('getWorkFlow', {reqData: req});
+
       }
     }
   }

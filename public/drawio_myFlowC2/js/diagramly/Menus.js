@@ -911,8 +911,8 @@
                 this.editorUi.handleError(resp, (resp != null) ? mxResources.get('errorRenamingFile') : null);
               }));
           }
-        }), (file.constructor == DriveFile || file.constructor == StorageFile) ?
-          mxResources.get('diagramName') : null, function (name) {
+        }),
+          null, function (name) {
           if (name != null && name.length > 0) {
             return true;
           }

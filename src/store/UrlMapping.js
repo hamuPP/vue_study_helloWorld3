@@ -6,7 +6,9 @@ class UrlMapping {
     // 基础后端地址
     this.BASE_URL = window.g.baseUrls;
 
-    this.GET_WORK_FLOW = `${this.BASE_URL}/getWorkflows`
+    this.GET_WORK_FLOW_LIST = `${this.BASE_URL}/getWorkflows`;
+    this.GET_WORK_FLOW = `${this.BASE_URL}/getWorkflow`;
+    this.SAVE_WORK_FLOW = `${this.BASE_URL}/saveWorkflow`;
 }
 
   /**

@@ -247,7 +247,7 @@
         })
       };
       debugger;
-      console.log(reqData.jsondata)
+      console.log(JSON.parse(reqData.jsondata))
       console.log(reqData.jsondata.constructor)
       var headers = {};
       var saveUrl = baseUrl + saveWorkFlowUrl;

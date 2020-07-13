@@ -6,12 +6,14 @@
  */
 
 var addMySaveBtn = function(scope){
+  debugger;// 找到ui
   var container = scope.menubar.container;
-  var graph = scope.editor.graph;
+  // var graph = scope.editor.graph;
 
   var saveWFbutton = VueIns.$children[0].$childrenRefs.saveWorkFlow;
   saveWFbutton.init({
-    graph: graph
+    scope: scope,
+    // graph: graph
   })
   container.appendChild(saveWFbutton.$el);
   saveWFbutton.visible = true;
